@@ -6,5 +6,6 @@ public class Area
   public Guid WardId { get; set; }
   public string Code { get; set; } = null!;
   public string Name { get; set; } = null!;
+  public Ward Ward { get; set; } = null!;
   public IEnumerable<Tole> Toles = null!;
 }
