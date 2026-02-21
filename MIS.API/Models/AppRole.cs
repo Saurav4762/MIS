@@ -1,11 +1,13 @@
-namespace MIS.API.Models
-{
-    public class AppRole
-    {
-        public string RoleCode { get; set; } = null!;
-        public string RoleName { get; set; } = null!;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
-        // Navigation properties
-        public ICollection<AppUserRole> UserRoles { get; set; } = new List<AppUserRole>();
-    }
+namespace MIS.API.Models;
+
+public class AppRole
+{
+    [Key]
+    public Guid Id { get; set; }
+
+    public string RoleCode { get; set; } = null!;
+    public string RoleName { get; set; } = null!;
 }
