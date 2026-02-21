@@ -92,28 +92,15 @@ public class AppDbContext : DbContext
             entity.Property(h => h.Geom).HasColumnType("geography (point)");
         });
 
-        modelBuilder.Entity<Tole>(entity =>
+        modelBuilder.Entity<HouseInfo>(entity =>
         {
-            entity.HasOne(t => t.Area)
-                .WithMany(a => a.Toles)
-                .HasForeignKey(t => t.AreaId)
-                .OnDelete(DeleteBehavior.Cascade);
+            entity.HasOne(hi => hi.Household)
+            .WithOne(h => h.HouseInfo)
+            .HasForeignKey<HouseInfo>(hi => hi.HouseholdId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+            entity .Property(hi => hi.HouseAge).HasColumnType("numeric(14,3)");
         });
 
-        modelBuilder.Entity<Area>(entity =>
-        {
-            entity.HasOne(a => a.Ward)
-            .WithMany(w => w.Areas)
-            .HasForeignKey(a => a.WardId)
-            .OnDelete(DeleteBehavior.Cascade);
-        });
-
-        modelBuilder.Entity<Ward>(entity =>
-        {
-            entity.HasOne(w => w.Municipality)
-            .WithMany(m => m.Wards)
-            .HasForeignKey(w => w.MunicipalityId)
-            .OnDelete(DeleteBehavior.Cascade);
-        });
     }
 }

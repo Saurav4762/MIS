@@ -64,4 +64,6 @@ public class Household
 
     // Navigation properties
     public Submission Submission { get; set; } = null!;
+
+    public HouseInfo HouseInfo { get; set; } = null!;
 }
