@@ -21,6 +21,12 @@ public class AppDbContext : DbContext
     public DbSet<OptionItem> OptionItems => Set<OptionItem>();
     public DbSet<Submission> Submissions => Set<Submission>();
 
+    public DbSet<Area> Areas => Set<Area>();
+    public DbSet<Tole> Toles => Set<Tole>();
+    public DbSet<Ward> Wards => Set<Ward>();
+    public DbSet<Municipality> Municipalities => Set<Municipality>();
+    
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -42,7 +48,7 @@ public class AppDbContext : DbContext
         {
             entity.HasIndex(ol => ol.Code).IsUnique();
             entity.Property(ol => ol.Code).IsRequired();
-            
+
             entity.Property(ol => ol.LabelEn).IsRequired();
             entity.Property(ol => ol.LabelNe).IsRequired();
         });
