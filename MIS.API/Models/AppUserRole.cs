@@ -1,12 +1,11 @@
-namespace MIS.API.Models
-{
-    public class AppUserRole
-    {
-        public Guid UserId { get; set; }
-        public string RoleCode { get; set; } = null!;
+namespace MIS.API.Models;
 
-        // Navigation properties
-        public AppUser? User { get; set; }
-        public AppRole? Role { get; set; }
-    }
+public class AppUserRole
+{
+    public Guid AppRoleId { get; set; }
+    public Guid AppUserId { get; set; }
+
+    // Navigation properties
+    public AppUser? AppUser { get; set; }
+    public AppRole? AppRole { get; set; }
 }
