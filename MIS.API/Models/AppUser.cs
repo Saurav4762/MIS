@@ -14,5 +14,7 @@ namespace MIS.API.Models
         public bool IsActive { get; set; } = true;
         public DateTime CreatedAt { get; set; }
 
+        public ICollection<Submission> Submissions { get; set; } = new List<Submission>();
+
     }
 }

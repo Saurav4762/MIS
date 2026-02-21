@@ -18,6 +18,7 @@ public class AppDbContext : DbContext
     // Lookup tables
     public DbSet<OptionList> OptionLists => Set<OptionList>();
     public DbSet<OptionItem> OptionItems => Set<OptionItem>();
+    public DbSet<Submission> Submissions => Set<Submission>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -60,6 +61,17 @@ public class AppDbContext : DbContext
 
             entity.Property(oi => oi.Extra).HasColumnType("jsonb");
 
+        });
+
+        modelBuilder.Entity<Submission>(entity =>
+        {
+            entity.HasOne(s => s.CreatedBy)
+            .WithMany(u => u.Submissions)
+            .HasForeignKey(s => s.CreatedById)
+            .OnDelete(DeleteBehavior.SetNull);
+
+            entity.Property(s => s.StartGeopoint).HasColumnType("geography (point)");
+            entity.Property(s => s.RawSubmissionJson).HasColumnType("jsonb");
         });
 
     }
