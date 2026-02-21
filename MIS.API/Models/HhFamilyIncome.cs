@@ -1,8 +1,13 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace MIS.API.Models
 {
     public class HhFamilyIncome
     {
+        [Key]
+        public Guid Id { get; set; }
         public Guid HouseholdId { get; set; }
+
         public decimal? IncomeAgriculture { get; set; }
         public decimal? IncomeLivestock { get; set; }
         public decimal? IncomeBusiness { get; set; }

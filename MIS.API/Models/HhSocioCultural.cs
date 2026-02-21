@@ -1,7 +1,10 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace MIS.API.Models
 {
     public class HhSocioCultural
     {
+        [Key]
         public Guid HouseholdId { get; set; }
         public string? Ethnicity { get; set; }
         public string? EthnicityOtherText { get; set; }

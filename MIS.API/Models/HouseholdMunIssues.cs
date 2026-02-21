@@ -1,7 +1,10 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace MIS.API.Models
 {
     public class HouseholdMunIssues
     {
+        [Key]
         public Guid HouseholdId { get; set; }
         public string ListName { get; set; } = "mun_issues";
         public string? ChoiceCode { get; set; }

@@ -1,7 +1,13 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace MIS.API.Models
 {
     public class HhFamilyInfo
     {
+        [Key]
+        public Guid Id { get; set; }
+
+        public Guid HhFamilyInfoId { get; set; }
         public Guid HouseholdId { get; set; }
         public string? FamilyType { get; set; }
         public int? TotalFamilyMember { get; set; }

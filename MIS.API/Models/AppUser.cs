@@ -1,7 +1,11 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace MIS.API.Models
 {
     public class AppUser
     {
+        [Key]
+      
         public Guid UserId { get; set; }
         public string? Username { get; set; }
         public string? FullName { get; set; }

@@ -1,7 +1,10 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace MIS.API.Models
 {
     public class Submission
     {
+        [Key]
         public Guid SubmissionId { get; set; }
         public DateTime CreatedAt { get; set; }
         public Guid? CreatedBy { get; set; }

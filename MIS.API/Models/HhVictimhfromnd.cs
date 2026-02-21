@@ -1,7 +1,10 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace MIS.API.Models
 {
     public class HhVictimhfromnd
     {
+        [Key]
         public Guid HouseholdId { get; set; }
         public int? DeathMale { get; set; }
         public int? DeathFemale { get; set; }

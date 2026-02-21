@@ -1,7 +1,10 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace MIS.API.Models
 {
     public class HhTransportFacility
     {
+        [Key]
         public Guid HouseholdId { get; set; }
         public string? RoadAccess { get; set; }
         public decimal? RoadDistanceKm { get; set; }

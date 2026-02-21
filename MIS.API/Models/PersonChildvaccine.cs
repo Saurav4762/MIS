@@ -1,7 +1,10 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace MIS.API.Models
 {
     public class PersonChildvaccine
     {
+        [Key]
         public Guid PersonId { get; set; }
         public string ListName { get; set; } = "childvaccine";
         public string? ChoiceCode { get; set; }

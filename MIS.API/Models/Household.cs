@@ -1,7 +1,10 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace MIS.API.Models
 {
     public class Household
     {
+        [Key]
         public Guid HouseholdId { get; set; }
         public Guid SubmissionId { get; set; }
         public int? WardNo { get; set; }

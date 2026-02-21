@@ -1,7 +1,10 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace MIS.API.Models
 {
     public class OptionItem
     {
+        [Key]
         public string ListName { get; set; } = null!;
         public string Code { get; set; } = null!;
         public string? LabelEn { get; set; }

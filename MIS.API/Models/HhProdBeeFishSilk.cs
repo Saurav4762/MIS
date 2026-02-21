@@ -1,7 +1,11 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace MIS.API.Models
 {
     public class HhProdBeeFishSilk
     {
+        [Key]
+        public Guid Id { get; set; }
         public Guid HouseholdId { get; set; }
         public int? BeeHiveNo { get; set; }
         public decimal? HoneyProductionKg { get; set; }

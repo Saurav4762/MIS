@@ -1,7 +1,11 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace MIS.API.Models
 {
     public class HhSanitationandhygine
     {
+        [Key]
+        public Guid Id { get; set; }
         public Guid HouseholdId { get; set; }
         public string? Sourceofwater { get; set; }
         public string? SourceofwaterOtherText { get; set; }
