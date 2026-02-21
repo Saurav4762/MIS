@@ -39,4 +39,6 @@ public class Submission
 
     public Dictionary<string, object>? RawSubmissionJson { get; set; }
     public AppUser? CreatedBy { get; set; }
+
+    public ICollection<Household> Households { get; set; } = new List<Household>();
 }
