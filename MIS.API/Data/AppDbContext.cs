@@ -90,10 +90,20 @@ public class AppDbContext : DbContext
         {
             entity.HasOne(hi => hi.Household)
             .WithOne(h => h.HouseInfo)
-            .HasForeignKey<HouseInfo>(hi => hi.HouseholdId)
+            .HasForeignKey(hi => hi.HouseholdId)
             .OnDelete(DeleteBehavior.Cascade);
 
             entity .Property(hi => hi.HouseAge).HasColumnType("numeric(14,3)");
+        });
+
+        modelBuilder.Entity<FamilyInfo>(entity =>
+        {
+            entity.HasOne(fi => fi.Household)
+            .WithOne(h => h.FamilyInfo)
+            .HasForeignKey(fi => fi.HouseholdId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+            entity.Property(fi => fi.LoanAmount).HasColumnType("numeric(14,3)");
         });
 
     }
