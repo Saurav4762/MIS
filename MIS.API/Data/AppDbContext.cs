@@ -102,5 +102,15 @@ public class AppDbContext : DbContext
             entity .Property(hi => hi.HouseAge).HasColumnType("numeric(14,3)");
         });
 
+        modelBuilder.Entity<FamilyInfo>(entity =>
+        {
+            entity.HasOne(fi => fi.Household)
+            .WithOne(h => h.FamilyInfo)
+            .HasForeignKey<FamilyInfo>(fi => fi.HouseholdId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+            entity.Property(fi => fi.LoanAmount).HasColumnType("numeric(14,3)");
+        });
+
     }
 }
