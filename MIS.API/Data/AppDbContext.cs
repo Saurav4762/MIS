@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using MIS.API.Models;
+using NetTopologySuite.Geometries;
 
 namespace MIS.API.Data;
 
@@ -72,6 +73,17 @@ public class AppDbContext : DbContext
 
             entity.Property(s => s.StartGeopoint).HasColumnType("geography (point)");
             entity.Property(s => s.RawSubmissionJson).HasColumnType("jsonb");
+        });
+
+        modelBuilder.Entity<Household>(entity =>
+        {
+            entity.HasOne(h => h.Submission)
+            .WithMany(s => s.Households)
+            .HasForeignKey(h => h.SubmissionId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+            entity.Property(h => h.Location).HasColumnType("geography (point)");
+            entity.Property(h => h.Geom).HasColumnType("geography (point)");
         });
 
     }
