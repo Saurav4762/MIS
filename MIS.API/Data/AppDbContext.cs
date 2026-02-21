@@ -86,5 +86,15 @@ public class AppDbContext : DbContext
             entity.Property(h => h.Geom).HasColumnType("geography (point)");
         });
 
+        modelBuilder.Entity<HouseInfo>(entity =>
+        {
+            entity.HasOne(hi => hi.Household)
+            .WithOne(h => h.HouseInfo)
+            .HasForeignKey<HouseInfo>(hi => hi.HouseholdId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+            entity .Property(hi => hi.HouseAge).HasColumnType("numeric(14,3)");
+        });
+
     }
 }
