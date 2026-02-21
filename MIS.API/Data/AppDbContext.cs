@@ -21,6 +21,12 @@ public class AppDbContext : DbContext
     public DbSet<OptionItem> OptionItems => Set<OptionItem>();
     public DbSet<Submission> Submissions => Set<Submission>();
 
+    public DbSet<Area> Areas => Set<Area>();
+    public DbSet<Tole> Toles => Set<Tole>();
+    public DbSet<Ward> Wards => Set<Ward>();
+    public DbSet<Municipality> Municipalities => Set<Municipality>();
+    
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
@@ -42,7 +48,7 @@ public class AppDbContext : DbContext
         {
             entity.HasIndex(ol => ol.Code).IsUnique();
             entity.Property(ol => ol.Code).IsRequired();
-            
+
             entity.Property(ol => ol.LabelEn).IsRequired();
             entity.Property(ol => ol.LabelNe).IsRequired();
         });
@@ -86,5 +92,28 @@ public class AppDbContext : DbContext
             entity.Property(h => h.Geom).HasColumnType("geography (point)");
         });
 
+        modelBuilder.Entity<Tole>(entity =>
+        {
+            entity.HasOne(t => t.Area)
+                .WithMany(a => a.Toles)
+                .HasForeignKey(t => t.AreaId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<Area>(entity =>
+        {
+            entity.HasOne(a => a.Ward)
+            .WithMany(w => w.Areas)
+            .HasForeignKey(a => a.WardId)
+            .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<Ward>(entity =>
+        {
+            entity.HasOne(w => w.Municipality)
+            .WithMany(m => m.Wards)
+            .HasForeignKey(w => w.MunicipalityId)
+            .OnDelete(DeleteBehavior.Cascade);
+        });
     }
 }
