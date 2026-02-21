@@ -13,7 +13,7 @@ builder.Services.AddControllers();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(
-        builder.Configuration.GetConnectionString("DefaultConnection")
+        builder.Configuration.GetConnectionString("DefaultConnection"), npgsql => npgsql.UseNetTopologySuite()
     ));
 
 var app = builder.Build();
