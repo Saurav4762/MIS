@@ -124,5 +124,13 @@ public class AppDbContext : DbContext
             .OnDelete(DeleteBehavior.Cascade);
         });
 
+        modelBuilder.Entity<FamilyDecision>(entity =>
+        {
+            entity.HasOne(fd => fd.Household)
+            .WithOne(h => h.FamilyDecision)
+            .HasForeignKey<FamilyDecision>(fd => fd.HouseholdId)
+            .OnDelete(DeleteBehavior.Cascade);
+        });
+
     }
 }
