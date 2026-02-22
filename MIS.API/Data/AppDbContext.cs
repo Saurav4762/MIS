@@ -93,7 +93,9 @@ public class AppDbContext : DbContext
             .HasForeignKey<HouseInfo>(hi => hi.HouseholdId)
             .OnDelete(DeleteBehavior.Cascade);
 
-            entity .Property(hi => hi.HouseAge).HasColumnType("numeric(14,3)");
+            entity .Property(hi => hi.HouseAge)
+            .HasColumnType("numeric(14,3)");
+
         });
 
         modelBuilder.Entity<FamilyInfo>(entity =>
@@ -103,8 +105,10 @@ public class AppDbContext : DbContext
             .HasForeignKey<FamilyInfo>(fi => fi.HouseholdId)
             .OnDelete(DeleteBehavior.Cascade);
 
-            entity.Property(fi => fi.LoanAmount).HasColumnType("numeric(14,3)");
-        });
+            entity.Property(fi => fi.LoanAmount)
+            .HasColumnType("numeric(14,3)");
+
+            });
 
     }
 }
