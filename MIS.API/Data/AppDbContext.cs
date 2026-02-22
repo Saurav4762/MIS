@@ -89,31 +89,39 @@ public class AppDbContext : DbContext
             .OnDelete(DeleteBehavior.Cascade);
 
             entity.Property(h => h.Location).HasColumnType("geography (point)");
-            entity.Property(h => h.Geom).HasColumnType("geography (point)");
+        });
+
+        modelBuilder.Entity<Tole>(entity =>
+        {
+            entity.HasOne(t => t.Area)
+                .WithMany(a => a.Toles)
+                .HasForeignKey(t => t.AreaId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<Area>(entity =>
+        {
+            entity.HasOne(a => a.Ward)
+            .WithMany(w => w.Areas)
+            .HasForeignKey(a => a.WardId)
+            .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<Ward>(entity =>
+        {
+            entity.HasOne(w => w.Municipality)
+            .WithMany(m => m.Wards)
+            .HasForeignKey(w => w.MunicipalityId)
+            .OnDelete(DeleteBehavior.Cascade);
         });
 
         modelBuilder.Entity<HouseInfo>(entity =>
         {
-            entity.HasOne(hi => hi.Household)
-            .WithOne(h => h.HouseInfo)
-            .HasForeignKey<HouseInfo>(hi => hi.HouseholdId)
-            .OnDelete(DeleteBehavior.Cascade);
-
-            entity .Property(hi => hi.HouseAge)
-            .HasColumnType("numeric(14,3)");
-
-        });
-
-        modelBuilder.Entity<FamilyInfo>(entity =>
-        {
-            entity.HasOne(fi => fi.Household)
-            .WithOne(h => h.FamilyInfo)
-            .HasForeignKey<FamilyInfo>(fi => fi.HouseholdId)
-            .OnDelete(DeleteBehavior.Cascade);
-
-            entity.Property(fi => fi.LoanAmount)
-            .HasColumnType("numeric(14,3)");
-
+            entity.Property(h => h.Coords).HasColumnType("geography (point)");
+            entity.HasOne(h => h.Tole)
+                .WithMany(t => t.HouseInfos)
+                .HasForeignKey(h => h.ToleId)
+                .OnDelete(DeleteBehavior.Cascade);
         });
 
         modelBuilder.Entity<SanitationandHygine>(entity =>
@@ -132,5 +140,12 @@ public class AppDbContext : DbContext
             .OnDelete(DeleteBehavior.Cascade);
         });
 
+        modelBuilder.Entity<Household>(entity =>
+        {
+            entity.HasOne(h => h.HouseInfo)
+                .WithMany(hh => hh.Households)
+                .HasForeignKey(h => h.HouseInfoId)
+                .OnDelete(DeleteBehavior.Cascade);
+        });
     }
 }

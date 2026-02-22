@@ -7,4 +7,7 @@ public class Tole
   public string Code { get; set; } = null!;
   public string Name { get; set; } = null!;
   public Area Area { get; set; } = null!;
+  
+  //  Navigation properties
+  public IEnumerable<HouseInfo>? HouseInfos { get; set; } = null;
 }

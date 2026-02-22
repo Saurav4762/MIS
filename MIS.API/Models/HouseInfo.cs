@@ -15,6 +15,7 @@
 // );
 
 using System.ComponentModel.DataAnnotations;
+using NetTopologySuite.Geometries;
 
 namespace MIS.API.Models;
 
@@ -22,7 +23,7 @@ public class HouseInfo
 {
     [Key]
     public Guid Id { get; set; }
-    public Guid HouseholdId { get; set; }
+    public Guid ToleId { get; set; }
     public string HouseLandType { get; set; } = null!;
     public string HouseLandTypeOtherText { get; set; } = null!;
     public string HouseType { get; set; } = null!;
@@ -34,7 +35,9 @@ public class HouseInfo
     public string HousePurpose { get; set; } = null!;
     public decimal HouseAge { get; set; }
     public DateTime UpdatedAt { get; set; }
-
+    public Point Coords { get; set; } = null!;
+    public DateTime CreatedAt { get; set; }
     // Navigation property
-    public Household Household { get; set; } = null!;
+    public Tole Tole { get; set; } = null!;
+    public IEnumerable<Household>? Households { get; set; } = null;
 }
