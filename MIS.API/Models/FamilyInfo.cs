@@ -25,24 +25,45 @@ public class FamilyInfo
 {
     [Key]
     public Guid Id { get; set; }
+
+    [Required]
     public Guid HouseholdId { get; set; }
-    public string FamilyType { get; set; } = null!;
+
+    [Required]
+    public string FamilyType { get; set; } = string.Empty;
+
+    [Range(1, 50)]
     public int TotalFamilyMember { get; set; }
-    public string FamilyHeadName { get; set; } = null!;
+
+    [Required]
+    public string FamilyHeadName { get; set; } = string.Empty;
+
+    [Range(0, 120)]
     public int FamilyHeadAge { get; set; }
-    public string FamilyHeadGender { get; set; } = null!;
-    public string FamilyHeadContact { get; set; } = null!;
-    public string HasMigrated { get; set; } = null!;
-    public string MigrationPurpose { get; set; } = null!;
-    public string MigrationPurposeOtherText { get; set; } = null!;
-    public string MigrationDistrict { get; set; } = null!;
-    public string MigrationDistrictOtherText { get; set; } = null!;
-    public string MigrationCountry { get; set; } = null!;
-    public string MigrationCountryOtherText { get; set; } = null!;
-    public string LoanTaken { get; set; } = null!;
-    public decimal LoanAmount { get; set; }
+
+    [Required]
+    public string FamilyHeadGender { get; set; } = string.Empty;
+
+    public string? FamilyHeadContact { get; set; }
+
+    // Migration
+    public bool HasMigrated { get; set; }
+
+    public string? MigrationPurpose { get; set; }
+    public string? MigrationPurposeOtherText { get; set; }
+
+    public string? MigrationDistrict { get; set; }
+    public string? MigrationDistrictOtherText { get; set; }
+
+    public string? MigrationCountry { get; set; }
+    public string? MigrationCountryOtherText { get; set; }
+
+    // Loan
+    public string? LoanTaken { get; set; } = null!;
+    public decimal? LoanAmount { get; set; }
+
     public DateTime UpdatedAt { get; set; }
 
-    // Navigation property
+    // Navigation
     public Household Household { get; set; } = null!;
 }

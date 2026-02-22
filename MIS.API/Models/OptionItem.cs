@@ -21,6 +21,7 @@ public class OptionItem
 
   public bool IsActive = false;
 
+  //Navigation property
   public OptionList OptionList { get; set; } = null!;
 
 }

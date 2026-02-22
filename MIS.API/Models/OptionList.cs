@@ -12,5 +12,6 @@ public class OptionList
   public string LabelEn { get; set; } = null!;
   public string LabelNe { get; set; } = null!;
   public string Description { get; set; } = string.Empty;
-  public IEnumerable<OptionItem> OptionItems { get; set; } = null!;
+  public ICollection<OptionItem> OptionItems { get; set; } = new List<OptionItem>();
+  
 }
