@@ -58,4 +58,8 @@ public class Household
     public HouseInfo HouseInfo { get; set; } = null!;
     public FamilyInfo FamilyInfo { get; set; } = null!;
     public Tole Tole { get; set; } = null!;
+
+    public SanitationandHygine SanitationandHygine { get; set; } = null!;
+
+    public FamilyDecision FamilyDecision { get; set; } = null!;
 }

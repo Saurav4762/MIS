@@ -124,6 +124,22 @@ public class AppDbContext : DbContext
                 .OnDelete(DeleteBehavior.Cascade);
         });
 
+        modelBuilder.Entity<SanitationandHygine>(entity =>
+        {
+            entity.HasOne(sh => sh.Household)
+            .WithOne(h => h.SanitationandHygine)
+            .HasForeignKey<SanitationandHygine>(sh => sh.HouseholdId)
+            .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        modelBuilder.Entity<FamilyDecision>(entity =>
+        {
+            entity.HasOne(fd => fd.Household)
+            .WithOne(h => h.FamilyDecision)
+            .HasForeignKey<FamilyDecision>(fd => fd.HouseholdId)
+            .OnDelete(DeleteBehavior.Cascade);
+        });
+
         modelBuilder.Entity<Household>(entity =>
         {
             entity.HasOne(h => h.HouseInfo)
