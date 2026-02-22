@@ -37,14 +37,11 @@ public class Household
     [Key]
     public Guid Id { get; set; }
     public Guid SubmissionId { get; set; }
-    public Guid WardNo { get; set; }
-    public string Area { get; set; } = null!;
-    public string AreaTole { get; set; } = null!;
-    public string ToleName { get; set; } = null!;
-    public string HouseNo { get; set; } = null!;
-    public string SerialNo { get; set; } = null!;
-    public int HhNo { get; set; }
-    public string HhId { get; set; } = null!;
+
+    public Guid HouseInfoId { get; set; }
+    
+    public int Number { get; set; }
+
     public Point Location { get; set; } = null!;
     public string HouseOwnership { get; set; } = null!;
     public string HouseOwnershipOtherText { get; set; } = null!;
@@ -55,17 +52,10 @@ public class Household
     public string NameInformant { get; set; } = null!;
     public string DataCollectionIssues { get; set; } = null!;
 
-    // convenience fields for public portal (optional)
-    public string AreaCode { get; set; } = null!;
-    public string ToleCode { get; set; } = null!;
-    public string ToleNameLocal { get; set; } = null!;
-    public Point Geom { get; set; } = null!;
-    public DateTime CreatedAt { get; set; }
 
     // Navigation properties
     public Submission Submission { get; set; } = null!;
-
     public HouseInfo HouseInfo { get; set; } = null!;
-
     public FamilyInfo FamilyInfo { get; set; } = null!;
+    public Tole Tole { get; set; } = null!;
 }
