@@ -70,4 +70,6 @@ public class Household
     public FamilyInfo FamilyInfo { get; set; } = null!;
 
     public SanitationandHygine SanitationandHygine { get; set; } = null!;
+
+    public FamilyDecision FamilyDecision { get; set; } = null!;
 }
