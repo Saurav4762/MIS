@@ -66,4 +66,6 @@ public class Household
     public Submission Submission { get; set; } = null!;
 
     public HouseInfo HouseInfo { get; set; } = null!;
+
+    public FamilyInfo FamilyInfo { get; set; } = null!;
 }
