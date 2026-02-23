@@ -1,0 +1,159 @@
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Builders;
+using MIS.API.Models;
+
+namespace MIS.API.Data.Configurations;
+
+public class OptionItemConfiguration : IEntityTypeConfiguration<OptionItem>
+{
+    public void Configure(EntityTypeBuilder<OptionItem> entity)
+    {
+        entity.HasIndex(oi => new { oi.OptionListId, oi.Code }).IsUnique();
+        entity.Property(oi => oi.Code).IsRequired();
+
+        entity.Property(oi => oi.LabelEn).IsRequired();
+        entity.Property(oi => oi.LabelNe).IsRequired();
+
+        entity.HasOne(oi => oi.OptionList)
+            .WithMany(ol => ol.OptionItems)
+            .HasForeignKey(oi => oi.OptionListId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        entity.Property(oi => oi.Extra).HasColumnType("jsonb");
+        
+        
+        entity.HasData(
+            // Source of Water options
+            new OptionItem
+            {
+                Id = Guid.Parse("b1e2c3d4-f5a6-4b7c-8d9e-0f1a2b3c4d5e"),
+                OptionListId = Guid.Parse("11111111-2222-3333-4444-555555555555"),
+                Code = "tap_water",
+                LabelEn = "Tap Water",
+                LabelNe = "ट्याप पानी",
+                IsActive = true
+            },
+            new OptionItem
+            {
+                Id = Guid.Parse("c2d3e4f5-a6b7-4c8d-9e0f-1a2b3c4d5e6f"),
+                OptionListId = Guid.Parse("11111111-2222-3333-4444-555555555555"),
+                Code = "well_water",
+                LabelEn = "Well Water",
+                LabelNe = "कुवा पानी",
+                IsActive = true
+            },
+            new OptionItem
+            {
+                Id = Guid.Parse("d3e4f5a6-b7c8-4d9e-0f1a-2b3c4d5e6f7a"),
+                OptionListId = Guid.Parse("11111111-2222-3333-4444-555555555555"),
+                Code = "river_water",
+                LabelEn = "River Water",
+                LabelNe = "नदी पानी",
+                IsActive = true
+            },
+            new OptionItem
+            {
+                Id = Guid.Parse("e4f5a6b7-c8d9-4e0f-1a2b-3c4d5e6f7a8b"),
+                OptionListId = Guid.Parse("11111111-2222-3333-4444-555555555555"),
+                Code = "rain_water",
+                LabelEn = "Rain Water",
+                LabelNe = "वर्षा पानी",
+                IsActive = true
+            },
+            new OptionItem
+            {
+                Id = Guid.Parse("f5a6b7c8-d9e0-4f1a-2b3c-4d5e6f7a8b9c"),
+                OptionListId = Guid.Parse("11111111-2222-3333-4444-555555555555"),
+                Code = "bottled_water",
+                LabelEn = "Bottled Water",
+                LabelNe = "बोतल पानी",
+                IsActive = true
+            },
+            new OptionItem
+            {
+                Id = Guid.Parse("a6b7c8d9-e0f1-4a2b-3c4d-5e6f7a8b9c0d"),
+                OptionListId = Guid.Parse("11111111-2222-3333-4444-555555555555"),
+                Code = "other",
+                LabelEn = "Other",
+                LabelNe = "अन्य",
+                IsActive = true
+            },
+            // Type of Toilet options
+            new OptionItem
+            {
+                Id = Guid.Parse("a1b2c3d4-e5f6-4a7b-8c9d-0e1f2a3b4c5d"),
+                OptionListId = Guid.Parse("22222222-3333-4444-5555-666666666666"),
+                Code = "flush_toilet",
+                LabelEn = "Flush Toilet",
+                LabelNe = "फ्लश टॉयलेट",
+                IsActive = true
+            },
+            new OptionItem
+            {
+                Id = Guid.Parse("b7c8d9e0-f1a2-4b3c-4d5e-6f7a8b9c0d1e"),
+                OptionListId = Guid.Parse("22222222-3333-4444-5555-666666666666"),
+                Code = "pit_latrine",
+                LabelEn = "Pit Latrine",
+                LabelNe = "पिट लाट्रिन",
+                IsActive = true
+            },
+            new OptionItem
+            {
+                Id = Guid.Parse("c8d9e0f1-a2b3-4c4d-5e6f-7a8b9c0d1e2f"),
+                OptionListId = Guid.Parse("22222222-3333-4444-5555-666666666666"),
+                Code = "composting_toilet",
+                LabelEn = "Composting Toilet",
+                LabelNe = "कम्पोस्टिंग टॉयलेट",
+                IsActive = true
+            },
+            new OptionItem
+            {
+                Id = Guid.Parse("d9e0f1a2-b3c4-4d5e-6f7a-8b9c0d1e2f3a"),
+                OptionListId = Guid.Parse("22222222-3333-4444-5555-666666666666"),
+                Code = "other",
+                LabelEn = "Other",
+                LabelNe = "अन्य",
+                IsActive = true
+            },
+            // Handwash Facility options
+            new OptionItem
+            {
+                Id = Guid.Parse("e0f1a2b3-c4d5-4e6f-7a8b-9c0d1e2f3a4b"),
+                OptionListId = Guid.Parse("33333333-4444-5555-6666-777777777777"),
+                Code = "handwash_station",
+                LabelEn = "Handwash Station",
+                LabelNe = "हात धुने स्टेशन",
+                IsActive = true
+            },
+            new OptionItem
+            {
+                Id = Guid.Parse("f1a2b3c4-d5e6-4f7a-8b9c-0d1e2f3a4b5c"),
+                OptionListId = Guid.Parse("33333333-4444-5555-6666-777777777777"),
+                Code = "handwash_basin",
+                LabelEn = "Handwash Basin",
+                LabelNe = "हात धुने बासिन",
+                IsActive = true
+            },
+            new OptionItem
+            {
+                Id = Guid.Parse("a2b3c4d5-e6f7-4a8b-9c0d-1e2f3a4b5c6d"),
+                OptionListId = Guid.Parse("33333333-4444-5555-6666-777777777777"),
+                Code = "handwash_bucket",
+                LabelEn = "Handwash Bucket",
+                LabelNe = "हात धुने बाल्टी",
+                IsActive = true
+            },
+            new OptionItem
+            {
+                Id = Guid.Parse("b3c4d5e6-f7a8-4b9c-0d1e-2f3a4b5c6d7e"),
+                OptionListId = Guid.Parse("33333333-4444-5555-6666-777777777777"),
+                Code = "other",
+                LabelEn = "Other",
+                LabelNe = "अन्य",
+                IsActive = true
+            }
+        );
+
+    }
+    
+}

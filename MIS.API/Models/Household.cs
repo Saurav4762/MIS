@@ -62,4 +62,6 @@ public class Household
     public SanitationandHygine SanitationandHygine { get; set; } = null!;
 
     public FamilyDecision FamilyDecision { get; set; } = null!;
+
+    public SocioCultural SocioCultural { get; set; } = null!;
 }

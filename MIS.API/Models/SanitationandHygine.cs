@@ -1,14 +1,4 @@
-// -- Module: sanitationandhygine
-// CREATE TABLE IF NOT EXISTS mp.hh_sanitationandhygine (
-//     household_id uuid PRIMARY KEY REFERENCES mp.household(household_id) ON DELETE CASCADE,
-//     sourceofwater text,
-//     sourceofwater_other_text text,
-//     type_of_toilet text,
-//     type_of_toilet_other_text text,
-//     causeofnotoilet text,
-//     handwash_facility text,
-//     updated_at timestamptz NOT NULL DEFAULT now()
-// );
+
 
 using System;
 using System.ComponentModel.DataAnnotations;
