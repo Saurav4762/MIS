@@ -12,4 +12,5 @@ public class Institute
 
   // Navigation properties
   public House House { get; set; } = null!;
+  public IEnumerable<HouseOwner>? HouseOwners { get; set; } = null;
 }

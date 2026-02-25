@@ -14,5 +14,8 @@ public class Person
     public string BloodGroup { get; set; } = string.Empty;
     public string Email { get; set; } = string.Empty;
     public string BirthPlace { get; set; } = string.Empty;
-    public DateTime DateOfBirth { get; set; } 
+    public DateTime DateOfBirth { get; set; }
+
+    // Navigation Property
+    public IEnumerable<HouseOwner>? HouseOwners { get; set; } = null;
 }

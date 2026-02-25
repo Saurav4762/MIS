@@ -9,26 +9,23 @@ public class HouseOwnerConfiguration : IEntityTypeConfiguration<HouseOwner>
     public void Configure(EntityTypeBuilder<HouseOwner> builder)
     {
         builder.ToTable("HouseOwners");
-        builder.HasKey(ho => new { ho.HouseId, ho.personId, ho.InstituteId });
+        builder.HasKey(ho => ho.HouseId);
 
-        builder.Property(ho => ho.other).HasMaxLength(500);
+        builder.Property(ho => ho.Other).HasMaxLength(500);
 
-        builder.HasOne<House>()
-            .WithMany()
-            .HasForeignKey(ho => ho.HouseId)
-            .HasConstraintName("FK_HouseOwners_Houses_HouseId")
+        builder.HasOne(ho => ho.House)
+            .WithOne(h => h.HouseOwner)
+            .HasForeignKey<HouseOwner>(ho => ho.HouseId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasOne<Person>()
-            .WithMany()
-            .HasForeignKey(ho => ho.personId)
-            .HasConstraintName("FK_HouseOwners_Persons_personId")
+        builder.HasOne<Person>(ho => ho.Person)
+            .WithMany(p => p.HouseOwners)
+            .HasForeignKey(ho => ho.OwnerId)
             .OnDelete(DeleteBehavior.Cascade);
 
-        builder.HasOne<Institute>()
-            .WithMany()
+        builder.HasOne<Institute>(ho => ho.Institute)
+            .WithMany(i => i.HouseOwners)
             .HasForeignKey(ho => ho.InstituteId)
-            .HasConstraintName("FK_HouseOwners_Institutes_InstituteId")
             .OnDelete(DeleteBehavior.Cascade);
     }
     
