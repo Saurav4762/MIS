@@ -11,4 +11,6 @@ public class AppUserRole
     // Navigation properties
     public AppUser? AppUser { get; set; }
     public AppRole? AppRole { get; set; }
+    
+
 }

@@ -16,5 +16,9 @@ namespace MIS.API.Models
 
         public ICollection<Submission> Submissions { get; set; } = new List<Submission>();
 
+        public ICollection<AppUserRole> AppUserRoles { get; set; } 
+        = new List<AppUserRole>();
+
+        
     }
 }

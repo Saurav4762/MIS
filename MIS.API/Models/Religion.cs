@@ -10,4 +10,6 @@ public class Religion
     public string Name { get; set; } = null!;
     
     // Navigation properties
+    
+    public IEnumerable<Family> Families { get; set; }
 }
