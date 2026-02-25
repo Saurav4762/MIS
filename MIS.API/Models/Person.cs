@@ -12,4 +12,9 @@ public class Person
     public string Email { get; set; } = string.Empty;
     public string BirthPlace { get; set; } = string.Empty;
     public DateTime DateOfBirth { get; set; } 
+
+    //Navigaton property
+    public Education Education {get;set;}
+    public IEnumerable<Education>? Educations { get; set; }
+    = new List<Education>();
 }

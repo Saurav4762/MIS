@@ -10,4 +10,7 @@ public class AppRole
 
     public string RoleCode { get; set; } = null!;
     public string RoleName { get; set; } = null!;
+
+    public ICollection<AppUserRole> AppUserRoles { get; set; }
+     = new List<AppUserRole>();
 }
