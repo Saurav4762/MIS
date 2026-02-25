@@ -8,7 +8,7 @@ public class OptionItemConfiguration : IEntityTypeConfiguration<OptionItem>
 {
   public void Configure(EntityTypeBuilder<OptionItem> entity)
   {
-    entity.HasKey(e => e.OptionList);
+    entity.HasKey(e => e.Id);
 
     entity.Property(e => e.LabelEn).IsRequired().HasMaxLength(200);
     entity.Property(e => e.LabelNe).IsRequired().HasMaxLength(200);
