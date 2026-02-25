@@ -2,20 +2,19 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using MIS.API.Models;
 
-namespace MIS.API.Data.Configurations;
+namespace Mis.API.Models;
 
-public class WardConfiguration : IEntityTypeConfiguration<Ward>
+public class wardConfiguration : IEntityTypeConfiguration<Ward>
 {
-    public void Configure(EntityTypeBuilder<Ward> builder)
+    public void Configure(EntityTypeBuilder<Ward> entity)
     {
-        builder.HasKey(w => w.Id);
-        builder.HasIndex(w => new { w.MunicipalityId, w.Code }).IsUnique();
-        builder.Property(w => w.Code).IsRequired();
-        builder.Property(w => w.Name).IsRequired();
+        entity.HasKey(e => e.Id);
+        entity.Property(e => e.Name).IsRequired();
 
-        builder.HasOne(W => W.Municipality)
+        entity.HasOne(m => m.Municipality)
             .WithMany(m => m.Wards)
-            .HasForeignKey(W => W.MunicipalityId)
-            .OnDelete(DeleteBehavior.Cascade);
+            .HasForeignKey(m => m.MunicipalityId);
+
     }
-}
+
+} 
