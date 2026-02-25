@@ -18,8 +18,7 @@ public class Person
 
     // Navigation Property
     public IEnumerable<HouseOwner>? HouseOwners { get; set; } = null;
+    public IEnumerable<Education>? Educations { get; set; } = [];
+    public Family? Family { get; set; } = null;
 
-    //Navigaton property
-    public IEnumerable<Education>? Educations { get; set; }
-    = [];
 }

@@ -10,12 +10,12 @@ public class Family
 
     public Guid EthnicityId { get; set; }
     public Guid ReligionId { get; set; }
-    
+
     //Navigation Property
-    public Ethnicity Ethnicity { get; set; }
-    
-    public Religion Religion { get; set; }
-    
-    public Person HeadOfTheFamily { get; set; }
+    public Ethnicity? Ethnicity { get; set; } = null;
+
+    public Religion? Religion { get; set; } = null;
+
+    public Person? HeadOfTheFamily { get; set; } = null;
     
 }

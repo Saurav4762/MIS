@@ -4,27 +4,24 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace MIS.API.Models;
 
-public class FamilyConfiguration  : IEntityTypeConfiguration<Family>
+public class FamilyConfiguration : IEntityTypeConfiguration<Family>
 {
     public void Configure(EntityTypeBuilder<Family> entity)
     {
-        entity.OwnsOne(e => e.Ethnicity);
-        entity.OwnsOne(e => e.Religion);
-        
-        entity.HasOne(e=>e.Ethnicity)
-            .WithMany(f=>f.Families)
-            .HasForeignKey(e => e.EthnicityId)
+        entity.HasOne<Ethnicity>(f => f.Ethnicity)
+            .WithMany(e => e.Families)
+            .HasForeignKey(f => f.EthnicityId)
             .OnDelete(DeleteBehavior.Cascade);
-        
-        entity.HasOne(e => e.Religion)
-            .WithMany(f=>f.Families)
-            .HasForeignKey(e => e.ReligionId)
+
+        entity.HasOne<Religion>(f => f.Religion)
+            .WithMany(r => r.Families)
+            .HasForeignKey(f => f.ReligionId)
             .OnDelete(DeleteBehavior.Cascade);
-        
-        entity.HasOne(f=>f.HeadOfTheFamily)
-            .WithMany()
-            .HasForeignKey(f=>f.HeadOfTheFamilyId)
+
+        entity.HasOne(f => f.HeadOfTheFamily)
+            .WithOne(p => p.Family)
+            .HasForeignKey<Family>(f => f.HeadOfTheFamilyId)
             .OnDelete(DeleteBehavior.Cascade);
-        
+
     }
 }

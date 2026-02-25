@@ -14,6 +14,6 @@ public class Education
   public string BoardOrUniversity { get; set; } = null!;
 
   //Navigation property 
-  public Person Person {get; set;}
+  public Person Person { get; set; } = null!;
 
 }

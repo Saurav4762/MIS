@@ -8,10 +8,6 @@ public class EthnicityConfiguration : IEntityTypeConfiguration<Ethnicity>
 {
     public void Configure(EntityTypeBuilder<Ethnicity> entity)
     {
-        entity.HasIndex(e=>e.Name)
-            .IsUnique();
         
-       
-            
     }
 }

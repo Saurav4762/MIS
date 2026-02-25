@@ -19,6 +19,9 @@ public class OptionItemConfiguration : IEntityTypeConfiguration<OptionItem>
           .HasForeignKey(e => e.OptionListId)
           .OnDelete(DeleteBehavior.Cascade);
 
+    entity.Property(e => e.Extra)
+          .HasColumnType("jsonb");
+
 
   }
 }
