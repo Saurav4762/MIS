@@ -1,0 +1,16 @@
+using System.ComponentModel.DataAnnotations;
+
+namespace MIS.API.Models;
+
+public class Education
+{
+  [Key]
+  public Guid Id { get; set; }
+  public Guid PersonId { get; set; }
+  public string Program { get; set; } = null!;
+  public DateTime StartYear { get; set; }
+  public DateTime EndYear { get; set; }
+  public int GradeOrGPA { get; set; }
+  public string BoardOrUniversity { get; set; } = null!;
+
+}
