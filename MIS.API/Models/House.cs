@@ -2,20 +2,6 @@ using System.ComponentModel.DataAnnotations;
 using NetTopologySuite.Geometries;
 
 namespace MIS.API.Models;
-//  House {
-//         Guid Id PK
-//         String HouseNumber UK
-//         Point Location
-//         String HouseType
-//         String LandType
-//         String RoofType
-//         String WallType
-//         String Image
-//         String Purpose
-//         DateTime BuidYear
-//         DateTime UpdatedAt
-//     }
-
 public class House
 {
     [Key]
@@ -30,9 +16,9 @@ public class House
     public string Purpose { get; set; } = null!;
     public DateTime BuildYear { get; set; }
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
-    
+
     // Navigation properties
-    
+    public Institute? Institute { get; set; } = null; 
 
 
 }
