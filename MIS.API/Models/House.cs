@@ -6,6 +6,7 @@ public class House
 {
     [Key]
     public Guid Id { get; set; }
+    public Guid ToleId { get; set; }
     public string HouseNumber { get; set; } = null!;
     public Point Location { get; set; } = null!;    
     public string HouseType { get; set; } = null!;
@@ -19,6 +20,6 @@ public class House
 
     // Navigation properties
     public Institute? Institute { get; set; } = null; 
-
-
+    public Tole Tole { get; set; } = null!;
+    public HouseOwner HouseOwner { get; set; } = null!;
 }

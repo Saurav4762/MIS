@@ -22,6 +22,7 @@ public class AppDbContext : DbContext
     public DbSet<Submission> Submissions => Set<Submission>();
 
     public DbSet<Tole> Toles => Set<Tole>();
+    public DbSet<House> Houses => Set<House>();
     public DbSet<Ward> Wards => Set<Ward>();
     public DbSet<Municipality> Municipalities => Set<Municipality>();
     
@@ -29,5 +30,6 @@ public class AppDbContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         base.OnModelCreating(modelBuilder);
+        modelBuilder.ApplyConfigurationsFromAssembly(typeof(AppDbContext).Assembly);
     }
 }
