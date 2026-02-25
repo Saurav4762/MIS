@@ -20,6 +20,7 @@ public class House
 {
     [Key]
     public Guid Id { get; set; }
+    public Guid ToleId { get; set; }
     public string HouseNumber { get; set; } = null!;
     public Point Location { get; set; } = null!;    
     public string HouseType { get; set; } = null!;
@@ -32,7 +33,5 @@ public class House
     public DateTime UpdatedAt { get; set; } = DateTime.UtcNow;
     
     // Navigation properties
-    
-
-
+    public Tole Tole { get; set; } = null!;
 }
