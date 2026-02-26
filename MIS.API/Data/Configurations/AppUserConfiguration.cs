@@ -22,6 +22,7 @@ public class AppUserConfiguration : IEntityTypeConfiguration<AppUser>
         //Reltionship :Appuser -> AppUserRole
         entity.HasMany(u=> u.AppUserRoles)
         .WithOne(ur => ur.AppUser)
-        .HasForeignKey(ur => ur.AppUserId);   
+        .HasForeignKey(ur => ur.AppUserId)
+        .;   
     }
 }
