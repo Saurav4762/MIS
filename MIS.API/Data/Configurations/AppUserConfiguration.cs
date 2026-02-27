@@ -23,6 +23,6 @@ public class AppUserConfiguration : IEntityTypeConfiguration<AppUser>
         entity.HasMany(u=> u.AppUserRoles)
         .WithOne(ur => ur.AppUser)
         .HasForeignKey(ur => ur.AppUserId)
-        .;   
+        .OnDelete(DeleteBehavior.Cascade);   
     }
 }
