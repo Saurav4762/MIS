@@ -64,11 +64,21 @@ public class ReligionController : ControllerBase
         {
             _logger.LogInformation("Creating new religion");
             var newReligion = await _religionRepo.AddReligionAsync(dto);
-            return Ok(new { message = "Religion added successfully", data = newReligion });
+            return CreatedAtAction(nameof(GetReligions), //Name of the action to retrive the resource
+                new { id = newReligion.Id }, //Route values
+                newReligion); //The object to return in the response delay.
+        }
+        catch (ArgumentException ex)
+        {
+            _logger.LogWarning(ex, "Invalid data provided for creating religion");
+            return BadRequest(ex.Message);
         }
         catch (Exception e)
         {
-            return BadRequest(e.Message);
+            //Internal server error for unexpected reasons 
+            _logger.LogError(e, "Error occured while creating new religion");
+            return StatusCode(500, new { message = "An error occured while creating religion." });
+
         }
     }
 
@@ -82,6 +92,11 @@ public class ReligionController : ControllerBase
             var updatedReligion = await _religionRepo.UpdateReligionAsync(id, dto);
             return Ok(new { message = "Religion updated successfully", data = updatedReligion });
         }
+        catch (KeyNotFoundException e)
+        {
+            return NotFound(e.Message);
+        }
+        
         catch (Exception e)
         {
             return BadRequest(e.Message);
@@ -99,9 +114,14 @@ public class ReligionController : ControllerBase
             return Ok(new { message = "Religion deleted successfully" });
 
         }
+
+        catch (KeyNotFoundException)
+        {
+            return NotFound(new { message = "Religion not found" });
+        }
         catch (Exception e)
         {
-           return BadRequest(e.Message);
+           return BadRequest(new {message = e.Message});
         }
         
     }
