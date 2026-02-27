@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using MIS.API.Data;
+using MIS.API.Repositories;
+using MIS.API.Repositories.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
+builder.Services.AddScoped<IOptionList, OptionListRepository>();
 
 
 builder.Services.AddDbContext<AppDbContext>(options =>
