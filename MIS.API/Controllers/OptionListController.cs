@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using MIS.API.DTOs;
 using MIS.API.Repositories.Interfaces;
 
 namespace MIS.API.Controllers;
@@ -11,12 +12,19 @@ public class OptionListController(IOptionList optionListRepository) : Controller
   private readonly IOptionList _optionListRepository = optionListRepository;
 
   [HttpPost]
-  public async Task<IActionResult> CreateOptionList(string code, string nameEn, string nameNe, string description)
+  public async Task<IActionResult> CreateOptionList([FromBody] OptionListRequest request)
   {
     try
     {
-      var optionList = await _optionListRepository.CreateOptionListAsync(code, nameEn, nameNe, description);
-      return CreatedAtAction(nameof(GetOptionListById), new { id = optionList.Id }, optionList);
+      var optionList = await _optionListRepository.CreateOptionListAsync(request.Code, request.LabelEn, request.LabelNe, request.Description);
+      var response = new OptionListResponse
+      {
+        Code = optionList.Code,
+        LabelEn = optionList.LabelEn,
+        LabelNe = optionList.LabelNe,
+        Description = optionList.Description
+      };
+      return CreatedAtAction(nameof(GetOptionListById), new { id = optionList.Id }, response);
     }
     catch (Exception ex)
     {
@@ -30,7 +38,14 @@ public class OptionListController(IOptionList optionListRepository) : Controller
     try
     {
       var optionList = await _optionListRepository.GetOptionListByIdAsync(id);
-      return Ok(optionList);
+      OptionListResponse response = new OptionListResponse
+      {
+        Code = optionList.Code,
+        LabelEn = optionList.LabelEn,
+        LabelNe = optionList.LabelNe,
+        Description = optionList.Description
+      };
+      return Ok(response);
     }
     catch (KeyNotFoundException ex)
     {
@@ -43,12 +58,19 @@ public class OptionListController(IOptionList optionListRepository) : Controller
   }
 
   [HttpPut("{id}")]
-  public async Task<IActionResult> UpdateOptionList(Guid id, string nameEn, string nameNe, string description)
+  public async Task<IActionResult> UpdateOptionList(Guid id, [FromBody] OptionListRequest request)
   {
     try
     {
-      var updatedOptionList = await _optionListRepository.UpdateOptionListAsync(id, nameEn, nameNe, description);
-      return Ok(updatedOptionList);
+      var updatedOptionList = await _optionListRepository.UpdateOptionListAsync(id, request.LabelEn, request.LabelNe, request.Description);
+      OptionListResponse response = new OptionListResponse
+      {
+        Code = updatedOptionList.Code,
+        LabelEn = updatedOptionList.LabelEn,
+        LabelNe = updatedOptionList.LabelNe,
+        Description = updatedOptionList.Description
+      };
+      return Ok(response);
     }
     catch (KeyNotFoundException ex)
     {
