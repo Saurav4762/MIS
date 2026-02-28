@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using MIS.API.Data;
 using MIS.API.Dtos;
 using MIS.API.Models;
+using MIS.API.Repositories.Interfaces;
 
 namespace MIS.API.Repositories;
 
