@@ -1,7 +1,7 @@
 using MIS.API.Dtos;
 using MIS.API.Models;
 
-namespace MIS.API.Repositories;
+namespace MIS.API.Repositories.Interfaces;
 
 public interface IReligionRepo
 {
