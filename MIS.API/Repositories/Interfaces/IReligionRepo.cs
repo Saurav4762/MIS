@@ -9,9 +9,9 @@ public interface IReligionRepo
 
     Task<List<Religion>> GetReligionsAsync();
     
-    Task<Religion> AddReligionAsync(ReligionRequestDto dtos);
+    Task<Religion> AddReligionAsync(string nameEn, string nameNe);
     
-    Task<Religion> UpdateReligionAsync(Guid id, ReligionRequestDto religion);
+    Task<Religion> UpdateReligionAsync(Guid id, string nameEn, string nameNe  );
     
     Task DeleteReligionAsync(Guid id);
 }
