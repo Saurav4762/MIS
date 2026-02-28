@@ -1,37 +1,30 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using MIS.API.Data;
 using MIS.API.Dtos;
 using MIS.API.Models;
 using MIS.API.Repositories.Interfaces;
+using Npgsql.Internal;
 
 namespace MIS.API.Repositories;
 
-public class ReligionRepo : IReligionRepo
+public class ReligionRepo(AppDbContext context) : IReligionRepo
 {
-    private readonly AppDbContext _context;
+    private readonly AppDbContext _context = context;
 
-    public ReligionRepo(AppDbContext context)
-    {
-        _context = context;
-    }
-
+    
     // GET BY ID
-    public async Task<Religion> GetReligionByIdAsync(Guid id)
+    public Task<Religion> GetReligionByIdAsync(Guid id)
     {
-        var religion = await _context.Religions
-            .Where(r => r.Id == id)
-            .Select(r => new Religion
-            {
-                Id = r.Id,
-                NameEn = r.NameEn,
-                NameNe = r.NameNe
-            })
-            .FirstOrDefaultAsync();
+        var religion =  _context.Religions.FirstOrDefault(x=>x.Id == id);
 
-        if (religion == null)
-            throw new Exception("Religion not found");
+        if(religion !=null)
+        {
+            return Task.FromResult(religion);
+        }
 
-        return religion;
+        throw new KeyNotFoundException($"Religion with id{id} not found.");
+
     }
 
     // GET ALL
@@ -45,22 +38,24 @@ public class ReligionRepo : IReligionRepo
                 NameNe = r.NameNe
             })
             .ToListAsync();
+
+        throw new KeyNotFoundException($"Religion not found");
     }
     
     //ADD
-    public async Task<Religion> AddReligionAsync(ReligionRequestDto dtos)
+    public async Task<Religion> AddReligionAsync(string nameEn, string nameNe)
     {
-        if (string.IsNullOrWhiteSpace(dtos.NameEn))
-            throw new Exception("Religion name (EN) is required");
+        if (string.IsNullOrWhiteSpace(nameEn))
+            throw new KeyNotFoundException($"Religion name (EN) is required");
 
-        if (string.IsNullOrWhiteSpace(dtos.NameNe))
-            throw new Exception("Religion name (NE) is required");
+        if (string.IsNullOrWhiteSpace(nameNe))
+            throw new Exception($"Religion name (NE) is required");
 
         var newReligion = new Religion
         {
             Id = Guid.NewGuid(),
-            NameEn = dtos.NameEn,
-            NameNe = dtos.NameNe
+            NameEn = nameEn,
+            NameNe = nameNe
         };
 
         await _context.Religions.AddAsync(newReligion);
@@ -72,18 +67,23 @@ public class ReligionRepo : IReligionRepo
    
 
     // UPDATE
-    public async Task<Religion> UpdateReligionAsync(Guid id, ReligionRequestDto religion)
+    public  Task<Religion> UpdateReligionAsync(Guid id, string nameEn, string nameNe)
     {
-        var existingReligion = await _context.Religions.FindAsync(id);
+        var ExistingReligion =  _context.Religions.FirstOrDefault(x=>x.Id ==id);
 
-        if (existingReligion == null)
-            throw new Exception("Religion not found");
+        if (ExistingReligion != null)
+        {
+            if(!string.IsNullOrEmpty(nameEn))
+            ExistingReligion.NameEn = nameEn;
 
-        existingReligion.NameEn = religion.NameEn;
-        existingReligion.NameNe = religion.NameNe;
+              if(!string.IsNullOrEmpty(nameNe))
+            ExistingReligion.NameNe = nameNe;
 
-        await _context.SaveChangesAsync();
-        return existingReligion;
+            _context.SaveChanges();
+            return Task.FromResult(ExistingReligion);
+        }
+
+        throw new KeyNotFoundException($"Religion with id{id} not found.");
     }
 
     // DELETE
@@ -92,7 +92,7 @@ public class ReligionRepo : IReligionRepo
         var religion = await _context.Religions.FindAsync(id);
 
         if (religion == null)
-            throw new Exception("Religion not found");
+            throw new KeyNotFoundException($"Religion not found");
 
         _context.Religions.Remove(religion);
         await _context.SaveChangesAsync();
