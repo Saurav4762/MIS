@@ -12,16 +12,16 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
+
 builder.Services.AddScoped<IOptionList, OptionListRepository>();
-
 builder.Services.AddScoped<IReligionRepo, ReligionRepo>();
-
+builder.Services.AddScoped<IEthnicityRepo, EthnicityRepo>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(
         builder.Configuration.GetConnectionString("DefaultConnection"), npgsql => npgsql.UseNetTopologySuite()
     ));
-builder.Services.AddScoped<IEthnicityRepo, EthnicityRepo>();
+
 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>

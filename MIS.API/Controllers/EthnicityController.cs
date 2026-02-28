@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using MIS.API.DTOs;
 using MIS.API.Models;
 using MIS.API.Repositories.Interfaces;
 
@@ -15,12 +16,17 @@ public class EthnicityController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateEthnicity(string nameEn , string nameNe)
+    public async Task<IActionResult> CreateEthnicity([FromBody] EthnicityRequest request)
     {
         try
         {
-            var ethnicity = await _ethnicityRepo.CreateEthnicity(nameEn, nameNe);
-            return CreatedAtAction(nameof(GetById), new { id = ethnicity.Id }, ethnicity);
+            var ethnicity = await _ethnicityRepo.CreateEthnicity(request.NameEn, request.NameNe);
+            var response = new EthnicityResponse
+            {
+                NameNe = ethnicity.NameNe,
+                NameEn = ethnicity.NameEn,
+            };
+            return CreatedAtAction(nameof(GetById), new { id = ethnicity.Id }, response);
         }
         catch (Exception e)
         {
@@ -35,7 +41,12 @@ public class EthnicityController : ControllerBase
             try
             {
                 var ethnicity = await _ethnicityRepo.GetById(id);
-                return Ok(ethnicity);
+                var response = new EthnicityResponse
+                {
+                    NameNe = ethnicity.NameNe,
+                    NameEn = ethnicity.NameEn,
+                };
+                return Ok(response);
             }
             catch (Exception e)
             {
@@ -45,12 +56,17 @@ public class EthnicityController : ControllerBase
         }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> UpdateEthnicity(Guid id,string nameEn, string nameNe)
+    public async Task<IActionResult> UpdateEthnicity(Guid id,  EthnicityRequest request)
     {
         try
         {
-            var ethnicity = await _ethnicityRepo.UpdateEthnicity(id, nameEn, nameNe);
-            return Ok(new {message ="updated sucessfully",data = ethnicity});
+            var ethnicity = await _ethnicityRepo.UpdateEthnicity(id, request.NameEn, request.NameNe);
+            var response = new EthnicityResponse
+            {
+                NameNe = ethnicity.NameNe,
+                NameEn = ethnicity.NameEn,
+            };
+            return Ok(response);
         }
         catch (Exception e)
         {

@@ -38,7 +38,7 @@ public class OptionListController(IOptionList optionListRepository) : Controller
     try
     {
       var optionList = await _optionListRepository.GetOptionListByIdAsync(id);
-      OptionListResponse response = new OptionListResponse
+      var response =new OptionListResponse
       {
         Code = optionList.Code,
         LabelEn = optionList.LabelEn,
@@ -63,7 +63,9 @@ public class OptionListController(IOptionList optionListRepository) : Controller
     try
     {
       var updatedOptionList = await _optionListRepository.UpdateOptionListAsync(id, request.LabelEn, request.LabelNe, request.Description);
-      OptionListResponse response = new OptionListResponse
+      
+      
+      var response = new OptionListResponse
       {
         Code = updatedOptionList.Code,
         LabelEn = updatedOptionList.LabelEn,
