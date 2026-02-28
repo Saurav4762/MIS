@@ -53,15 +53,19 @@ public class ReligionController(IReligionRepo religionRepo) : ControllerBase
 
     // POST: api/religion
     [HttpPost]
-    public async Task<IActionResult> PostReligion(ReligionRequestDto dto )
+    public async Task<IActionResult> CreateReligion(ReligionRequest dto )
     {
         try
         {
            
-            var newReligion = await _religionRepo.AddReligionAsync(Request.dto);
-            return CreatedAtAction(nameof(GetReligions), //Name of the action to retrive the resource
-                new { id = newReligion.Id }, //Route values
-                newReligion); //The object to return in the response delay.
+            var religion = await _religionRepo.AddReligionAsync(dto.NameEn, dto.NameNe);
+           var respone = new ReligionResponse
+           {
+             NameEn = religion.NameEn,
+             NameNe = religion.NameNe  
+           };
+
+           return CreatedAtAction(nameof(GetReligionById),new { id = religion.Id});
         }
         catch (ArgumentException ex)
         {
@@ -79,12 +83,17 @@ public class ReligionController(IReligionRepo religionRepo) : ControllerBase
 
     // PUT: api/religion/{id}
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutReligion(Guid id, ReligionRequestDto dto)
+    public async Task<IActionResult> PutReligion(Guid id, ReligionRequest dto)
     {
         try
         {
            
-            var updatedReligion = await _religionRepo.UpdateReligionAsync(id, dto);
+            var updatedReligion = await _religionRepo.UpdateReligionAsync(id, dto.NameEn,dto.NameNe);
+            ReligionResponse response = new ReligionResponse
+            {
+                NameEn = updatedReligion.NameEn,
+                NameNe = updatedReligion.NameNe
+            };
             return Ok(new { message = "Religion updated successfully", data = updatedReligion });
         }
         catch (KeyNotFoundException e)
