@@ -21,6 +21,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(
         builder.Configuration.GetConnectionString("DefaultConnection"), npgsql => npgsql.UseNetTopologySuite()
     ));
+builder.Services.AddScoped<IEthnicityRepo, EthnicityRepo>();
 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
