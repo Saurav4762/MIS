@@ -12,13 +12,27 @@ using MIS.API.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
+
+// Add services to the container.
+// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+// builder.Services.AddOpenApi();
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+builder.Services.AddControllers();
+
+builder.Services.AddScoped<IOptionList, OptionListRepository>();
+builder.Services.AddScoped<IReligionRepo, ReligionRepo>();
+builder.Services.AddScoped<IEthnicityRepo, EthnicityRepo>();
+
+
 // Add DbContext
+
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(
         builder.Configuration.GetConnectionString("DefaultConnection"),
         npgsql => npgsql.UseNetTopologySuite()
     ));
-builder.Services.AddScoped<IEthnicityRepo, EthnicityRepo>();
+
 
 // Add controllers with JSON options to avoid cycles
 builder.Services.AddControllers()
