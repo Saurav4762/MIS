@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using MIS.API.Data;
+using MIS.API.Repositories;
+using MIS.API.Repositories.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +17,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(
         builder.Configuration.GetConnectionString("DefaultConnection"), npgsql => npgsql.UseNetTopologySuite()
     ));
+builder.Services.AddScoped<IEthnicityRepo, EthnicityRepo>();
 
 var app = builder.Build();
 
