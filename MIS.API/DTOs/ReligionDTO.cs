@@ -3,7 +3,7 @@ using Mis.API.Models;
 namespace MIS.API.Dtos;
 
 
-public class ReligionRequestDto
+public class ReligionRequest
 {
     public string NameEn { get; set; }
     
@@ -11,7 +11,7 @@ public class ReligionRequestDto
     
 }
 
-public class ReligionResponseDto
+public class ReligionResponse
 {
     public Guid Id { get; set; }
     

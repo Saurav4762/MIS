@@ -2,21 +2,17 @@ using Microsoft.AspNetCore.Mvc;
 using MIS.API.Dtos;
 using MIS.API.Models;
 using MIS.API.Repositories;
+using MIS.API.Repositories.Interfaces;
 
 namespace MIS.API.Controllers;
 
 [Route("api/[controller]")]
 [ApiController]
-public class ReligionController : ControllerBase
+public class ReligionController(IReligionRepo religionRepo) : ControllerBase
 {
-    private readonly IReligionRepo _religionRepo;
-    private readonly ILogger<ReligionController> _logger;
+    private readonly IReligionRepo _religionRepo = religionRepo;
 
-    public ReligionController(IReligionRepo religionRepo, ILogger<ReligionController> logger)
-    {
-        _religionRepo = religionRepo;
-        _logger = logger;
-    }
+
 
     // GET: api/religion
     [HttpGet]
@@ -24,7 +20,6 @@ public class ReligionController : ControllerBase
     {
         try
         {
-            _logger.LogInformation("Getting all religions");
             var religions = await _religionRepo.GetReligionsAsync();
             return Ok(new { message = "Religions retrieved successfully", data = religions });
 
@@ -42,7 +37,7 @@ public class ReligionController : ControllerBase
     {
         try
         {
-            _logger.LogInformation("Getting religion by id {Id}", id);
+           
             var religion = await _religionRepo.GetReligionByIdAsync(id);
 
             if (religion == null)
@@ -62,21 +57,21 @@ public class ReligionController : ControllerBase
     {
         try
         {
-            _logger.LogInformation("Creating new religion");
-            var newReligion = await _religionRepo.AddReligionAsync(dto);
+           
+            var newReligion = await _religionRepo.AddReligionAsync(Request.dto);
             return CreatedAtAction(nameof(GetReligions), //Name of the action to retrive the resource
                 new { id = newReligion.Id }, //Route values
                 newReligion); //The object to return in the response delay.
         }
         catch (ArgumentException ex)
         {
-            _logger.LogWarning(ex, "Invalid data provided for creating religion");
+           
             return BadRequest(ex.Message);
         }
         catch (Exception e)
         {
             //Internal server error for unexpected reasons 
-            _logger.LogError(e, "Error occured while creating new religion");
+           
             return StatusCode(500, new { message = "An error occured while creating religion." });
 
         }
@@ -88,7 +83,7 @@ public class ReligionController : ControllerBase
     {
         try
         {
-            _logger.LogInformation("Updating religion {Id}", id);
+           
             var updatedReligion = await _religionRepo.UpdateReligionAsync(id, dto);
             return Ok(new { message = "Religion updated successfully", data = updatedReligion });
         }
@@ -109,7 +104,7 @@ public class ReligionController : ControllerBase
     {
         try
         {
-            _logger.LogInformation("Deleting religion {Id}", id);
+           
             await _religionRepo.DeleteReligionAsync(id);
             return Ok(new { message = "Religion deleted successfully" });
 
