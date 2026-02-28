@@ -38,6 +38,7 @@ public class OptionListRepository(AppDbContext context) : IOptionList
     public Task<OptionList> GetOptionListByIdAsync(Guid id)
     {
         var optionList = _context.OptionLists.FirstOrDefault(x => x.Id == id);
+        // SELECT NAME , DESCRIPTION FROM OptionLists WHERE Id = id
         if (optionList != null)
         {
             return Task.FromResult(optionList);
@@ -48,6 +49,7 @@ public class OptionListRepository(AppDbContext context) : IOptionList
     public Task<OptionList> UpdateOptionListAsync(Guid id, string nameEn, string nameNe, string description)
     {
         var optionList = _context.OptionLists.FirstOrDefault(x => x.Id == id);
+        // select * from OptionLists where Id = id
         if (optionList != null)
         {
             if (!string.IsNullOrEmpty(nameEn))
