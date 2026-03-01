@@ -1,6 +1,7 @@
 namespace MIS.API.Repositories;
 
 using MIS.API.Data;
+using MIS.API.Exceptions;
 using MIS.API.Models;
 using MIS.API.Repositories.Interfaces;
 
@@ -22,29 +23,17 @@ public class OptionListRepository(AppDbContext context) : IOptionList
         _context.SaveChanges();
         return Task.FromResult(newOptionList);
     }
-
-    public Task DeleteOptionListAsync(Guid id)
-    {
-        var optionList = _context.OptionLists.FirstOrDefault(x => x.Id == id);
-        if (optionList != null)
-        {
-            _context.OptionLists.Remove(optionList);
-            _context.SaveChanges();
-            return Task.CompletedTask;
-        }
-        throw new KeyNotFoundException($"OptionList with id {id} not found.");
-    }
-
     public Task<OptionList> GetOptionListByIdAsync(Guid id)
     {
         var optionList = _context.OptionLists.FirstOrDefault(x => x.Id == id);
-        // SELECT NAME , DESCRIPTION FROM OptionLists WHERE Id = id
         if (optionList != null)
         {
             return Task.FromResult(optionList);
         }
-        throw new KeyNotFoundException($"OptionList with id {id} not found.");
+        throw new NotFoundException(nameof(OptionList), nameof(OptionItem.Id), id);
     }
+
+
 
     public Task<OptionList> UpdateOptionListAsync(Guid id, string nameEn, string nameNe, string description)
     {
@@ -61,6 +50,17 @@ public class OptionListRepository(AppDbContext context) : IOptionList
             _context.SaveChanges();
             return Task.FromResult(optionList);
         }
-        throw new KeyNotFoundException($"OptionList with id {id} not found.");
+        throw new NotFoundException(nameof(OptionList), nameof(OptionList.Id), id);
+    }
+    public Task DeleteOptionListAsync(Guid id)
+    {
+        var optionList = _context.OptionLists.FirstOrDefault(x => x.Id == id);
+        if (optionList != null)
+        {
+            _context.OptionLists.Remove(optionList);
+            _context.SaveChanges();
+            return Task.CompletedTask;
+        }
+        throw new NotFoundException(nameof(OptionList), nameof(OptionList.Id), id);
     }
 }
