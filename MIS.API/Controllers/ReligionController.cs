@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using MIS.API.Dtos;
 using MIS.API.Models;
 using MIS.API.Repositories;
+using MIS.API.Repositories.Interfaces;
 
 namespace MIS.API.Controllers;
 
