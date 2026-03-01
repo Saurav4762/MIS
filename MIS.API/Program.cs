@@ -9,6 +9,7 @@ using MIS.API.Models;
 using MIS.API.Repositories.Interfaces;
 using MIS.API.Repositories;
 using MIS.API.Services;
+using MIS.API.Exceptions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,6 +33,8 @@ builder.Services.AddDbContext<AppDbContext>(options =>
         builder.Configuration.GetConnectionString("DefaultConnection"),
         npgsql => npgsql.UseNetTopologySuite()
     ));
+
+builder.Services.AddTransient<GlobalExceptionHandler>();
 
 
 // Add controllers with JSON options to avoid cycles
@@ -73,6 +76,9 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
+app.UseMiddleware<GlobalExceptionHandler>();
+
+// Configure the HTTP request pipeline.
 // Swagger in Development
 if (app.Environment.IsDevelopment())
 {
