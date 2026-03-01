@@ -48,6 +48,7 @@ builder.Services.AddScoped<IReligionRepo, ReligionRepo>();
 builder.Services.AddScoped<IAppUserRepo, AppUserRepo>();
 builder.Services.AddScoped<PasswordHasher<AppUser>>();
 builder.Services.AddScoped<JwtService>();
+builder.Services.AddScoped<IAppRoleRepo, AppRoleRepo>();
 
 // Configure JWT authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
