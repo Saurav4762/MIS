@@ -1,4 +1,5 @@
 using System.Diagnostics;
+using System.Security.Permissions;
 
 namespace MIS.API.Responses;
 
@@ -8,11 +9,11 @@ public class ApiResponse<T>
   public bool Success { get; set; }
   public string Message { get; set; } = string.Empty;
   public T? Data { get; set; }
-  public List<ApiError>? Errors { get; set; }
+  public ApiError? Error { get; set; }
   public int StatusCode { get; set; }
   public DateTime Timestamp { get; set; } = DateTime.UtcNow;
 
-  public static ApiResponse<T> SuccessResponse(T data, string message = " Request successful", int statusCode = 200)
+  public static ApiResponse<T> SuccessResponse(T data, string message = "Request successful", int statusCode = 200)
   {
     return new ApiResponse<T>
     {
@@ -22,36 +23,26 @@ public class ApiResponse<T>
       StatusCode = statusCode
     };
   }
-  public static ApiResponse<T> FailResponse(string message, int statusCode = 400, List<ApiError>? errors = null)
-  {
-    return new ApiResponse<T>
-    {
-      Success = false,
-      Message = message,
-      Errors = errors,
-      StatusCode = statusCode
-    };
-  }
 
-  public static ApiResponse<T> FailResponse(string message, string errorCode, string errorDetail, string? field = null, int statusCode = 400)
+  public static ApiResponse<T> FailResponse(string message, ApiError? error = null, int statusCode = 400)
   {
     return new ApiResponse<T>
     {
       Success = false,
       Message = message,
       StatusCode = statusCode,
-      Errors = new List<ApiError> { new ApiError(errorCode, errorDetail, field) }
+      Error = error
     };
   }
 
-  public static ApiResponse<T> FailResponse(string message, string errorCode, string errorDetail, int statusCode = 400, string? field = null)
+  public static ApiResponse<T> FailResponse(string errorCode, string message, Dictionary<string, string[]>? details = null, int statusCode = 400)
   {
     return new ApiResponse<T>
     {
       Success = false,
       Message = message,
       StatusCode = statusCode,
-      Errors = new List<ApiError> { new ApiError(errorCode, errorDetail, field) }
+      Error = new ApiError(errorCode, message, details)
     };
   }
 

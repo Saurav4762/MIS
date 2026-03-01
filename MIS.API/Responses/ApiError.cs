@@ -4,12 +4,12 @@ public class ApiError
 {
   public string Code { get; set; } = string.Empty;
   public string Message { get; set; } = string.Empty;
-  public string? Field { get; set; }
+  public Dictionary<string, string[]>? Details { get; set; }
   public ApiError() { }
-  public ApiError(string code, string message, string? field = null)
+  public ApiError(string code, string message, Dictionary<string, string[]>? details = null)
   {
     Code = code;
     Message = message;
-    Field = field;
+    Details = details;
   }
 }
