@@ -3,3 +3,4 @@
 *.sql
 global.json
 mis.sln.DotSettings.user
+qodana.yaml

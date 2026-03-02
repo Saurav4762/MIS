@@ -81,10 +81,7 @@ public class EthnicityController : ControllerBase
         try
         {
             var ethnicity = await _ethnicityRepo.DeleteEthnicity(id);
-            if (ethnicity == null)
-            {
-                return NotFound();                    // 404 - standard REST response
-            }
+           
             return NoContent();
         }
         catch (Exception e)
