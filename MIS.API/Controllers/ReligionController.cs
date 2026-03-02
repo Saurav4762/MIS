@@ -1,8 +1,10 @@
+using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using MIS.API.Dtos;
 using MIS.API.Models;
 using MIS.API.Repositories;
 using MIS.API.Repositories.Interfaces;
+using MIS.API.Responses;
 
 namespace MIS.API.Controllers;
 
@@ -16,79 +18,41 @@ public class ReligionController(IReligionRepo religionRepo) : ControllerBase
 
     // GET: api/religion
     [HttpGet]
-    public async Task<IActionResult> GetReligions()
+    public async Task<IActionResult> GetAllReligion()
     {
-        try
-        {
-            var religions = await _religionRepo.GetReligionsAsync();
-            return Ok(new { message = "Religions retrieved successfully", data = religions });
-
-        }
-        catch (Exception e)
-        {
-            return BadRequest(e.Message);
-        }
-        
+        var religions = await _religionRepo.GetReligionsAsync();
+        return Ok(ApiResponse<List<Religion>>.SuccessResponse(religions));
     }
 
     // GET: api/religion/{id}
     [HttpGet("{id}")]
     public async Task<IActionResult> GetReligionById(Guid id)
     {
-        try
-        {
-           
-            var religion = await _religionRepo.GetReligionByIdAsync(id);
 
-            if (religion == null)
-                return NotFound(new { message = "Religion not found" });
-
-            return Ok(new { message = "Religion retrieved successfully", data = religion });
-        }
-        catch (Exception e)
-        {
-           return BadRequest(e.Message);
-        }
+        var religion = await _religionRepo.GetReligionByIdAsync(id);
+        return Ok(ApiResponse<Religion>.SuccessResponse(religion));
     }
 
     // POST: api/religion
     [HttpPost]
-    public async Task<IActionResult> CreateReligion(ReligionRequest dto )
+    public async Task<IActionResult> CreateReligion(ReligionRequest dto)
     {
-        try
-        {
-           
-            var religion = await _religionRepo.AddReligionAsync(dto.NameEn, dto.NameNe);
-           var respone = new ReligionResponse
-           {
-             NameEn = religion.NameEn,
-             NameNe = religion.NameNe  
-           };
 
-           return CreatedAtAction(nameof(GetReligionById),new { id = religion.Id});
-        }
-        catch (ArgumentException ex)
-        {
-           
-            return BadRequest(ex.Message);
-        }
-        catch (Exception e)
-        {
-            //Internal server error for unexpected reasons 
-           
-            return StatusCode(500, new { message = "An error occured while creating religion." });
+        var religion = await _religionRepo.AddReligionAsync(dto.NameEn, dto.NameNe);
 
-        }
+        return CreatedAtAction(
+            actionName: nameof(GetReligionById),
+            routeValues: new { id = religion.Id },
+            value: ApiResponse<Religion>.SuccessResponse(religion, "Religion created succesfully", statusCode: HttpStatusCode.Created));
     }
 
     // PUT: api/religion/{id}
     [HttpPut("{id}")]
-    public async Task<IActionResult> PutReligion(Guid id, ReligionRequest dto)
+    public async Task<IActionResult> UpdateReligion(Guid id, ReligionRequest dto)
     {
         try
         {
-           
-            var updatedReligion = await _religionRepo.UpdateReligionAsync(id, dto.NameEn,dto.NameNe);
+            var updatedReligion = await _religionRepo.UpdateReligionAsync(id, dto.NameEn, dto.NameNe);
             ReligionResponse response = new ReligionResponse
             {
                 NameEn = updatedReligion.NameEn,
@@ -100,7 +64,7 @@ public class ReligionController(IReligionRepo religionRepo) : ControllerBase
         {
             return NotFound(e.Message);
         }
-        
+
         catch (Exception e)
         {
             return BadRequest(e.Message);
@@ -113,7 +77,7 @@ public class ReligionController(IReligionRepo religionRepo) : ControllerBase
     {
         try
         {
-           
+
             await _religionRepo.DeleteReligionAsync(id);
             return Ok(new { message = "Religion deleted successfully" });
 
@@ -125,8 +89,8 @@ public class ReligionController(IReligionRepo religionRepo) : ControllerBase
         }
         catch (Exception e)
         {
-           return BadRequest(new {message = e.Message});
+            return BadRequest(new { message = e.Message });
         }
-        
+
     }
 }

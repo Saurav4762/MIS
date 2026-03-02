@@ -14,5 +14,5 @@ public class Religion
     
     // Navigation properties
     
-    public IEnumerable<Family> Families { get; set; }
+    public IEnumerable<Family>? Families { get; set; }
 }

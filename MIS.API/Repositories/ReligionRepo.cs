@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using MIS.API.Data;
 using MIS.API.Dtos;
+using MIS.API.Exceptions;
 using MIS.API.Models;
 using MIS.API.Repositories.Interfaces;
 using Npgsql.Internal;
@@ -12,44 +13,32 @@ public class ReligionRepo(AppDbContext context) : IReligionRepo
 {
     private readonly AppDbContext _context = context;
 
-    
+
     // GET BY ID
     public Task<Religion> GetReligionByIdAsync(Guid id)
     {
-        var religion =  _context.Religions.FirstOrDefault(x=>x.Id == id);
+        var religion = _context.Religions.FirstOrDefault(x => x.Id == id) ?? throw new NotFoundException(entity: nameof(Religion), key: nameof(Religion.Id), value: id);
 
-        if(religion !=null)
-        {
-            return Task.FromResult(religion);
-        }
-
-        throw new KeyNotFoundException($"Religion with id{id} not found.");
-
+        return Task.FromResult(religion);
     }
 
     // GET ALL
     public async Task<List<Religion>> GetReligionsAsync()
     {
-        return await _context.Religions
-            .Select(r => new Religion
-            {
-                Id = r.Id,
-                NameEn = r.NameEn,
-                NameNe = r.NameNe
-            })
-            .ToListAsync();
-
-        throw new KeyNotFoundException($"Religion not found");
+        return await _context.Religions.ToListAsync();
     }
-    
+
     //ADD
     public async Task<Religion> AddReligionAsync(string nameEn, string nameNe)
     {
+        var errors = new Dictionary<string, string[]>();
         if (string.IsNullOrWhiteSpace(nameEn))
-            throw new KeyNotFoundException($"Religion name (EN) is required");
+            errors.Add(nameof(Religion.NameEn), ["Field is required"]);
 
         if (string.IsNullOrWhiteSpace(nameNe))
-            throw new Exception($"Religion name (NE) is required");
+            errors.Add(nameof(Religion.NameNe), ["Field is required"]);
+
+        if (errors.Count > 0) throw new ValidationException(errors: errors);
 
         var newReligion = new Religion
         {
@@ -61,29 +50,27 @@ public class ReligionRepo(AppDbContext context) : IReligionRepo
         await _context.Religions.AddAsync(newReligion);
         await _context.SaveChangesAsync();
 
-        return newReligion; 
+        return newReligion;
     }
 
-   
+
 
     // UPDATE
-    public  Task<Religion> UpdateReligionAsync(Guid id, string nameEn, string nameNe)
+    public Task<Religion> UpdateReligionAsync(Guid id, string nameEn, string nameNe)
     {
-        var ExistingReligion =  _context.Religions.FirstOrDefault(x=>x.Id ==id);
+        var ExistingReligion = _context.Religions.FirstOrDefault(x => x.Id == id);
 
-        if (ExistingReligion != null)
-        {
-            if(!string.IsNullOrEmpty(nameEn))
+        if (ExistingReligion == null)
+            throw new NotFoundException(entity: nameof(Religion), key: nameof(Religion.Id), value: id);
+
+        if (!string.IsNullOrEmpty(nameEn))
             ExistingReligion.NameEn = nameEn;
 
-              if(!string.IsNullOrEmpty(nameNe))
+        if (!string.IsNullOrEmpty(nameNe))
             ExistingReligion.NameNe = nameNe;
 
-            _context.SaveChanges();
-            return Task.FromResult(ExistingReligion);
-        }
-
-        throw new KeyNotFoundException($"Religion with id{id} not found.");
+        _context.SaveChanges();
+        return Task.FromResult(ExistingReligion);
     }
 
     // DELETE
