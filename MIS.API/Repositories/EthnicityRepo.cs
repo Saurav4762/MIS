@@ -39,7 +39,7 @@ public class EthnicityRepo : IEthnicityRepo
     
     public async Task<Ethnicity> UpdateEthnicity(Guid id, string nameEn , string nameNe)
     {
-        var ethnicity = await _context.Ethnicities.FirstOrDefaultAsync(X =>X.Id == id);
+        var ethnicity = await _context.Ethnicities.FirstOrDefaultAsync(x =>x.Id == id);
         if (ethnicity == null)
         {
             throw new KeyNotFoundException($"Ethnicity with id {id} not found");
