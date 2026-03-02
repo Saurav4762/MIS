@@ -1,3 +1,4 @@
+using System.Net;
 using System.Text.Json;
 using MIS.API.Responses;
 
@@ -54,7 +55,7 @@ public class GlobalExceptionHandler : IMiddleware
 
   private ApiResponse<object> HandleBaseException(HttpContext context, BaseException exception)
   {
-    context.Response.StatusCode = exception.StatusCode;
+    context.Response.StatusCode = (int)exception.StatusCode;
 
     var response = ApiResponse<object>.FailResponse(exception.ErrorCode, exception.Message, exception.Details, exception.StatusCode);
 
@@ -63,7 +64,7 @@ public class GlobalExceptionHandler : IMiddleware
 
   private ApiResponse<object> HandleUnknownException(HttpContext context, Exception exception)
   {
-    context.Response.StatusCode = 500;
+    context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
     var response = ApiResponse<object>.FailResponse("INTERNAL_ERROR", exception.Message);
     return response;
   }

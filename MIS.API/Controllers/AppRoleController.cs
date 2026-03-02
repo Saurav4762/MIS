@@ -1,16 +1,19 @@
+using System.Net;
 using Microsoft.AspNetCore.Mvc;
 using MIS.API.DTOs;
 using MIS.API.Models;
 using MIS.API.Repositories.Interfaces;
 using MIS.API.Responses;
+using static MIS.API.DTOs.AppRoleDTO;
 
 namespace MIS.API.Controllers;
+
 [ApiController]
 [Route("api/[controller]")]
-public class AppRoleController(IAppRoleRepo context) :ControllerBase
+public class AppRoleController(IAppRoleRepo context) : ControllerBase
 {
     private readonly IAppRoleRepo _repo = context;
-    
+
     //Create role
     [HttpPost]
     public async Task<IActionResult> CreateRole(AppRoleDTO.CreateRoleDto dto)
@@ -32,78 +35,43 @@ public class AppRoleController(IAppRoleRepo context) :ControllerBase
             RoleCode = created.RoleCode
         };
 
-        return Ok(
+        return CreatedAtAction(
+            actionName: nameof(GetRoleById),
+            routeValues: response.Id,
             ApiResponse<object>.SuccessResponse(
-                null,
+                response,
                 "Role created sucessfully",
-                200
-                ));
+                HttpStatusCode.Created
+            ));
 
     }
-    
+
     //GET ROLE BY ID
     [HttpGet("{id}")]
     public async Task<IActionResult> GetRoleById(Guid id)
     {
         var role = await _repo.GetRoleById(id);
-        if (role == null)
-        {
-            return NotFound(
-                ApiResponse<object>.FailResponse(
-                    "Role not found",
-                    "ROLE_NOT_FOUND",
-                    $"Role with id {id} does not exist",
-                    400
 
-                )
-            );
-        }
 
-        
 
-        var response = new AppRoleDTO.RoleResponseDto
-        {
-            Id = role.Id,
-            RoleName = role.RoleName,
-            RoleCode = role.RoleCode
-
-        };
-        
         return Ok(
-            ApiResponse<object>.SuccessResponse(
-                null,
+            ApiResponse<AppRole>.SuccessResponse(
+                role,
                 "Role deleted sucessfully",
-                200
+                HttpStatusCode.OK
             ));
-        
-        
+
+
     }
-    
+
     //Revoke Role(Delete)
     [HttpDelete("{id}")]
     public async Task<IActionResult> DeleteRoleAsync(Guid id)
     {
-        var deleted = await _repo.DeleteAsync(id);
-        if (!deleted)
-        {
-            return NotFound(
-                ApiResponse<object>.FailResponse(
-                    "Role not found",
-                   "ROLE_NOT_FOUND",
-                    $"Role with id {id} does not exist",
-                     400
-                )
-            );
-        }
-
-        return Ok(
-            ApiResponse<object>.SuccessResponse(
-                null,
-                "Role found successfully",
-                200
-                ));
+        await _repo.DeleteAsync(id);
+        return NoContent();
     }
 
 
-    
+
 }
