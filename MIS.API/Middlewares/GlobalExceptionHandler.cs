@@ -65,7 +65,7 @@ public class GlobalExceptionHandler : IMiddleware
   private ApiResponse<object> HandleUnknownException(HttpContext context, Exception exception)
   {
     context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
-    var response = ApiResponse<object>.FailResponse("INTERNAL_ERROR", exception.Message);
+    var response = ApiResponse<object>.FailResponse("INTERNAL_ERROR", "Something went wrong");
     return response;
   }
 }

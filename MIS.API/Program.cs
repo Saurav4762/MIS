@@ -1,6 +1,5 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
@@ -10,22 +9,31 @@ using MIS.API.Repositories.Interfaces;
 using MIS.API.Repositories;
 using MIS.API.Services;
 using MIS.API.Exceptions;
+using MIS.API.Interfaces.IServices;
+using MIS.API.Configurations;
 
 var builder = WebApplication.CreateBuilder(args);
 
 
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-// builder.Services.AddOpenApi();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
+
+
+builder.Services.Configure<JWTSettings>(
+    builder.Configuration.GetSection("JWT")
+);
+
 
 builder.Services.AddScoped<IOptionList, OptionListRepository>();
 builder.Services.AddScoped<IReligionRepo, ReligionRepo>();
 builder.Services.AddScoped<IEthnicityRepo, EthnicityRepo>();
 builder.Services.AddScoped<IMunicipalityRepo, MunicipalityRepo>();
 
+builder.Services.AddScoped<IAuthRepo, AuthRepo>();
+builder.Services.AddScoped<IAppRoleRepo, AppRoleRepo>();
+builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IPasswordHashService, PasswordHashService>();
 
 // Add DbContext
 
@@ -46,28 +54,47 @@ builder.Services.AddControllers()
             System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
     });
 
-// Add DI services
-builder.Services.AddScoped<IOptionList, OptionListRepository>();
-builder.Services.AddScoped<IReligionRepo, ReligionRepo>();
-builder.Services.AddScoped<IAppUserRepo, AppUserRepo>();
-builder.Services.AddScoped<PasswordHasher<AppUser>>();
-builder.Services.AddScoped<JwtService>();
-builder.Services.AddScoped<IAppRoleRepo, AppRoleRepo>();
 
 // Configure JWT authentication
-builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+builder.Services.AddAuthentication(options =>
+    {
+
+        options.DefaultAuthenticateScheme =
+        options.DefaultChallengeScheme =
+        options.DefaultForbidScheme =
+        options.DefaultScheme =
+        options.DefaultSignInScheme =
+        options.DefaultSignOutScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
     .AddJwtBearer(options =>
     {
+
+        var jwtSettings = builder.Configuration.GetSection("JWT");
+        var keyString = jwtSettings["Key"];
+
+        if (string.IsNullOrEmpty(keyString))
+        {
+            throw new Exception("JWT Key is missing from configuration");
+        }
+
+        if (string.IsNullOrEmpty(jwtSettings["Issuer"]) || string.IsNullOrEmpty(jwtSettings["Audience"]))
+        {
+            Console.WriteLine("Warning: Issuer or Audience is missing. Tokens might not validate correctly.");
+        }
+
+        var key = Encoding.ASCII.GetBytes(keyString);
+
+
+
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,
             ValidateAudience = true,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
-            ValidIssuer = builder.Configuration["Jwt:Issuer"],
-            ValidAudience = builder.Configuration["Jwt:Audience"],
-            IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
+            ValidIssuer = jwtSettings["Issuer"],
+            ValidAudience = jwtSettings["Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(key)
         };
     });
 
@@ -89,7 +116,7 @@ if (app.Environment.IsDevelopment())
 
 // Middleware order
 app.UseHttpsRedirection();
-app.UseAuthentication(); // must come before Authorization
+app.UseAuthentication();
 app.UseAuthorization();
 
 // Map controllers

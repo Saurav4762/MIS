@@ -4,28 +4,30 @@ using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using MIS.API.Dtos;
 using MIS.API.Repositories.Interfaces;
-using MIS.API.Services;
 using MIS.API.Exceptions;
 using MIS.API.Models;
+using MIS.API.Responses;
+using MIS.API.Interfaces.IServices;
 
 namespace MIS.API.Controllers;
+
 [ApiController]
 [Route("api/auth")]
-public class AppUserController : ControllerBase
+public class AuthController : ControllerBase
 {
-    private readonly IAppUserRepo _appUserRepo;
-    private readonly JwtService _jwtService;
+    private readonly IAuthRepo _authRepo;
+    private readonly ITokenService _tokenService;
 
-    public AppUserController(IAppUserRepo appUserRepo, JwtService jwtService)
+    public AuthController(IAuthRepo authRepo, ITokenService tokenService)
     {
-        _appUserRepo = appUserRepo;
-        _jwtService = jwtService;
+        _authRepo = authRepo;
+        _tokenService = tokenService;
     }
 
     [HttpPost("register")]
     public async Task<IActionResult> Register(AppUserDTO.RegisterDto dto)
     {
-        var existing = await _appUserRepo.GetByUsernameAsync(dto.userName);
+        var existing = await _authRepo.GetByUsernameAsync(dto.userName);
         if (existing != null)
         {
             throw new BadRequestException("Username already exists");
@@ -39,22 +41,22 @@ public class AppUserController : ControllerBase
             Phone = dto.Phone
         };
 
-        await _appUserRepo.RegisterUserAsync(user, dto.Password);
+        await _authRepo.RegisterUserAsync(user, dto.Password);
 
         return Ok("User Registered sucessfully");
     }
-    
-    
+
+
     [HttpPost("login")]
     public async Task<IActionResult> Login(AppUserDTO.LoginDto dto)
     {
-        var user = await _appUserRepo.LoginAsync(dto.UserName,dto.Password);
+        var user = await _authRepo.LoginAsync(dto.UserName, dto.Password);
 
         if (user == null)
             throw new UnauthorizedException("Invalid Username or password");
-        
-        var token = _jwtService.GenerateToken(user);
-        return Ok(token);
-        
+
+        var token = _tokenService.GenerateToken(user).Result;
+        return Ok(ApiResponse<object>.SuccessResponse(new { Token = token }, "Logged in successfully"));
+
     }
 }
