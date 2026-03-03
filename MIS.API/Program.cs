@@ -24,6 +24,7 @@ builder.Services.AddControllers();
 builder.Services.AddScoped<IOptionList, OptionListRepository>();
 builder.Services.AddScoped<IReligionRepo, ReligionRepo>();
 builder.Services.AddScoped<IEthnicityRepo, EthnicityRepo>();
+builder.Services.AddScoped<IMunicipalityRepo, MunicipalityRepo>();
 
 
 // Add DbContext
