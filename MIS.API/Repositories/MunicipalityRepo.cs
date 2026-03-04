@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using MIS.API.Data;
+using Microsoft.AspNetCore.Http.HttpResults;
+using MIS.API.Exceptions;
 using MIS.API.Models;
 using MIS.API.Repositories.Interfaces;
 
@@ -9,6 +11,7 @@ public class MunicipalityRepo : IMunicipalityRepo
 {
     private readonly AppDbContext _context;
     
+
     public MunicipalityRepo(AppDbContext context)
     {
         _context = context;
@@ -30,22 +33,24 @@ public class MunicipalityRepo : IMunicipalityRepo
 
     public async Task<Municipality> GetById(Guid id)
     {
-        var municipality = await _context.Municipalities.FindAsync(id);
-        if (municipality == null)
-        {
-            throw new KeyNotFoundException($"Municipality with {id} not found");
-        }
+        var municipality = await _context.Municipalities.FindAsync(id) ??
+            throw new NotFoundException(
+                entity: nameof(Municipality),
+                key: nameof(Municipality.Id),
+                value: id
+            );
 
         return municipality;
     }
 
     public async Task<Municipality> UpdateMunicipality(Guid id, string nameNe, string nameEn, string code)
     {
-        var municipality = await _context.Municipalities.FirstOrDefaultAsync(x => x.Id == id);
-        if (municipality == null)
-        {
-            throw new KeyNotFoundException($"Municipality with {id} not found");
-        }
+        var municipality = await _context.Municipalities.FirstOrDefaultAsync(x => x.Id == id) ??
+            throw new NotFoundException(
+                entity: nameof(Municipality),
+                key: nameof(Municipality.Id),
+                value: id
+            );
 
         municipality.NameEn = nameNe;
         municipality.NameNe = nameNe;
@@ -57,14 +62,15 @@ public class MunicipalityRepo : IMunicipalityRepo
 
     public async Task<Municipality> DeleteMunicipality(Guid id)
     {
-        var municipality = await _context.Municipalities.FirstOrDefaultAsync(x => x.Id == id);
-        if (municipality == null)
-        {
-            throw new KeyNotFoundException($"Municipality with {id} not found ");
-        }
+        var municipality = await _context.Municipalities.FirstOrDefaultAsync(x => x.Id == id) ??
+            throw new NotFoundException(
+                entity: nameof(Municipality),
+                key: nameof(Municipality.Id),
+                value: id
+            );
         _context.Municipalities.Remove(municipality);
-         await _context.SaveChangesAsync();
-         return municipality;
+        await _context.SaveChangesAsync();
+        return municipality;
     }
 
 }

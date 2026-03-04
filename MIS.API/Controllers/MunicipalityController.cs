@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using MIS.API.DTOs;
-using MIS.API.Models;
 using MIS.API.Repositories.Interfaces;
 
 
@@ -33,10 +32,6 @@ public class MunicipalityController : ControllerBase
     public async Task<IActionResult> GetById(Guid id)
     {
         var municipality = await _municipalityRepo.GetById(id);
-        if (municipality == null)
-        {
-            throw new KeyNotFoundException($"Municipality where {id} is not found");
-        }
         return Ok(municipality);
     }
 
