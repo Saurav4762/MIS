@@ -69,18 +69,18 @@ public class ReligionRepo(AppDbContext context) : IReligionRepo
     // UPDATE
     public  Task<Religion> UpdateReligionAsync(Guid id, string nameEn, string nameNe)
     {
-        var ExistingReligion =  _context.Religions.FirstOrDefault(x=>x.Id ==id);
+        var existingReligion =  _context.Religions.FirstOrDefault(x=>x.Id ==id);
 
-        if (ExistingReligion != null)
+        if (existingReligion != null)
         {
             if(!string.IsNullOrEmpty(nameEn))
-            ExistingReligion.NameEn = nameEn;
+            existingReligion.NameEn = nameEn;
 
               if(!string.IsNullOrEmpty(nameNe))
-            ExistingReligion.NameNe = nameNe;
+            existingReligion.NameNe = nameNe;
 
             _context.SaveChanges();
-            return Task.FromResult(ExistingReligion);
+            return Task.FromResult(existingReligion);
         }
 
         throw new KeyNotFoundException($"Religion with id{id} not found.");

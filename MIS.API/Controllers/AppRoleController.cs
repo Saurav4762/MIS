@@ -72,7 +72,7 @@ public class AppRoleController(IAppRoleRepo context) :ControllerBase
         return Ok(
             ApiResponse<object>.SuccessResponse(
                 null,
-                "Role deleted sucessfully",
+                "Role deleted successfully",
                 200
             ));
         

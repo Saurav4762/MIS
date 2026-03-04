@@ -6,10 +6,12 @@ namespace MIS.API.Exceptions;
 
 public class NotFoundException : BaseException
 {
-  public NotFoundException(string entity, object key)
+  public NotFoundException(string entity, object key, Guid value)
   : base(
       message: $"{entity} with identifier '{key}' was not found",
       statusCode: 404,
       errorCode: "NOT_FOUND"
   ) { }
+
+  
 }

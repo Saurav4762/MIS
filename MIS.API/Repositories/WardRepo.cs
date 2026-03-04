@@ -16,33 +16,26 @@ public class WardRepo : IWardRepo
     }
     
     //GET
-    public async Task<List<Ward>> GetAllWards()
+    public async Task<List<Ward>> GetAllWardsAsync()
     {
         return await _context.Wards.ToListAsync();
     }
     
     //GET BY ID
-    public async Task<Ward?> GetWardById(Guid id)
+    public async Task<Ward?> GetWardByIdAsync(Guid id)
     {
         return await _context.Wards
             .FirstOrDefaultAsync(w => w.Id == id)
             ?? throw new NotFoundException(entity: nameof(Ward),key: nameof(Ward.Id), value: id);
     }
 
-    public async Task<Ward> CreateWard(string name, string code)
+    public async Task<Ward> CreateWardAsync(string name, string code, Guid MunicipalityId)
     {
-        var errors = new Dictionary<string, string[]>();
-        if (string.IsNullOrEmpty(name))
-            errors.Add(nameof(Ward.Name), ["Field is required"]);
-        
-        if (string.IsNullOrEmpty(code))
-            errors.Add(nameof(Ward.Code), ["Field is required"]);
-        
-        if(errors.Count > 0) throw new ValidationException(errors : errors);
 
         var ward = new Ward
         {
             Id = Guid.NewGuid(),
+            MunicipalityId = MunicipalityId,
             Name = name,
             Code = code
         };
@@ -56,7 +49,7 @@ public class WardRepo : IWardRepo
 
     
     //UPDATE
-    public async Task<Ward> UpdateAsync(Guid id, string name, string code)
+    public async Task<Ward?> UpdateAsync(Guid id, string name, string code)
     {
         var existingWard = _context.Wards.FirstOrDefault(w => w.Id == id);
         

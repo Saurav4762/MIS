@@ -4,16 +4,16 @@ namespace MIS.API.Repositories.Interfaces;
 
 public interface IWardRepo
 {
-    Task<List<Ward>> GetAllWards();
+    Task<List<Ward>> GetAllWardsAsync();
     
-    Task<Ward?> GetWardById(Guid Id);
+    Task<Ward?> GetWardByIdAsync(Guid Id);
     
-    Task<Ward> CreateWard(string name, string code );
+    Task<Ward> CreateWardAsync(string name, string code, Guid municipalityId );
     
-    Task<Ward>UpdateAsync ( Guid id, string name, string code);
+    Task<Ward?>UpdateAsync ( Guid id, string name, string code);
     
     Task DeleteWardById(Guid Id);
-    
+
+
    
-    
 }

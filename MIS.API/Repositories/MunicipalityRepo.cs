@@ -28,9 +28,9 @@ public class MunicipalityRepo : IMunicipalityRepo
         return Task.FromResult(newMunicipality);
     }
 
-    public async Task<Municipality> GetById(Guid id)
+    public async Task<Municipality?> GetById(Guid id)
     {
-        var municipality = await _context.Municipalities.FindAsync(id);
+        var municipality = await _context.Municipalities.FirstOrDefaultAsync(m=>m.Id==id);
         if (municipality == null)
         {
             throw new KeyNotFoundException($"Municipality with {id} not found");

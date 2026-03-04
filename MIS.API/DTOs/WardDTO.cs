@@ -4,6 +4,7 @@ public class WardDTO
 {
    public class WardRequest
    {
+      public Guid MunicipalityId { get; set; }
       public string Name { get; set; } = null!;
 
       public string Code { get; set; } = null!;
@@ -15,8 +16,12 @@ public class WardDTO
       
       public Guid MunicipalityId {get; set;}
       
-      public string Name { get; set; } = null!;
+      public string MunicipalityCode {get; set;} = null!;
       
-      public string Code { get; set; } = null!;
+      public string MunicipalityName {get; set;} = null!;
+      
+      public string WardName { get; set; } = null!;
+      
+      public string WardCode { get; set; } = null!;
    }
 }

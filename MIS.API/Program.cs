@@ -50,6 +50,9 @@ builder.Services.AddScoped<IAppUserRepo, AppUserRepo>();
 builder.Services.AddScoped<PasswordHasher<AppUser>>();
 builder.Services.AddScoped<JwtService>();
 builder.Services.AddScoped<IAppRoleRepo, AppRoleRepo>();
+builder.Services.AddScoped<IEthnicityRepo, EthnicityRepo>();
+builder.Services.AddScoped<IWardRepo, WardRepo>();
+
 
 // Configure JWT authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
