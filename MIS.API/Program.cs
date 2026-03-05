@@ -5,12 +5,12 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi;
 using MIS.API.Data;
 using MIS.API.Models;
-using MIS.API.Repositories.Interfaces;
 using MIS.API.Repositories;
 using MIS.API.Services;
 using MIS.API.Exceptions;
 using MIS.API.Interfaces.IServices;
 using MIS.API.Configurations;
+using MIS.API.Interfaces.IRepositories;
 
 var builder = WebApplication.CreateBuilder(args);
 

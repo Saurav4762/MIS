@@ -3,7 +3,7 @@ using MIS.API.Data;
 using Microsoft.AspNetCore.Http.HttpResults;
 using MIS.API.Exceptions;
 using MIS.API.Models;
-using MIS.API.Repositories.Interfaces;
+using MIS.API.Interfaces.IRepositories;
 
 namespace MIS.API.Repositories;
 

@@ -2,8 +2,8 @@ namespace MIS.API.Repositories;
 
 using MIS.API.Data;
 using MIS.API.Exceptions;
+using MIS.API.Interfaces.IRepositories;
 using MIS.API.Models;
-using MIS.API.Repositories.Interfaces;
 
 public class OptionListRepository(AppDbContext context) : IOptionList
 {

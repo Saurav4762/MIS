@@ -3,8 +3,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using MIS.API.Data;
 using MIS.API.Dtos;
 using MIS.API.Exceptions;
+using MIS.API.Interfaces.IRepositories;
 using MIS.API.Models;
-using MIS.API.Repositories.Interfaces;
 using Npgsql.Internal;
 
 namespace MIS.API.Repositories;
