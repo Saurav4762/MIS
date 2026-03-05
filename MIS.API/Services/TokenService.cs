@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.SignalR;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using MIS.API.Configurations;
-using MIS.API.Dtos;
+using MIS.API.DTOs;
 using MIS.API.Interfaces.IServices;
 using MIS.API.Models;
 

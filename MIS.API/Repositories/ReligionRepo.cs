@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion.Internal;
 using MIS.API.Data;
-using MIS.API.Dtos;
+using MIS.API.DTOs;
 using MIS.API.Exceptions;
 using MIS.API.Interfaces.IRepositories;
 using MIS.API.Models;

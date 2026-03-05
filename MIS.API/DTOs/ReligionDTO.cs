@@ -1,6 +1,6 @@
 using Mis.API.Models;
 
-namespace MIS.API.Dtos;
+namespace MIS.API.DTOs;
 
 
 public class ReligionRequest
