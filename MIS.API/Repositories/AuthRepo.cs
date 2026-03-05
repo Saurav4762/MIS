@@ -2,9 +2,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using MIS.API.Data;
 using MIS.API.Exceptions;
+using MIS.API.Interfaces.IRepositories;
 using MIS.API.Interfaces.IServices;
 using MIS.API.Models;
-using MIS.API.Repositories.Interfaces;
 
 namespace MIS.API.Repositories;
 
