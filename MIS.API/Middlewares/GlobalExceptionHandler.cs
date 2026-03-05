@@ -44,7 +44,7 @@ public class GlobalExceptionHandler : IMiddleware
       _ => HandleUnknownException(context, exception)
     };
 
-    _logger.LogError(exception, "Exception occured: {Message}", exception.Message);
+    _logger.LogError(exception, "Exception occured {Method} {Path}: {Message}", context.Request.Method, context.Request.Path, exception.Message);
     var jsonOptions = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
     await context.Response.WriteAsync(JsonSerializer.Serialize(response, jsonOptions));
   }

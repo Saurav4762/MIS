@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore.ChangeTracking;
+using MIS.API.DTOs;
 using MIS.API.Models;
 
 namespace MIS.API.Interfaces.IRepositories;
@@ -6,7 +7,9 @@ namespace MIS.API.Interfaces.IRepositories;
 
 public interface IOptionItemRepo
 {
-  public Task<OptionItem> CreateOptionItemAsync();
-  public Task<List<OptionItem>> GetOptionItemsByOptionListId();
+  public Task<OptionItemsResponseDTO> CreateOptionItemAsync(OptionItemsRequestDTO requestDTO);
+  public Task<OptionItemsResponseDTO> GetOptionItemsByOptionListIdAsync(Guid optionListId);
+  public Task DeleteOptionItemByIdAsync(Guid id);
+
 
 }

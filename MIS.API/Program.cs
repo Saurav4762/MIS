@@ -11,6 +11,7 @@ using MIS.API.Exceptions;
 using MIS.API.Interfaces.IServices;
 using MIS.API.Configurations;
 using MIS.API.Interfaces.IRepositories;
+using Npgsql;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +27,7 @@ builder.Services.Configure<JWTSettings>(
 
 
 builder.Services.AddScoped<IOptionList, OptionListRepository>();
+builder.Services.AddScoped<IOptionItemRepo, OptionItemRepo>();
 builder.Services.AddScoped<IReligionRepo, ReligionRepo>();
 builder.Services.AddScoped<IEthnicityRepo, EthnicityRepo>();
 builder.Services.AddScoped<IMunicipalityRepo, MunicipalityRepo>();
@@ -35,11 +37,19 @@ builder.Services.AddScoped<IAppRoleRepo, AppRoleRepo>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IPasswordHashService, PasswordHashService>();
 
-// Add DbContext
 
+// Enable Dynamic Serialization
+var dataSourceBuilder = new NpgsqlDataSourceBuilder(
+    builder.Configuration.GetConnectionString("DefaultConnection")
+);
+
+var dataSource = dataSourceBuilder.EnableDynamicJson().Build();
+
+
+// Add DbContext
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(
-        builder.Configuration.GetConnectionString("DefaultConnection"),
+        dataSource,
         npgsql => npgsql.UseNetTopologySuite()
     ));
 

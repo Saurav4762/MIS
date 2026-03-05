@@ -1,4 +1,4 @@
-using MIS.API.Dtos;
+using MIS.API.DTOs;
 using MIS.API.Models;
 
 namespace MIS.API.Interfaces.IRepositories;

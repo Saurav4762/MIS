@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using MIS.API.DTOs;
-using MIS.API.Repositories.Interfaces;
-
+using MIS.API.Interfaces.IRepositories;
 
 namespace MIS.API.Controllers;
 [ApiController]
