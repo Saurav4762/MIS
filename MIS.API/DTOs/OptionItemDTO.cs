@@ -45,3 +45,14 @@ public record OptionItemsResponseDTO
   public List<OptionItemResponseDTO> Items { get; set; } = null!;
 
 }
+
+public record UpdateOptionItemRequestDTO
+{
+  public string? Code { get; set; } = null!;
+  public string? LabelEn { get; set; } = null!;
+  public string? LabelNe { get; set; } = null!;
+
+  public Dictionary<string, object>? Extra { get; set; }
+  public int? SortOrder { get; set; }
+
+}

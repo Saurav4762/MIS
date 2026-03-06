@@ -9,6 +9,9 @@ public interface IOptionItemRepo
 {
   public Task<OptionItemsResponseDTO> CreateOptionItemAsync(OptionItemsRequestDTO requestDTO);
   public Task<OptionItemsResponseDTO> GetOptionItemsByOptionListIdAsync(Guid optionListId);
+  public Task<OptionItemResponseDTO> GetOptionItemByIdAsync(Guid id);
+
+  public Task<OptionItemResponseDTO> UpdateOptionItemAsync(Guid id, UpdateOptionItemRequestDTO requestDTO);
   public Task DeleteOptionItemByIdAsync(Guid id);
 
 

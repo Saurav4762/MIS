@@ -49,6 +49,23 @@ public class OptionItemRepo(AppDbContext context) : IOptionItemRepo
     };
   }
 
+  public async Task<OptionItemResponseDTO> GetOptionItemByIdAsync(Guid id)
+  {
+    var r = await _context.OptionItems.FirstOrDefaultAsync(x => x.Id == id)
+    ?? throw new NotFoundException(nameof(OptionItem), nameof(OptionItem.Id), id);
+
+    return new OptionItemResponseDTO
+    {
+      Code = r.Code,
+      Extra = r.Extra,
+      Id = r.Id,
+      LabelEn = r.LabelEn,
+      LabelNe = r.LabelNe
+    };
+
+
+  }
+
 
   public async Task<OptionItemsResponseDTO> GetOptionItemsByOptionListIdAsync(Guid optionListId)
   {
@@ -73,6 +90,38 @@ public class OptionItemRepo(AppDbContext context) : IOptionItemRepo
       Items = optionItems
     };
 
+  }
+
+  public async Task<OptionItemResponseDTO> UpdateOptionItemAsync(Guid id, UpdateOptionItemRequestDTO requestDTO)
+  {
+    var optionItem = await _context.OptionItems.FirstOrDefaultAsync(x => x.Id == id)
+    ?? throw new NotFoundException(nameof(OptionItem), nameof(OptionItem.Id), id);
+
+    if (!string.IsNullOrEmpty(requestDTO.Code))
+      optionItem.Code = requestDTO.Code;
+    if (!string.IsNullOrEmpty(requestDTO.LabelEn))
+      optionItem.LabelEn = requestDTO.LabelEn;
+    if (!string.IsNullOrEmpty(requestDTO.LabelNe))
+      optionItem.LabelNe = requestDTO.LabelNe;
+    if (requestDTO.Extra != null)
+      optionItem.Extra = requestDTO.Extra;
+
+    if (requestDTO.SortOrder != null && requestDTO.SortOrder != 0)
+      optionItem.SortOrder = requestDTO.SortOrder;
+
+
+    _context.OptionItems.Update(optionItem);
+    await _context.SaveChangesAsync();
+
+    return new OptionItemResponseDTO
+    {
+      Id = optionItem.Id,
+      Code = optionItem.Code,
+      Extra = optionItem.Extra,
+      LabelEn = optionItem.LabelEn,
+      LabelNe = optionItem.LabelNe,
+      SortOrder = optionItem.SortOrder
+    };
   }
 
   public async Task DeleteOptionItemByIdAsync(Guid id)
