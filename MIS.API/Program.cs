@@ -20,11 +20,16 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 
+// Add DI services
 builder.Services.AddScoped<IOptionList, OptionListRepository>();
 builder.Services.AddScoped<IReligionRepo, ReligionRepo>();
+builder.Services.AddScoped<IAppUserRepo, AppUserRepo>();
+builder.Services.AddScoped<PasswordHasher<AppUser>>();
+builder.Services.AddScoped<JwtService>();
+builder.Services.AddScoped<IAppRoleRepo, AppRoleRepo>();
 builder.Services.AddScoped<IEthnicityRepo, EthnicityRepo>();
 builder.Services.AddScoped<IMunicipalityRepo, MunicipalityRepo>();
-
+builder.Services.AddScoped<IWardRepo, WardRepo>();
 
 // Add DbContext
 
@@ -42,17 +47,6 @@ builder.Services.AddControllers()
         options.JsonSerializerOptions.ReferenceHandler =
             System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
     });
-
-// Add DI services
-builder.Services.AddScoped<IOptionList, OptionListRepository>();
-builder.Services.AddScoped<IReligionRepo, ReligionRepo>();
-builder.Services.AddScoped<IAppUserRepo, AppUserRepo>();
-builder.Services.AddScoped<PasswordHasher<AppUser>>();
-builder.Services.AddScoped<JwtService>();
-builder.Services.AddScoped<IAppRoleRepo, AppRoleRepo>();
-builder.Services.AddScoped<IEthnicityRepo, EthnicityRepo>();
-builder.Services.AddScoped<IWardRepo, WardRepo>();
-
 
 // Configure JWT authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
