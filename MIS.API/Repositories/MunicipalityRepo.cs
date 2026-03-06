@@ -10,14 +10,14 @@ namespace MIS.API.Repositories;
 public class MunicipalityRepo : IMunicipalityRepo
 {
     private readonly AppDbContext _context;
-    
+
 
     public MunicipalityRepo(AppDbContext context)
     {
         _context = context;
     }
 
-    public Task<Municipality> CreateMunicipality(string nameEn, string nameNe , string code)
+    public Task<Municipality> CreateMunicipality(string nameEn, string nameNe, string code)
     {
         var newMunicipality = new Municipality
         {
@@ -31,7 +31,7 @@ public class MunicipalityRepo : IMunicipalityRepo
         return Task.FromResult(newMunicipality);
     }
 
-    public async Task<Municipality> GetById(Guid id)
+    public async Task<Municipality?> GetById(Guid id)
     {
         var municipality = await _context.Municipalities.FindAsync(id) ??
             throw new NotFoundException(

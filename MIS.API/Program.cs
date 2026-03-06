@@ -26,9 +26,13 @@ builder.Services.Configure<JWTSettings>(
 );
 
 
+// Add DI services
 builder.Services.AddScoped<IOptionList, OptionListRepository>();
 builder.Services.AddScoped<IOptionItemRepo, OptionItemRepo>();
 builder.Services.AddScoped<IReligionRepo, ReligionRepo>();
+builder.Services.AddScoped<IAuthRepo, AuthRepo>();
+builder.Services.AddScoped<JWTSettings>();
+builder.Services.AddScoped<IAppRoleRepo, AppRoleRepo>();
 builder.Services.AddScoped<IEthnicityRepo, EthnicityRepo>();
 builder.Services.AddScoped<IMunicipalityRepo, MunicipalityRepo>();
 
@@ -36,6 +40,7 @@ builder.Services.AddScoped<IAuthRepo, AuthRepo>();
 builder.Services.AddScoped<IAppRoleRepo, AppRoleRepo>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IPasswordHashService, PasswordHashService>();
+builder.Services.AddScoped<IWardRepo, WardRepo>();
 
 
 // Enable Dynamic Serialization
