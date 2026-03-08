@@ -1,6 +1,22 @@
+using MIS.API.Models;
+
 namespace MIS.API.Interfaces.IRepositories;
 
-public class IUserRepo
-{
+public interface IUserRepo
+{ 
+    Task<IEnumerable<AppUser>> GetAllUsers();
     
+    Task<AppUser?> GetUsersByIdAsync(Guid id);
+    
+    Task<AppUser> CreateUserAsync (AppUser user);
+    
+    Task<AppUser> UpdateUserAsync( Guid id ,AppUser user);
+    
+    Task<bool> DeleteUserAsync(Guid id);
+    
+    Task AssignRoleAsync (AppUserRole userRole);
+
+    Task SaveChangesAsync();
+
+
 }
