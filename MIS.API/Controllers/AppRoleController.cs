@@ -36,22 +36,17 @@ public class AppRoleController(IAppRoleRepo context) : ControllerBase
             RoleCode = created.RoleCode
         };
 
-        return CreatedAtAction(
-            actionName: nameof(GetRoleById),
-            routeValues: response.Id,
-            ApiResponse<object>.SuccessResponse(
-                response,
-                "Role created sucessfully",
-                HttpStatusCode.Created
-            ));
+        return CreatedAtAction(nameof(GetRoleById), new { id = created.Id }, role);
 
     }
+
+  
 
     //GET ROLE BY ID
     [HttpGet("{id}")]
     public async Task<IActionResult> GetRoleById(Guid id)
     {
-        var role = await _repo.GetRoleById(id);
+        var role = await _repo.GetRoleByIdAsync(id);
 
 
 
