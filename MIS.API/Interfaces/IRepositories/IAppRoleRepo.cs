@@ -6,6 +6,6 @@ public interface IAppRoleRepo
 {
     
     Task<AppRole> CreateAsync(AppRole role);
-    Task<AppRole> GetRoleById(Guid id);
+    Task<AppRole> GetRoleByIdAsync(Guid id);
     Task DeleteAsync(Guid id);
 }
