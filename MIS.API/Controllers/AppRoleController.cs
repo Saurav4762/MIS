@@ -39,7 +39,6 @@ public class AppRoleController(IAppRoleRepo context) : ControllerBase
         return CreatedAtAction(nameof(GetRoleById), new { id = created.Id }, role);
 
     }
-
   
 
     //GET ROLE BY ID
