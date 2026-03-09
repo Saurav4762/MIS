@@ -41,6 +41,8 @@ builder.Services.AddScoped<IAppRoleRepo, AppRoleRepo>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IPasswordHashService, PasswordHashService>();
 builder.Services.AddScoped<IWardRepo, WardRepo>();
+builder.Services.AddScoped<IPersonService, PeronService>();
+builder.Services.AddScoped<IPersonRepo, PersonRepo>();
 
 
 // Enable Dynamic Serialization

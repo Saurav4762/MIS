@@ -18,5 +18,6 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.4" />
     <PackageReference Include="NetTopologySuite" Version="2.6.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="10.1.4" />
+    <PackageReference Include="TestableIO.System.IO.Abstractions.Wrappers" Version="22.1.0" />
   </ItemGroup>
 </Project>
