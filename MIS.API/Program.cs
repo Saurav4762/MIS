@@ -2,9 +2,7 @@ using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi;
 using MIS.API.Data;
-using MIS.API.Models;
 using MIS.API.Repositories;
 using MIS.API.Services;
 using MIS.API.Exceptions;
@@ -26,7 +24,7 @@ builder.Services.Configure<JWTSettings>(
 );
 
 
-// Add DI services
+// Register repositories with interfaces
 builder.Services.AddScoped<IOptionList, OptionListRepository>();
 builder.Services.AddScoped<IOptionItemRepo, OptionItemRepo>();
 builder.Services.AddScoped<IReligionRepo, ReligionRepo>();
@@ -35,12 +33,13 @@ builder.Services.AddScoped<JWTSettings>();
 builder.Services.AddScoped<IAppRoleRepo, AppRoleRepo>();
 builder.Services.AddScoped<IEthnicityRepo, EthnicityRepo>();
 builder.Services.AddScoped<IMunicipalityRepo, MunicipalityRepo>();
-
-builder.Services.AddScoped<IAuthRepo, AuthRepo>();
 builder.Services.AddScoped<IAppRoleRepo, AppRoleRepo>();
+builder.Services.AddScoped<IWardRepo, WardRepo>();
+builder.Services.AddScoped<IUserRepo, UserRepo>();
+
+//Register services with interfaces 
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IPasswordHashService, PasswordHashService>();
-builder.Services.AddScoped<IWardRepo, WardRepo>();
 
 
 // Enable Dynamic Serialization
@@ -70,7 +69,7 @@ builder.Services.AddControllers()
     });
 
 
-// Configure JWT authentication
+/*// Configure JWT authentication
 builder.Services.AddAuthentication(options =>
     {
 
@@ -96,11 +95,10 @@ builder.Services.AddAuthentication(options =>
         {
             Console.WriteLine("Warning: Issuer or Audience is missing. Tokens might not validate correctly.");
         }
-
+        
         var key = Encoding.ASCII.GetBytes(keyString);
 
-
-
+        
         options.TokenValidationParameters = new TokenValidationParameters
         {
             ValidateIssuer = true,
@@ -110,6 +108,35 @@ builder.Services.AddAuthentication(options =>
             ValidIssuer = jwtSettings["Issuer"],
             ValidAudience = jwtSettings["Audience"],
             IssuerSigningKey = new SymmetricSecurityKey(key)
+        };
+    });*/
+
+var jwtSettings = builder.Configuration.GetSection("JWT");
+var keyBase64 = jwtSettings["Key"];
+
+if (string.IsNullOrEmpty(keyBase64))
+{
+    throw new Exception("JWT Key is missing from configuration");
+}
+
+var keyBytes = Encoding.ASCII.GetBytes(keyBase64); // ✅ ASCII bytes
+
+builder.Services.AddAuthentication(options =>
+    {
+        options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+    })
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = jwtSettings["Issuer"],
+            ValidAudience = jwtSettings["Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(keyBytes)
         };
     });
 

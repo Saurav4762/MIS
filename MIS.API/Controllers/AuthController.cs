@@ -1,62 +1,79 @@
-using System.Xml;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using MIS.API.Data;
 using MIS.API.DTOs;
-using MIS.API.Interfaces.IRepositories;
 using MIS.API.Exceptions;
-using MIS.API.Models;
-using MIS.API.Responses;
 using MIS.API.Interfaces.IServices;
+using MIS.API.Responses;
 
-namespace MIS.API.Controllers;
-
-[ApiController]
-[Route("api/auth")]
-public class AuthController : ControllerBase
+namespace MIS.API.Controllers
 {
-    private readonly IAuthRepo _authRepo;
-    private readonly ITokenService _tokenService;
-
-    public AuthController(IAuthRepo authRepo, ITokenService tokenService)
+    [ApiController]
+    [Route("api/[controller]")]
+    public class AuthController : ControllerBase
     {
-        _authRepo = authRepo;
-        _tokenService = tokenService;
-    }
+        private readonly AppDbContext _context;
+        private readonly IPasswordHashService _passwordService;
+        private readonly ITokenService _tokenService;
 
-    [HttpPost("register")]
-    public async Task<IActionResult> Register(AppUserDTO.RegisterDto dto)
-    {
-        var existing = await _authRepo.GetByUsernameAsync(dto.userName);
-        if (existing != null)
+        public AuthController(
+            AppDbContext context,
+            IPasswordHashService passwordService,
+            ITokenService tokenService)
         {
-            throw new BadRequestException("Username already exists");
+            _context = context;
+            _passwordService = passwordService;
+            _tokenService = tokenService;
         }
 
-        var user = new AppUser
+        [HttpPost("login")]
+        public async Task<IActionResult> Login(AuthDTOs.LoginRequestDto request)
         {
-            Username = dto.userName,
-            FullName = dto.FullName,
-            Email = dto.Email,
-            Phone = dto.Phone
-        };
+            var user = await _context.AppUsers
+                .Include(x => x.AppUserRoles)
+                .ThenInclude(x => x.AppRole)
+                .FirstOrDefaultAsync(x => x.Username == request.UserName);
 
-        await _authRepo.RegisterUserAsync(user, dto.Password);
+            if (user == null)
+            {
+                throw new ValidationException(new Dictionary<string, string[]>
+                {
+                    { "login", new [] { "Invalid username or password" } }
+                });
+            }
+            
 
-        return Ok("User Registered sucessfully");
-    }
+            var isValid = _passwordService.Verify(
+                request.Password,
+                user.PasswordHash
+            );
 
+            if (!isValid)
+            {
+                throw new ValidationException(new Dictionary<string, string[]>
+                {
+                    { "login", new [] { "Invalid username or password" } }
+                });
+            }
 
-    [HttpPost("login")]
-    public async Task<IActionResult> Login(AppUserDTO.LoginDto dto)
-    {
-        var user = await _authRepo.LoginAsync(dto.UserName, dto.Password);
+            var token = await _tokenService.GenerateToken(user);
 
-        if (user == null)
-            throw new UnauthorizedException("Invalid Username or password");
+            var roles = user.AppUserRoles
+                .Select(x => x.AppRole.RoleName)
+                .ToList();
 
-        var token = _tokenService.GenerateToken(user).Result;
-        return Ok(ApiResponse<object>.SuccessResponse(new { Token = token }, "Logged in successfully"));
+            var response = new AuthDTOs.LoginResponseDto
+            {
+                Token = token,
+                Username = user.Username,
+                FullName = user.FullName,
+                Roles = roles
+            };
 
+            return Ok(ApiResponse<AuthDTOs.LoginResponseDto>.SuccessResponse(
+                response,
+                "Login successful"
+            ));
+        }
     }
 }

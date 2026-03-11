@@ -17,7 +17,7 @@ public class AppRoleRepo(AppDbContext context) : IAppRoleRepo
         return Task.FromResult<AppRole>(role);
     }
 
-    public async Task<AppRole> GetRoleById(Guid id)
+    public async Task<AppRole> GetRoleByIdAsync(Guid id)
     {
         return await _context.AppRoles
             .FirstOrDefaultAsync(r => r.Id == id) ?? throw new NotFoundException(entity: nameof(AppRole), nameof(AppRole.Id), id);
