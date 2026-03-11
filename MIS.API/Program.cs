@@ -40,6 +40,9 @@ builder.Services.AddScoped<IUserRepo, UserRepo>();
 //Register services with interfaces 
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IPasswordHashService, PasswordHashService>();
+builder.Services.AddScoped<IPersonService, PeronService>();
+builder.Services.AddScoped<IPersonRepo, PersonRepo>();
+
 
 
 // Enable Dynamic Serialization
