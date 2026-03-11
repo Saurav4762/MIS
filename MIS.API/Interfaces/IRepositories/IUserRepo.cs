@@ -6,7 +6,7 @@ public interface IUserRepo
 { 
     Task<IEnumerable<AppUser>> GetAllUsers();
     
-    Task<AppUser?> GetUsersByIdAsync(Guid id);
+    Task<AppUser> GetUsersByIdAsync(Guid id);
     
     Task<AppUser> CreateUserAsync (AppUser user);
     
@@ -14,7 +14,7 @@ public interface IUserRepo
     
     Task<bool> DeleteUserAsync(Guid id);
     
-    Task AssignRoleAsync (AppUserRole userRole);
+    Task<Object> AssignRoleAsync (Guid userId, Guid roleId);
 
     Task SaveChangesAsync();
 

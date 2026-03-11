@@ -45,8 +45,6 @@ public class UserController : ControllerBase
     public async Task<IActionResult> GetById(Guid id)
     {
         var user = await _repo.GetUsersByIdAsync(id);
-        
-        if (user == null) return NotFound();
 
         var response = new UserDTOs.UserResponse
         {
@@ -87,30 +85,10 @@ public class UserController : ControllerBase
     public async Task<IActionResult> AssignRole(AppRoleDTO.AssignRoleDto dto)
     {
         var user = await _repo.GetUsersByIdAsync(dto.UserId);
-        if (user == null)
-            return NotFound("User not found");
-
+        
         var role = await _roleRepo.GetRoleByIdAsync(dto.RoleId);
-        if (role == null)
-            return NotFound("Role not found");
 
-        if (user.AppUserRoles.Any(ur => ur.AppRoleId == role.Id))
-            return BadRequest("User already has this role");
-
-        await _repo.AssignRoleAsync(new AppUserRole
-        {
-            AppUserId = user.Id,
-            AppRoleId = role.Id
-        });
-
-        await _repo.SaveChangesAsync();
-
-        return Ok(new
-        {
-            message = "Role assigned successfully",
-            UserId = user.Id,
-            RoleName = role.RoleName
-        });
+        return Ok(user);
     }
 
     [HttpPut("{id}")]
