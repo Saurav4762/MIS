@@ -72,7 +72,6 @@ public class PeronService : IPersonService
 
         if (errors.Any())
             throw new ValidationException(errors);
-
     }
 
     public async Task<PersonResponseDto> CreateAsync(CreatePersonDto dto)
@@ -139,7 +138,8 @@ public class PeronService : IPersonService
 
     public async Task UpdateAsync(Guid id, PersonDTO.CreatePersonDto dto)
     {
-           var errors = new Dictionary<string, string[]>();
+        ValidateCreatePerson(dto);
+        
         var person = await _personRepo.GetPersonByIdAsync(id);
         
         if(person ==null )
