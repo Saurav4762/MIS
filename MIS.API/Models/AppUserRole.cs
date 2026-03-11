@@ -9,8 +9,8 @@ public class AppUserRole
     public Guid AppUserId { get; set; }
 
     // Navigation properties
-    public AppUser? AppUser { get; set; }
-    public AppRole? AppRole { get; set; }
-    
+    public AppUser AppUser { get; set; } = null!;
+    public AppRole AppRole { get; set; } = null!;
+
 
 }
