@@ -1,3 +1,5 @@
+using MIS.API.Enum;
+
 namespace MIS.API.DTOs;
 
 public class PersonDTO
@@ -12,7 +14,7 @@ public class PersonDTO
         
         public string FatherName {get; set; } = string.Empty;
         
-        public string Gender { get; set; } = string.Empty;
+        public Gender Gender { get; set; } 
         
         public string BloodGroup {get; set; } = string.Empty;
         
@@ -29,7 +31,7 @@ public class PersonDTO
         
         public string FullName {get; set; } = string.Empty;
         
-        public string Gender {get; set; } = string.Empty;
+        public Gender Gender {get; set; }
         public string Email {get; set; } = string.Empty;
         
         public DateTime DateOfBirth {get; set; }
