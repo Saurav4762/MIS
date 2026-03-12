@@ -64,7 +64,7 @@ public class PersonController : ControllerBase
         await _service.UpdateAsync(id, dto);
 
         return Ok(
-            ApiResponse<object>.SuccessResponse(
+            ApiResponse<PersonResponseDto>.SuccessResponse(
                 null,
                 "Person updated successfully"
             )
@@ -77,7 +77,7 @@ public class PersonController : ControllerBase
         await _service.DeleteAsync(id);
 
         return Ok(
-            ApiResponse<object>.SuccessResponse(
+            ApiResponse<PersonResponseDto>.SuccessResponse(
                 null,
                 "Person deleted successfully"
             )
