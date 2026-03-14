@@ -42,6 +42,7 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IPasswordHashService, PasswordHashService>();
 builder.Services.AddScoped<IPersonService, PeronService>();
 builder.Services.AddScoped<IPersonRepo, PersonRepo>();
+builder.Services.AddScoped<IWardService, WardService>();
 
 
 

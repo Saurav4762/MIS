@@ -8,7 +8,7 @@ public interface IPersonRepo
     
     Task<IEnumerable<Person>> GetAllPersonsAsync();
     
-    Task<Person?> GetPersonByIdAsync(Guid id);
+    Task<Person> GetPersonByIdAsync(Guid id);
     
     Task UpdatePersonAsync (Person person);
     

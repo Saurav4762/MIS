@@ -16,67 +16,66 @@ public class WardRepo : IWardRepo
     }
     
     //GET
-    public async Task<List<Ward>> GetAllWardsAsync()
+    public async Task<IEnumerable<Ward>> GetAllWardsAsync()
     {
-        return await _context.Wards.ToListAsync();
+        return await _context.Wards
+            .Include(w=>w.Municipality)
+            .ToListAsync();
     }
     
     //GET BY ID
     public async Task<Ward?> GetWardByIdAsync(Guid id)
     {
         return await _context.Wards
-            .FirstOrDefaultAsync(w => w.Id == id)
-            ?? throw new NotFoundException(entity: nameof(Ward),key: nameof(Ward.Id), value: id);
+            .Include(w => w.Municipality)
+            .FirstOrDefaultAsync(w => w.Id == id);
     }
 
-    public async Task<Ward> CreateWardAsync(string name, string code, Guid MunicipalityId)
+    public async Task<Ward> CreateWardAsync(Ward ward)
     {
-
-        var ward = new Ward
-        {
-            Id = Guid.NewGuid(),
-            MunicipalityId = MunicipalityId,
-            Name = name,
-            Code = code
-        };
-        
         await _context.Wards.AddAsync(ward);
         await _context.SaveChangesAsync();
         
         return ward;
-
     }
 
-    
-    //UPDATE
-    public async Task<Ward> UpdateAsync(Guid id, string name, string code)
+    public async Task UpdateAsync(Ward ward)
     {
-        var existingWard = _context.Wards.FirstOrDefault(w => w.Id == id);
-
-        
-        if (existingWard == null)
-            throw new NotFoundException(entity: nameof(Ward), key: nameof(Ward.Id), value: id);
-
-        if (!string.IsNullOrEmpty(name))
-            existingWard.Name = name;
-        
-        if (!string.IsNullOrEmpty(code))
-            existingWard.Code = code;
-
-        _context.SaveChanges();
-        return await Task.FromResult(existingWard);
-
+        _context.Wards.Update(ward); 
+        await _context.SaveChangesAsync();
     }
 
-    public async Task DeleteWardById(Guid id)
+    public async Task DeleteWardById(Ward ward)
     {
-        var ward = await _context.Wards.FindAsync(id);
-
-        if (ward == null)
-            throw new KeyNotFoundException($"Ward not found");
-        
         _context.Wards.Remove(ward);
         await _context.SaveChangesAsync();
+    }
 
+    public Task<bool> MunicipalityExistsAsync(Guid id)
+    {
+      return _context.Municipalities
+          .AnyAsync(m => m.Id == id);
+    }
+
+    public async Task<bool> WardExistsAsync(string name, Guid MunicipalityId)
+    {
+        return await _context.Wards
+            .AnyAsync(w => w.Name.ToLower() == name.ToLower() 
+                           && w.MunicipalityId == MunicipalityId);
+    }
+
+    public async Task<bool> WardNameExistsAsync(string name, Guid MunicipalityId, Guid WardId)
+    {
+        return await _context.Wards
+            .AnyAsync(w => w.Name.ToLower() == name.ToLower()
+                            && w.MunicipalityId == MunicipalityId
+                            &&w.Id != WardId);
+    }
+
+    public async Task<Ward?> GetWardWithMunicipality(Guid id)
+    {
+        return await _context.Wards
+            .Include(w => w.Municipality)
+            .FirstOrDefaultAsync(w => w.Id == id);
     }
 }
