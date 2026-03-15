@@ -5,7 +5,7 @@ namespace MIS.API.Interfaces.IServices;
 
 public interface IWardService
 {
-    Task<IEnumerable<WardResponse>> GetAllAsync();
+    Task<PaginatedResponse<WardResponse>> GetAllAsync(PaginationRequest request);
 
     Task<WardResponse> GetByIdAsync(Guid id);
 

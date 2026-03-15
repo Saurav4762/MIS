@@ -1,10 +1,12 @@
 using MIS.API.Models;
 
+using MIS.API.DTOs;
+
 namespace MIS.API.Interfaces.IRepositories;
 
 public interface IWardRepo
 {
-    Task<IEnumerable<Ward>> GetAllWardsAsync();
+    Task<PaginatedResponse<Ward>> GetAllWardsAsync(int pageNumber, int pageSize);
     
     Task<Ward?> GetWardByIdAsync(Guid Id);
     
@@ -15,6 +17,8 @@ public interface IWardRepo
     Task DeleteWardById(Ward ward);
     
     Task<bool> MunicipalityExistsAsync(Guid id);
+
+    Task<bool> WardExistsByIdAsync( Guid id);
     
     Task<bool> WardExistsAsync(string name, Guid MunicipalityId);
     Task<bool>WardNameExistsAsync(string name, Guid MunicipalityId, Guid WardId);
