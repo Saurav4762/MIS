@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using MIS.API.Data;
+using MIS.API.DTOs;
 using MIS.API.Exceptions;
 using MIS.API.Models;
 using MIS.API.Interfaces.IRepositories;
@@ -15,12 +16,24 @@ public class WardRepo : IWardRepo
         _context = context;
     }
     
-    //GET
-    public async Task<IEnumerable<Ward>> GetAllWardsAsync()
+    //GET WITH PAGINATION
+    public async Task<PaginatedResponse<Ward>> GetAllWardsAsync(int pageNumber, int pageSize)
     {
-        return await _context.Wards
-            .Include(w=>w.Municipality)
+        var totalCount = await _context.Wards.CountAsync();
+        
+        var wards = await _context.Wards
+            .Include(w => w.Municipality)
+            .Skip((pageNumber - 1) * pageSize)
+            .Take(pageSize)
             .ToListAsync();
+
+        return new PaginatedResponse<Ward>
+        {
+            Data = wards,
+            TotalCount = totalCount,
+            PageNumber = pageNumber,
+            PageSize = pageSize
+        };
     }
     
     //GET BY ID
@@ -77,5 +90,10 @@ public class WardRepo : IWardRepo
         return await _context.Wards
             .Include(w => w.Municipality)
             .FirstOrDefaultAsync(w => w.Id == id);
+    }
+
+    public async Task<bool> WardExistsByIdAsync(Guid id)
+    {
+        return await _context.Wards.AnyAsync(w => w.Id == id);
     }
 }
