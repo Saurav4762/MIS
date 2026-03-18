@@ -24,13 +24,17 @@ public class WardController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetAll()
+    public async Task<IActionResult> GetAll([FromQuery] int pageNumber = 1, [FromQuery] int pageSize = 10)
     {
-        var result = await _wardService.GetAllAsync();
+        var paginationRequest = new PaginationRequest 
+        { 
+            PageNumber = pageNumber, 
+            PageSize = pageSize 
+        };
+        
+        var result = await _wardService.GetAllAsync(paginationRequest);
 
-        return Ok(ApiResponse<IEnumerable<WardResponse>>.SuccessResponse(result));
-
-
+        return Ok(ApiResponse<PaginatedResponse<WardResponse>>.SuccessResponse(result));
     }
 
     [HttpGet("{id}")]
@@ -55,11 +59,11 @@ public class WardController : ControllerBase
     [HttpPut("{id}")]
     public async Task<IActionResult> UpdateWard(Guid id,WardDTO.WardRequest dto)
     {
-      await _wardService.UpdateAsync(id, dto);
+      var result = await _wardService.UpdateAsync(id, dto);
       
       return Ok(
           ApiResponse<WardResponse>.SuccessResponse(
-              null,
+              result,
               "Ward updated successfully"));
     }
 
@@ -71,7 +75,7 @@ public class WardController : ControllerBase
         
         return Ok(
             ApiResponse<string>.SuccessResponse(
-                null,
+                "Ward deleted successfully",
                 "Ward deleted successfully"));
     }
     

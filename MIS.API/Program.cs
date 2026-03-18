@@ -1,4 +1,5 @@
 using System.Text;
+using FluentValidation;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -9,6 +10,7 @@ using MIS.API.Exceptions;
 using MIS.API.Interfaces.IServices;
 using MIS.API.Configurations;
 using MIS.API.Interfaces.IRepositories;
+using MIS.API.Validators;
 using Npgsql;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -43,6 +45,9 @@ builder.Services.AddScoped<IPasswordHashService, PasswordHashService>();
 builder.Services.AddScoped<IPersonService, PeronService>();
 builder.Services.AddScoped<IPersonRepo, PersonRepo>();
 builder.Services.AddScoped<IWardService, WardService>();
+
+// Register Validators
+//builder.Services.AddValidatorsFromAssemblyContaining<WardRequestValidator>();
 
 
 
