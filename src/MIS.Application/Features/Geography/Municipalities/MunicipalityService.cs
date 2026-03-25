@@ -10,13 +10,16 @@ public class MunicipalityService : IMunicipalityService
 	private readonly IMunicipalityRepo _repo;
 	private readonly IValidator<CreateMunicipalityDTO> _createMunicipalityValidator;
 	private readonly IValidator<UpdateMunicipalityDTO> _updateMunicipalityValidator;
+	private readonly IMunicipalityExcelParser _parser;
 
 	public MunicipalityService(
 		IMunicipalityRepo repo,
+		IMunicipalityExcelParser parser,
 		IValidator<CreateMunicipalityDTO> createMunicipalityValidator,
 		IValidator<UpdateMunicipalityDTO> updateMunicipalityValidator)
 	{
 		_repo = repo;
+		_parser = parser;
 		_createMunicipalityValidator = createMunicipalityValidator;
 		_updateMunicipalityValidator = updateMunicipalityValidator;
 	}
@@ -32,6 +35,36 @@ public class MunicipalityService : IMunicipalityService
 			NameEn = dto.NameEn,
 			NameNe = dto.NameNe
 		});
+	}
+	public async Task<int> SeedMunicipalityAsync(IMunicipalitySeedDTO dto)
+	{
+		var municipalityDTOs = _parser.Parse(dto.file.Content);
+		Dictionary<int, Dictionary<string, string[]>> errors = [];
+
+
+
+		foreach (var (item, index) in municipalityDTOs.Select((i, j) => (i, j)))
+		{
+			var error = await _createMunicipalityValidator.EnsureValidOrToDictonary(item);
+			if (error is not null)
+			{
+				errors.Add(index + 1, error);
+			}
+		}
+
+		if (errors.Count != 0)
+		{
+			throw new DataValidationException(errors);
+		}
+
+		var municipalities = municipalityDTOs.Select(x => new Municipality
+		{
+			Id = Guid.NewGuid(),
+			Code = x.Code,
+			NameEn = x.NameEn,
+			NameNe = x.NameNe
+		}).ToList();
+		return await _repo.BulkInsertAsync(municipalities);
 	}
 
 	public async Task<List<Municipality>> GetAllMunicipalitiesAsync()

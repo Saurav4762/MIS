@@ -51,4 +51,10 @@ public class MunicipalityRepo : IMunicipalityRepo
 			.Where(x => x.Id == id)
 			.ExecuteDeleteAsync();
 	}
+
+  public async Task<int> BulkInsertAsync(List<Municipality> entities)
+	{
+		await _context.AddRangeAsync(entities);
+		return await _context.SaveChangesAsync();
+	}
 }

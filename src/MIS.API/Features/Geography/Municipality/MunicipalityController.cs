@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using MIS.API.Common.Responses;
+using MIS.Application.Common.Models;
 using MIS.Application.Features.Geography.Municipalities;
 
 namespace MIS.API.Features.Geography.Municipality;
@@ -20,6 +22,26 @@ public class MunicipalityController : ControllerBase
 		var result = await _municipalityService.CreateMunicipalityAsync(dto);
 		return CreatedAtAction(nameof(GetMunicipalityById), new { id = result.Id }, result);
 	}
+
+	[HttpPost]
+	[Route("seed")]
+	public async Task<IActionResult> SeedMunicipality(IFormFile file)
+	{
+		var count = await _municipalityService.SeedMunicipalityAsync(new IMunicipalitySeedDTO
+		{
+			file = new FileDto
+			{
+				Content = file.OpenReadStream(),
+				ContentType = file.ContentType,
+				FileName = file.Name,
+				SizeInBytes = file.Length
+			}
+		});
+
+		return Created("", ApiResponse<object>.SuccessResponse(null, $"{count} Records seeded successfully"));
+	}
+
+
 
 	[HttpGet]
 	public async Task<IActionResult> GetAllMunicipalities()

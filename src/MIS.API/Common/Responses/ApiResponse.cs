@@ -23,7 +23,7 @@ public class ApiResponse<T>
   public string? PreviousCursor { get; set; }
 
 
-  public static ApiResponse<T> SuccessResponse(T data, string message = "Request successful", HttpStatusCode statusCode = HttpStatusCode.OK)
+  public static ApiResponse<T> SuccessResponse(T? data, string message = "Request successful", HttpStatusCode statusCode = HttpStatusCode.OK)
   {
     return new ApiResponse<T>
     {
@@ -82,15 +82,16 @@ public class ApiResponse<T>
     };
   }
 
-  public static ApiResponse<T> FailResponse(string errorCode, string message, Dictionary<string, string[]>? details = null, HttpStatusCode statusCode = HttpStatusCode.BadRequest)
+  public static ApiResponse<T> FailResponse(string errorCode, string message, Dictionary<string, string[]>? details = null, Dictionary<int, Dictionary<string, string[]>>? rowErrors = null, HttpStatusCode statusCode = HttpStatusCode.BadRequest)
   {
     return new ApiResponse<T>
     {
       Success = false,
       Message = message,
       StatusCode = statusCode,
-      Error = new ApiError(errorCode, message, details)
+      Error = new ApiError(errorCode, message, details, rowErrors)
     };
   }
+
 
 }

@@ -5,7 +5,7 @@
 global.json
 mis.sln.DotSettings.user
 qodana.yaml
-
+temp
 
 # Created by https://www.toptal.com/developers/gitignore/api/venv,dotnetcore,dotenv,aspnetcore,rider,macos,windows,linux,vs,sublimetext,visualstudiocode,vim,node
 # Edit at https://www.toptal.com/developers/gitignore?templates=venv,dotnetcore,dotenv,aspnetcore,rider,macos,windows,linux,vs,sublimetext,visualstudiocode,vim,node
