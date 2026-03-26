@@ -29,7 +29,7 @@ public class UserService : IUserService
 
     if (await _repo.ExistingUserByEmailAsync(dto.Email))
     {
-      throw new ConflictException(nameof(User), "Email already exits");
+      throw new ConflictException(nameof(User), "Email already exists");
     }
     if (await _repo.ExistingUserByUsernameAsync(dto.Username))
     {
