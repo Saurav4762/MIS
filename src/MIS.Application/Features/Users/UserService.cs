@@ -31,7 +31,7 @@ public class UserService : IUserService
     {
       throw new ConflictException(nameof(User), "Email already exits");
     }
-    if (await _repo.ExistingUserByUsernameAsync(dto.Email))
+    if (await _repo.ExistingUserByUsernameAsync(dto.Username))
     {
       throw new ConflictException(nameof(User), "Username already exits");
     }
@@ -41,18 +41,21 @@ public class UserService : IUserService
       Id = Guid.NewGuid(),
       CreatedAt = DateTime.UtcNow,
       Email = dto.Email,
+      Username = dto.Username,
       FullName = dto.FullName,
+      Phone = dto.Phone,
       PasswordHash = _passwordHashService.Hash(dto.Password)
     };
     await _repo.CreateUserAsync(user);
-    var userDTO = new UserDTO
+    var userDto = new UserDTO
     {
       Id = user.Id,
       CreatedAt = user.CreatedAt,
       Email = dto.Email,
+      Username = dto.Username,
       FullName = dto.FullName
     };
-    return userDTO;
+    return userDto;
 
   }
 }
