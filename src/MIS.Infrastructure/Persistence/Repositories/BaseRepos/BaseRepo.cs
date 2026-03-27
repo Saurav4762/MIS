@@ -1,21 +1,19 @@
-namespace MIS.Infrastructure.Persistence.Repositories.BaseRepo;
+using Microsoft.EntityFrameworkCore;
+using MIS.Domain.Exceptions;
 
-public class a
-{
-    
-}
+namespace MIS.Infrastructure.Persistence.Repositories.BaseRepos;
 
 public class BaseRepo<T> where T : class
 {
-    protected async Task ExecuteAsync(Func<Task> action)
+    protected async Task<TResult> ExecuteAsync<TResult>(Func<Task<TResult>> action)
     {
         try
         {
-            await action();
+            return await action();
         }
-        catch 
+        catch (DbUpdateException ex)
         {
-            
+            throw new DatabaseException();
         }
     }
 }

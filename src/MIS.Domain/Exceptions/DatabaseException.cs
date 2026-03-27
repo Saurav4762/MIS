@@ -1,6 +1,13 @@
 namespace MIS.Domain.Exceptions;
 
-public class DatabaseExceptions
+public class DatabaseException : BaseException
 {
-    
+    public DatabaseException() :
+        base(
+            "Database error occured",
+            "DATABASE"
+        )
+    {
+        
+    }
 }

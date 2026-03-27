@@ -3,10 +3,11 @@ using MIS.Application.Features.Geography.Municipalities;
 using MIS.Domain.Entities.Geography;
 using MIS.Domain.Exceptions;
 using MIS.Infrastructure.Persistence.Data;
+using MIS.Infrastructure.Persistence.Repositories.BaseRepos;
 
 namespace MIS.Infrastructure.Persistence.Repositories.Geography.Municipalities;
 
-public class MunicipalityRepo : IMunicipalityRepo
+public class MunicipalityRepo : BaseRepo<Municipality>,IMunicipalityRepo 
 {
 	private readonly ApplicationDbContext _context;
 
@@ -53,8 +54,11 @@ public class MunicipalityRepo : IMunicipalityRepo
 	}
 
   public async Task<int> BulkInsertAsync(List<Municipality> entities)
-	{
-		await _context.AddRangeAsync(entities);
-		return await _context.SaveChangesAsync();
+  {
+	    return await ExecuteAsync<int>(async () =>
+	    {
+		    await _context.AddRangeAsync(entities); 
+		    return await _context.SaveChangesAsync();
+	    });
 	}
 }

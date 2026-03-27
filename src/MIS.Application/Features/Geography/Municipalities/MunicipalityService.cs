@@ -42,7 +42,6 @@ public class MunicipalityService : IMunicipalityService
 		Dictionary<int, Dictionary<string, string[]>> errors = [];
 
 
-
 		foreach (var (item, index) in municipalityDTOs.Select((i, j) => (i, j)))
 		{
 			var error = await _createMunicipalityValidator.EnsureValidOrToDictonary(item);
