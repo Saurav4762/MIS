@@ -17,5 +17,28 @@ public class CreateMunicipalityDTOValidator : AbstractValidator<CreateMunicipali
 		RuleFor(x => x.NameNe)
 			.NotEmpty().WithMessage("Municipality Nepali name is required")
 			.MaximumLength(200).WithMessage("Municipality Nepali name must be at most 200 characters");
+
+		RuleFor(x => x.HeadExecutiveNameEn)
+			.NotEmpty().WithMessage("Executive head english name is required")
+			.MaximumLength(200).WithMessage("Executive head name must be at most 200 characters");
+
+		RuleFor(x => x.HeadExecutiveNameNe)
+			.NotEmpty().WithMessage("Executive head nepali name is required")
+			.MaximumLength(200).WithMessage("Executive head name must be at most 200 characters");
+
+		RuleFor(x => x.Email)
+			.NotEmpty().WithMessage("Municipality email address is required")
+			.EmailAddress().WithMessage("Invalid email address format")
+			.MaximumLength(200).WithMessage("Too large email");
+			
+		RuleFor(x => x.PhoneNo)
+			.NotEmpty().WithMessage("Municipality Phone number is required")
+			.Matches(@"^(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$")
+			.WithMessage("Invalid phone number")
+			.MaximumLength(20).WithMessage("Too large input for the given field");
+
+
+
 	}
+
 }

@@ -7,7 +7,7 @@ using MIS.Infrastructure.Persistence.Repositories.BaseRepos;
 
 namespace MIS.Infrastructure.Persistence.Repositories.Geography.Municipalities;
 
-public class MunicipalityRepo : BaseRepo<Municipality>,IMunicipalityRepo 
+public class MunicipalityRepo : BaseRepo<Municipality>, IMunicipalityRepo
 {
 	private readonly ApplicationDbContext _context;
 
@@ -32,6 +32,21 @@ public class MunicipalityRepo : BaseRepo<Municipality>,IMunicipalityRepo
 	{
 		return await _context.Set<Municipality>().FirstOrDefaultAsync(x => x.Id == id);
 	}
+	public async Task<Municipality?> GetByUniqueIdentifiersAsync(string? code, string? phone, string? email)
+	{
+		return await _context.Municipalities
+				.FirstOrDefaultAsync(m => m.Code == code
+															|| m.PhoneNo == phone
+															|| m.Email == email);
+	}
+
+	public async Task<bool> ExistsAsync(string code, string phone, string email)
+	{
+		return await _context.Municipalities
+				.AnyAsync(m => m.Code == code
+										|| m.PhoneNo == phone
+										|| m.Email == email);
+	}
 
 	public async Task<Municipality> UpdateMunicipalityAsync(Municipality municipality)
 	{
@@ -53,12 +68,12 @@ public class MunicipalityRepo : BaseRepo<Municipality>,IMunicipalityRepo
 			.ExecuteDeleteAsync();
 	}
 
-  public async Task<int> BulkInsertAsync(List<Municipality> entities)
-  {
-	    return await ExecuteAsync<int>(async () =>
-	    {
-		    await _context.AddRangeAsync(entities); 
-		    return await _context.SaveChangesAsync();
-	    });
+	public async Task<int> BulkInsertAsync(List<Municipality> entities)
+	{
+		return await ExecuteAsync<int>(async () =>
+		{
+			await _context.AddRangeAsync(entities);
+			return await _context.SaveChangesAsync();
+		});
 	}
 }

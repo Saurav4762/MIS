@@ -4,10 +4,11 @@ public class DatabaseException : BaseException
 {
     public DatabaseException() :
         base(
-            "Database error occured",
-            "DATABASE"
+            "Something went worng",
+            "SERVER"
         )
     {
-        
+
     }
+    public DatabaseException(string message) : base(message, "SERVER") {}
 }
