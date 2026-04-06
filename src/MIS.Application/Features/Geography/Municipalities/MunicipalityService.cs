@@ -35,7 +35,7 @@ public class MunicipalityService : IMunicipalityService
 			var errors = new Dictionary<string, string[]>();
 			if (existingMunicipality.Code.ToLower() == dto.Code.ToLower())
 				errors.Add(nameof(Municipality.Code), ["The field already exists"]);
-				
+
 			if (existingMunicipality.Email.ToLower() == dto.Email.ToLower())
 				errors.Add(nameof(Municipality.Email), ["The field already exists"]);
 
@@ -56,6 +56,7 @@ public class MunicipalityService : IMunicipalityService
 			HeadExecutiveNameEn = dto.HeadExecutiveNameEn,
 			HeadExecutiveNameNe = dto.HeadExecutiveNameNe,
 			PhoneNo = dto.PhoneNo,
+			Website = dto.Website
 		});
 	}
 	public async Task<int> SeedMunicipalityAsync(IMunicipalitySeedDTO dto)
@@ -144,6 +145,9 @@ public class MunicipalityService : IMunicipalityService
 		if (!string.IsNullOrWhiteSpace(dto.Email))
 			municipality.Email = dto.Email;
 
+		if (!string.IsNullOrWhiteSpace(dto.Website))
+			municipality.Website = dto.Website;
+
 		return await _repo.UpdateMunicipalityAsync(municipality);
 	}
 
@@ -153,5 +157,10 @@ public class MunicipalityService : IMunicipalityService
 			?? throw new NotFoundException(nameof(Municipality), nameof(Municipality.Id), id);
 
 		await _repo.DeleteMunicipalityAsync(municipality.Id);
+	}
+
+  public Task<List<Municipality>> SearchMunicipalitiesAsync(string searchQuery, string? searchBy = null, int maxResults = 10, int pageNumber = 1)
+	{
+		return _repo.SearchMunicipalitiesAsync(searchQuery, searchBy, maxResults, pageNumber);
 	}
 }

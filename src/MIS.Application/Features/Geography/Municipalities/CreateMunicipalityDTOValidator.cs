@@ -30,12 +30,17 @@ public class CreateMunicipalityDTOValidator : AbstractValidator<CreateMunicipali
 			.NotEmpty().WithMessage("Municipality email address is required")
 			.EmailAddress().WithMessage("Invalid email address format")
 			.MaximumLength(200).WithMessage("Too large email");
-			
+
 		RuleFor(x => x.PhoneNo)
 			.NotEmpty().WithMessage("Municipality Phone number is required")
 			.Matches(@"^(\+\d{1,2}\s?)?1?\-?\.?\s?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}$")
 			.WithMessage("Invalid phone number")
 			.MaximumLength(20).WithMessage("Too large input for the given field");
+
+		RuleFor(x => x.Website)
+			.NotEmpty().WithMessage("Municipality website is required")
+			.Matches(@"^(https?:\/\/)?([\w\-]+\.)+[\w\-]+(\/[\w\-._~:\/?#[\]@!$&'()*+,;=]*)?$")
+			.WithMessage("Invalid website URL format");
 
 
 

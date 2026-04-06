@@ -9,5 +9,6 @@ public class UpdateMunicipalityDTO
 	public string? HeadExecutiveNameNe { get; set; } = null!;
 	public string? Email { get; set; } = null!;
 	public string? PhoneNo { get; set; } = null!;
+	public string? Website { get; set; } = null!;
 
 }

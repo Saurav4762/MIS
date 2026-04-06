@@ -41,7 +41,13 @@ public class MunicipalityController : ControllerBase
 		return Created("", ApiResponse<object>.SuccessResponse(null, $"{count} Records seeded successfully"));
 	}
 
-
+	[HttpGet("search")]
+	public async Task<IActionResult> SearchMunicipalities([FromQuery] string query, [FromQuery] string? searchBy, [FromQuery] int maxResults = 10, [FromQuery] int pageNumber = 1)
+	{
+		Console.WriteLine("Search Query: " + query);
+		var result = await _municipalityService.SearchMunicipalitiesAsync(query, searchBy, maxResults, pageNumber);
+		return Ok(result);
+	}
 
 	[HttpGet]
 	public async Task<IActionResult> GetAllMunicipalities()

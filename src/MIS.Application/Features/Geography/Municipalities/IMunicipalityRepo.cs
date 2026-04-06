@@ -10,6 +10,10 @@ public interface IMunicipalityRepo
 	Task<List<Municipality>> GetAllMunicipalitiesAsync();
 	Task<Municipality?> GetMunicipalityByIdAsync(Guid id);
 	Task<Municipality?> GetByUniqueIdentifiersAsync(string? code = null, string? phone = null, string? email = null);
+
+	Task<List<Municipality>> SearchMunicipalitiesAsync(string searchQuery, string? searchBy = null, int maxResults = 10, int pageNumber = 1);
+
+
 	Task<bool> ExistsAsync(string code, string phone, string email);
 	Task<Municipality> UpdateMunicipalityAsync(Municipality municipality);
 	Task<int> DeleteMunicipalityAsync(Guid id);

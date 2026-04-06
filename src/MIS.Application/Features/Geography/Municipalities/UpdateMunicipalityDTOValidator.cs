@@ -38,5 +38,11 @@ public class UpdateMunicipalityDTOValidator : AbstractValidator<UpdateMunicipali
 			.When(x => x.PhoneNo is not null);
 
 
+		RuleFor(x => x.Website)
+			.Matches(@"^(https?:\/\/)?([\w\-]+\.)+[\w\-]+(\/[\w\-._~:\/?#[\]@!$&'()*+,;=]*)?$")
+			.WithMessage("Invalid website URL format")
+			.When(x => x.Website is not null);
+
+
 	}
 }

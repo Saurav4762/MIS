@@ -36,8 +36,9 @@ public class WardService : IWardService
 		{
 			Id = Guid.NewGuid(),
 			MunicipalityId = municipality.Id,
-			Code = dto.Code,
-			Name = dto.Name
+			Number = dto.Number,
+			RepresentativeNameEn = dto.RepresentativeNameEn,
+			RepresentativeNameNe = dto.RepresentativeNameNe
 		});
 	}
 
@@ -73,12 +74,23 @@ public class WardService : IWardService
 				?? throw new NotFoundException(nameof(Municipality), nameof(Municipality.Id), dto.MunicipalityId.Value);
 			ward.MunicipalityId = municipality.Id;
 		}
+		// check ward already exists with the same number in the same municipality
+		if (dto.Number.HasValue)
+		{
+			var existingWard = await _repo.GetWardByNumberAndMunicipalityIdAsync(dto.Number.Value, ward.MunicipalityId);
+			if (existingWard != null && existingWard.Id != id)
+			{
+				throw new InvalidOperationException("A ward with the same number already exists in the specified municipality.");
+			}
+			ward.Number = dto.Number.Value;
+		}
 
-		if (!string.IsNullOrWhiteSpace(dto.Code))
-			ward.Code = dto.Code;
+		if (dto.RepresentativeNameEn is not null)
+			ward.RepresentativeNameEn = dto.RepresentativeNameEn;
 
-		if (!string.IsNullOrWhiteSpace(dto.Name))
-			ward.Name = dto.Name;
+		if (dto.RepresentativeNameNe is not null)
+			ward.RepresentativeNameNe = dto.RepresentativeNameNe;
+
 
 		return await _repo.UpdateWardAsync(ward);
 	}
