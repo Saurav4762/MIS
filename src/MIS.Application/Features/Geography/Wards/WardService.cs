@@ -25,43 +25,87 @@ public class WardService : IWardService
 		_updateWardValidator = updateWardValidator;
 	}
 
-	public async Task<Ward> CreateWardAsync(CreateWardDTO dto)
+	public async Task<WardDTO> CreateWardAsync(CreateWardDTO dto)
 	{
 		await _createWardValidator.EnsureValidOrThrowAsync(dto);
 
 		var municipality = await _municipalityRepo.GetMunicipalityByIdAsync(dto.MunicipalityId)
 			?? throw new NotFoundException(nameof(Municipality), nameof(Municipality.Id), dto.MunicipalityId);
 
-		return await _repo.CreateWardAsync(new Ward
+		var ward = await _repo.CreateWardAsync(new Ward
 		{
 			Id = Guid.NewGuid(),
 			MunicipalityId = municipality.Id,
 			Number = dto.Number,
 			RepresentativeNameEn = dto.RepresentativeNameEn,
-			RepresentativeNameNe = dto.RepresentativeNameNe
+			RepresentativeNameNe = dto.RepresentativeNameNe,
+			Email = string.Empty,
+			PhoneNo = string.Empty
 		});
+		return new WardDTO
+		{
+			Id = ward.Id,
+			MunicipalityId = ward.MunicipalityId,
+			Number = ward.Number,
+			RepresentativeNameEn = ward.RepresentativeNameEn,
+			RepresentativeNameNe = ward.RepresentativeNameNe,
+			Email = ward.Email,
+			PhoneNo = ward.PhoneNo
+		};
 	}
 
-	public async Task<List<Ward>> GetAllWardsAsync()
+	public async Task<List<WardDTO>> GetAllWardsAsync()
 	{
-		return await _repo.GetAllWardsAsync();
+		var wards = await _repo.GetAllWardsAsync();
+		return wards.Select(w => new WardDTO
+		{
+			Id = w.Id,
+			MunicipalityId = w.MunicipalityId,
+			Number = w.Number,
+			RepresentativeNameEn = w.RepresentativeNameEn,
+			RepresentativeNameNe = w.RepresentativeNameNe,
+			Email = w.Email,
+			PhoneNo = w.PhoneNo
+
+		}).ToList();
 	}
 
-	public async Task<List<Ward>> GetWardsByMunicipalityIdAsync(Guid municipalityId)
+	public async Task<List<WardDTO>> GetWardsByMunicipalityIdAsync(Guid municipalityId)
 	{
 		var municipality = await _municipalityRepo.GetMunicipalityByIdAsync(municipalityId)
 			?? throw new NotFoundException(nameof(Municipality), nameof(Municipality.Id), municipalityId);
 
-		return await _repo.GetWardsByMunicipalityIdAsync(municipality.Id);
+		var wards = await _repo.GetWardsByMunicipalityIdAsync(municipality.Id);
+		return wards.Select(w => new WardDTO
+		{
+			Id = w.Id,
+			MunicipalityId = w.MunicipalityId,
+			Number = w.Number,
+			RepresentativeNameEn = w.RepresentativeNameEn,
+			RepresentativeNameNe = w.RepresentativeNameNe,
+			Email = w.Email,
+			PhoneNo = w.PhoneNo
+
+		}).ToList();
 	}
 
-	public async Task<Ward> GetWardByIdAsync(Guid id)
+	public async Task<WardDTO> GetWardByIdAsync(Guid id)
 	{
-		return await _repo.GetWardByIdAsync(id)
+		var ward = await _repo.GetWardByIdAsync(id)
 			?? throw new NotFoundException(nameof(Ward), nameof(Ward.Id), id);
+		return new WardDTO
+		{
+			Id = ward.Id,
+			MunicipalityId = ward.MunicipalityId,
+			Number = ward.Number,
+			RepresentativeNameEn = ward.RepresentativeNameEn,
+			RepresentativeNameNe = ward.RepresentativeNameNe,
+			Email = ward.Email,
+			PhoneNo = ward.PhoneNo
+		};	
 	}
 
-	public async Task<Ward> UpdateWardAsync(Guid id, UpdateWardDTO dto)
+	public async Task<WardDTO	> UpdateWardAsync(Guid id, UpdateWardDTO dto)
 	{
 		await _updateWardValidator.EnsureValidOrThrowAsync(dto);
 
@@ -90,9 +134,23 @@ public class WardService : IWardService
 
 		if (dto.RepresentativeNameNe is not null)
 			ward.RepresentativeNameNe = dto.RepresentativeNameNe;
+		if (dto.Email is not null)
+			ward.Email = dto.Email;
+		if (dto.PhoneNo is not null)
+			ward.PhoneNo = dto.PhoneNo;
 
 
-		return await _repo.UpdateWardAsync(ward);
+		var updatedWard = await _repo.UpdateWardAsync(ward);
+		return new WardDTO
+		{
+			Id = updatedWard.Id,
+			MunicipalityId = updatedWard.MunicipalityId,
+			Number = updatedWard.Number,
+			RepresentativeNameEn = updatedWard.RepresentativeNameEn,
+			RepresentativeNameNe = updatedWard.RepresentativeNameNe,
+			Email = updatedWard.Email,
+			PhoneNo = updatedWard.PhoneNo
+		};
 	}
 
 	public async Task DeleteWardAsync(Guid id)

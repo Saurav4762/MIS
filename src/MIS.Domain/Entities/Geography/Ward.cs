@@ -8,6 +8,8 @@ public class Ward : BaseEntity
   public int Number { get; set; }
   public string RepresentativeNameEn { get; set; } = string.Empty;
   public string RepresentativeNameNe { get; set; } = string.Empty;
+  public string PhoneNo { get; set; } = string.Empty;
+  public string Email { get; set; } = string.Empty;
 
   // Navigation Property
   public Municipality Municipality { get; set; } = null!;
