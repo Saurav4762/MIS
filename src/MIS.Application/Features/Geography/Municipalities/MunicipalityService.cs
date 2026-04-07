@@ -11,18 +11,21 @@ public class MunicipalityService : IMunicipalityService
 	private readonly IMunicipalityRepo _repo;
 	private readonly IValidator<CreateMunicipalityDTO> _createMunicipalityValidator;
 	private readonly IValidator<UpdateMunicipalityDTO> _updateMunicipalityValidator;
+	private readonly IValidator<ExcelMunicipalityDTO> _excelMunicipalityValidator;
 	private readonly IMunicipalityExcelParser _parser;
 
 	public MunicipalityService(
 		IMunicipalityRepo repo,
 		IMunicipalityExcelParser parser,
 		IValidator<CreateMunicipalityDTO> createMunicipalityValidator,
-		IValidator<UpdateMunicipalityDTO> updateMunicipalityValidator)
+		IValidator<UpdateMunicipalityDTO> updateMunicipalityValidator,
+		IValidator<ExcelMunicipalityDTO> excelMunicipalityValidator)
 	{
 		_repo = repo;
 		_parser = parser;
 		_createMunicipalityValidator = createMunicipalityValidator;
 		_updateMunicipalityValidator = updateMunicipalityValidator;
+		_excelMunicipalityValidator = excelMunicipalityValidator;
 	}
 
 	public async Task<Municipality> CreateMunicipalityAsync(CreateMunicipalityDTO dto)
@@ -65,13 +68,17 @@ public class MunicipalityService : IMunicipalityService
 		Dictionary<int, Dictionary<string, string[]>> errors = [];
 		var hasSeenCode = new HashSet<string>();
 
-		foreach (var (item, index) in municipalityDTOs.Select((i, j) => (i, j)))
+		foreach (var item in municipalityDTOs)
 		{
-			var error = await _createMunicipalityValidator.EnsureValidOrToDictonary(item);
-
-			if (error is not null)
+			var validationResult = _excelMunicipalityValidator.Validate(item);
+			if (!validationResult.IsValid)
 			{
-				errors.Add(item.RowNumber, error);
+				errors[item.RowNumber] = validationResult.Errors
+					.GroupBy(x => x.PropertyName)
+					.ToDictionary(
+						group => group.Key,
+						group => group.Select(x => x.ErrorMessage).ToArray()
+					);
 				continue;
 			}
 
@@ -101,7 +108,12 @@ public class MunicipalityService : IMunicipalityService
 			Id = Guid.NewGuid(),
 			Code = x.Code,
 			NameEn = x.NameEn,
-			NameNe = x.NameNe
+			NameNe = x.NameNe,
+			HeadExecutiveNameEn = x.HeadExecutiveNameEn,
+			HeadExecutiveNameNe = x.HeadExecutiveNameNe,
+			Email = x.Email,
+			PhoneNo = x.PhoneNo,
+			Website = x.Website
 		}).ToList();
 		return await _repo.BulkInsertAsync(municipalities);
 	}

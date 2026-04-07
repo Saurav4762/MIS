@@ -39,8 +39,8 @@ public class WardService : IWardService
 			Number = dto.Number,
 			RepresentativeNameEn = dto.RepresentativeNameEn,
 			RepresentativeNameNe = dto.RepresentativeNameNe,
-			Email = string.Empty,
-			PhoneNo = string.Empty
+			Email = dto.Email,
+			PhoneNo = dto.PhoneNo
 		});
 		return new WardDTO
 		{
