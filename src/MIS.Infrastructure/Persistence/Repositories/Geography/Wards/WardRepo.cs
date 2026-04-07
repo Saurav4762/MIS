@@ -45,8 +45,10 @@ public class WardRepo : IWarrdRepo
 			?? throw new NotFoundException(nameof(Ward), nameof(Ward.Id), ward.Id);
 
 		existing.MunicipalityId = ward.MunicipalityId;
-		existing.Code = ward.Code;
-		existing.Name = ward.Name;
+		existing.Number = ward.Number;
+		existing.RepresentativeNameEn = ward.RepresentativeNameEn;
+		existing.RepresentativeNameNe = ward.RepresentativeNameNe;
+
 
 		await _context.SaveChangesAsync();
 		return existing;
@@ -57,5 +59,11 @@ public class WardRepo : IWarrdRepo
 		return await _context.Set<Ward>()
 			.Where(x => x.Id == id)
 			.ExecuteDeleteAsync();
+	}
+
+	public async Task<Ward?> GetWardByNumberAndMunicipalityIdAsync(int number, Guid municipalityId)
+	{
+		return await _context.Set<Ward>()
+			.FirstOrDefaultAsync(x => x.Number == number && x.MunicipalityId == municipalityId);
 	}
 }

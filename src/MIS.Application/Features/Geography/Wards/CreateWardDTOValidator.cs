@@ -8,13 +8,15 @@ public class CreateWardDTOValidator : AbstractValidator<CreateWardDTO>
 	{
 		RuleFor(x => x.MunicipalityId)
 			.NotEmpty().WithMessage("Municipality id is required");
+		RuleFor(x => x.Number)
+			.NotEmpty().WithMessage("Ward number is required")
+			.GreaterThan(0).WithMessage("Ward number must be greater than 0");
+		RuleFor(x => x.RepresentativeNameEn)
+			.NotEmpty().WithMessage("Representative name in English is required")
+			.MaximumLength(100).WithMessage("Representative name in English must not exceed 100 characters");
+		RuleFor(x => x.RepresentativeNameNe)
+			.NotEmpty().WithMessage("Representative name in Nepali is required")
+			.MaximumLength(100).WithMessage("Representative name in Nepali must not exceed 100 characters");
 
-		RuleFor(x => x.Code)
-			.NotEmpty().WithMessage("Ward code is required")
-			.MaximumLength(20).WithMessage("Ward code must be at most 20 characters");
-
-		RuleFor(x => x.Name)
-			.NotEmpty().WithMessage("Ward name is required")
-			.MaximumLength(200).WithMessage("Ward name must be at most 200 characters");
 	}
 }

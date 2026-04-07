@@ -9,7 +9,12 @@ public class WardConfiguration : IEntityTypeConfiguration<Ward>
     public void Configure(EntityTypeBuilder<Ward> entity)
     {
         entity.HasKey(e => e.Id);
-        entity.Property(e => e.Name).IsRequired();
+
+        entity.Property(e => e.Number).IsRequired();
+
+        entity.Property(e => e.RepresentativeNameEn).IsRequired();
+        entity.Property(e => e.RepresentativeNameNe).IsRequired();
+
 
         entity.HasOne(m => m.Municipality)
             .WithMany(m => m.Wards)

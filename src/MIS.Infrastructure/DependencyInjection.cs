@@ -14,6 +14,8 @@ using Npgsql;
 using MIS.Infrastructure.Identity;
 using MIS.Application.Features.Geography.Toles;
 using MIS.Infrastructure.Persistence.Repositories.Geography.Toles;
+using OfficeOpenXml;
+using MIS.Infrastructure.ExcelParser;
 
 namespace MIS.Infrastructure;
 
@@ -22,6 +24,11 @@ public static class DependencyInjection
 
   public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
   {
+    ExcelPackage.License.SetNonCommercialPersonal("Your Name");
+
+    // Excel Parser
+    services.AddTransient<IMunicipalityExcelParser, MunicipalityExcelParser>();
+
 
     // Identity
     services.AddScoped<IJwtTokenService, JwtTokenService>();

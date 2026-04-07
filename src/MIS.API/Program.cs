@@ -28,6 +28,16 @@ builder.Services.AddApplication();
 builder.Services.AddControllers();
 builder.Services.AddTransient<GlobalExceptionHandler>();
 
+builder.Services.AddCors(options =>
+{
+  options.AddDefaultPolicy(policy =>
+  {
+    policy.AllowAnyOrigin()
+          .AllowAnyMethod()
+          .AllowAnyHeader();
+  });
+});
+
 
 
 builder.Services
@@ -60,7 +70,13 @@ if (app.Environment.IsDevelopment())
   app.UseSwaggerUI();
 }
 
-app.UseHttpsRedirection();
+app.UseCors();
+
+if (!app.Environment.IsDevelopment())
+{
+  app.UseHttpsRedirection();
+}
+
 app.UseAuthentication();
 app.UseAuthorization();
 

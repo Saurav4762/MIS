@@ -15,6 +15,15 @@ public class ConflictException : BaseException
   {
   }
 
+  public ConflictException(Dictionary<string, string[]> errors)
+: base(
+  message: "The request could not be completed because it conflicts with the current state of the resource.",
+  errorCode: "CONFLICT",
+  errors
+)
+  {
+  }
+
   public ConflictException(string message = "The request could not be completed because it conflicts with the current state of the resource.") : base(message, "CONFLICT") { }
 
 }

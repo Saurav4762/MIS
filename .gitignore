@@ -5,7 +5,21 @@
 global.json
 mis.sln.DotSettings.user
 qodana.yaml
+temp
 
+**/bin/Debug/
+**/bin/Release/
+**/obj/
+
+src/MIS.API/bin/Debug/
+src/MIS.Infrastructure/bin/Debug/
+
+src/MIS.API/bin\\Debug/
+src/MIS.Infrastructure/bin\\Debug/
+
+# Ignore build folders regardless of where they are in the src tree
+[Bb]in/
+[Oo]bj/
 
 # Created by https://www.toptal.com/developers/gitignore/api/venv,dotnetcore,dotenv,aspnetcore,rider,macos,windows,linux,vs,sublimetext,visualstudiocode,vim,node
 # Edit at https://www.toptal.com/developers/gitignore?templates=venv,dotnetcore,dotenv,aspnetcore,rider,macos,windows,linux,vs,sublimetext,visualstudiocode,vim,node
