@@ -6,4 +6,6 @@ public class UpdateWardDTO
 	public int? Number { get; set; }
 	public string? RepresentativeNameEn { get; set; }
 	public string? RepresentativeNameNe { get; set; }
+	public string? PhoneNo { get; set; }
+	public string? Email { get; set; }
 }

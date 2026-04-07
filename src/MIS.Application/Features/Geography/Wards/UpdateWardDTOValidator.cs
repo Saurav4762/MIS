@@ -21,6 +21,12 @@ public class UpdateWardDTOValidator : AbstractValidator<UpdateWardDTO>
 			.NotEmpty().WithMessage("Representative name in Nepali cannot be empty")
 			.MaximumLength(100).WithMessage("Representative name in Nepali must not exceed 100 characters")
 			.When(x => x.RepresentativeNameNe is not null);
+		RuleFor(x => x.Email)
+			.EmailAddress().WithMessage("Invalid email format")
+			.When(x => x.Email is not null);
+		RuleFor(x => x.PhoneNo)
+			.NotEmpty().WithMessage("Phone number cannot be empty")
+			.When(x => x.PhoneNo is not null);
 
 
 	}
