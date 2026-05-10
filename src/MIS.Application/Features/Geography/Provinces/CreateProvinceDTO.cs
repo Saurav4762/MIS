@@ -1,0 +1,8 @@
+namespace MIS.Application.Features.Geography.Provinces;
+
+public record CreateProvinceDTO
+{
+	public string Code { get; set; } = null!;
+	public string NameEn { get; set; } = null!;
+	public string NameNe { get; set; } = null!;
+}

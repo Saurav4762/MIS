@@ -2,7 +2,7 @@ using MIS.Domain.Entities.Geography;
 
 namespace MIS.Application.Features.Geography.Wards;
 
-public interface IWarrdRepo
+public interface IWardRepo
 {
 	Task<Ward> CreateWardAsync(Ward ward);
 	Task<List<Ward>> GetAllWardsAsync();

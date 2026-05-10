@@ -1,4 +1,5 @@
 using FluentValidation;
+using MIS.Application.Common.Extensions;
 
 namespace MIS.Application.Features.Geography.Wards;
 
@@ -16,7 +17,10 @@ public class CreateWardDTOValidator : AbstractValidator<CreateWardDTO>
 			.MaximumLength(100).WithMessage("Representative name in English must not exceed 100 characters");
 		RuleFor(x => x.RepresentativeNameNe)
 			.NotEmpty().WithMessage("Representative name in Nepali is required")
+			.MustBeNepali()
+			.WithName("Representative name in Nepali")
 			.MaximumLength(100).WithMessage("Representative name in Nepali must not exceed 100 characters");
+
 		RuleFor(x => x.Email)
 			.EmailAddress().WithMessage("Invalid email format")
 			.When(x => !string.IsNullOrEmpty(x.Email));

@@ -6,7 +6,7 @@ using MIS.Infrastructure.Persistence.Data;
 
 namespace MIS.Infrastructure.Persistence.Repositories.Geography.Wards;
 
-public class WardRepo : IWarrdRepo
+public class WardRepo : IWardRepo
 {
 	private readonly ApplicationDbContext _context;
 

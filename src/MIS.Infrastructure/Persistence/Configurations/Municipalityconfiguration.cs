@@ -9,6 +9,13 @@ public class Municipalityconfiguration : IEntityTypeConfiguration<Municipality>
 {
     public void Configure(EntityTypeBuilder<Municipality> builder)
     {
+        builder.HasKey(m => m.Id);
+        
+        builder.HasOne(m => m.District)
+            .WithMany(d => d.Municipalities)
+            .HasForeignKey(m => m.DistrictId)
+            .OnDelete(DeleteBehavior.Cascade);
+
         builder
             .HasIndex(m => m.Code)
             .IsUnique();

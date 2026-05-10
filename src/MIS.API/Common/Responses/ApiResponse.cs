@@ -33,6 +33,18 @@ public class ApiResponse<T>
       StatusCode = statusCode
     };
   }
+  public static ApiResponse<object> SuccessResponse(string message = "Request successful", HttpStatusCode statusCode = HttpStatusCode.OK)
+  {
+    return new ApiResponse<object>
+    {
+      Success = true,
+      Message = message,
+      StatusCode = statusCode
+    };
+  }
+
+
+
   // -------------------------------
   public static ApiResponse<IEnumerable<T>> Paginated(
       IEnumerable<T> data,

@@ -1,6 +1,6 @@
 
 using FluentValidation;
-using MIS.Application.Common.Validations;
+using MIS.Application.Common.Extensions;
 using MIS.Application.Features.Options.OptionLists;
 using MIS.Domain.Exceptions;
 

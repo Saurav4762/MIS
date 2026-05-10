@@ -1,7 +1,9 @@
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using MIS.Application.Features.Authentication;
+using MIS.Application.Features.Geography.Districts;
 using MIS.Application.Features.Geography.Municipalities;
+using MIS.Application.Features.Geography.Provinces;
 using MIS.Application.Features.Geography.Toles;
 using MIS.Application.Features.Geography.Wards;
 using MIS.Application.Features.Options.OptionItems;
@@ -16,8 +18,10 @@ public static class DependencyInjection
   {
     services.AddScoped<IAuthenticationService, AuthenticationService>();
     services.AddScoped<IMunicipalityService, MunicipalityService>();
+    services.AddScoped<IDistrictService, DistrictService>();
     services.AddScoped<IWardService, WardService>();
     services.AddScoped<IToleService, ToleService>();
+    services.AddScoped<IProvinceService, ProvinceService>();
 
 
     services.AddScoped<IUserService, UserService>();

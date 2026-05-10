@@ -16,6 +16,8 @@ public class ApplicationDbContext : DbContext
     public DbSet<User> Users => Set<User>();
 
     // Geography
+    public DbSet<Province> Provinces => Set<Province>();
+    public DbSet<District> Districts => Set<District>();
     public DbSet<Municipality> Municipalities => Set<Municipality>();
     public DbSet<Ward> Wards => Set<Ward>();
     public DbSet<Tole> Toles => Set<Tole>();

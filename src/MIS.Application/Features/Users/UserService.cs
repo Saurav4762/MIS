@@ -2,7 +2,7 @@ using FluentValidation;
 using MIS.Application.Features.Authentication;
 using MIS.Domain.Entities.Identity;
 using MIS.Domain.Exceptions;
-using MIS.Application.Common.Validations;
+using MIS.Application.Common.Extensions;
 
 namespace MIS.Application.Features.Users;
 
