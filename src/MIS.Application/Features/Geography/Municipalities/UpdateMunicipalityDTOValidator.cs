@@ -1,4 +1,5 @@
 using FluentValidation;
+using MIS.Application.Common.Extensions;
 
 namespace MIS.Application.Features.Geography.Municipalities;
 
@@ -15,6 +16,8 @@ public class UpdateMunicipalityDTOValidator : AbstractValidator<UpdateMunicipali
 			.When(x => x.NameEn is not null);
 
 		RuleFor(x => x.NameNe)
+			.MustBeNepaliOrEmpty()
+			.WithName("Municipality Nepali name")
 			.MaximumLength(200).WithMessage("Municipality Nepali name must be at most 200 characters")
 			.When(x => x.NameNe is not null);
 
@@ -23,6 +26,8 @@ public class UpdateMunicipalityDTOValidator : AbstractValidator<UpdateMunicipali
 			.When(x => x.HeadExecutiveNameEn is not null);
 
 		RuleFor(x => x.HeadExecutiveNameNe)
+			.MustBeNepaliOrEmpty()
+			.WithName("Executive head Nepali name")
 			.MaximumLength(200).WithMessage("Executive head name must be at most 200 characters")
 			.When(x => x.HeadExecutiveNameNe is not null);
 

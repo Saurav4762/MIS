@@ -1,5 +1,5 @@
 using FluentValidation;
-using MIS.Application.Common.Validations;
+using MIS.Application.Common.Extensions;
 using MIS.Domain.Entities.Identity;
 using MIS.Domain.Exceptions;
 

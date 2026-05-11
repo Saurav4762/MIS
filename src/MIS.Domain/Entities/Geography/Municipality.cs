@@ -4,6 +4,7 @@ namespace MIS.Domain.Entities.Geography;
 
 public class Municipality : BaseEntity
 {
+  public Guid DistrictId { get; set; }
   public string Code { get; set; } = null!;
   public string NameEn { get; set; } = null!;
   public string NameNe { get; set; } = null!;
@@ -14,5 +15,6 @@ public class Municipality : BaseEntity
   public string Website { get; set; } = null!;
 
   // Navigation property
+  public District District { get; set; } = null!;
   public IEnumerable<Ward> Wards { get; set; } = null!;
 }

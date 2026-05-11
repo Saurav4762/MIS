@@ -2,12 +2,16 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MIS.Application.Features.Authentication;
+using MIS.Application.Features.Geography.Districts;
 using MIS.Application.Features.Geography.Municipalities;
+using MIS.Application.Features.Geography.Provinces;
 using MIS.Application.Features.Geography.Wards;
 using MIS.Application.Features.Users;
 using MIS.Infrastructure.Persistence.Repositories.Authentications;
 using MIS.Infrastructure.Persistence.Data;
 using MIS.Infrastructure.Persistence.Repositories.Geography.Municipalities;
+using MIS.Infrastructure.Persistence.Repositories.Geography.Districts;
+using MIS.Infrastructure.Persistence.Repositories.Geography.Provinces;
 using MIS.Infrastructure.Persistence.Repositories.Geography.Wards;
 using MIS.Infrastructure.Persistence.Repositories.Users;
 using Npgsql;
@@ -16,6 +20,9 @@ using MIS.Application.Features.Geography.Toles;
 using MIS.Infrastructure.Persistence.Repositories.Geography.Toles;
 using OfficeOpenXml;
 using MIS.Infrastructure.ExcelParser;
+using MIS.Application.Features.Options.OptionLists;
+using MIS.Application.Features.Options.OptionItems;
+using MIS.Infrastructure.Persistence.Repositories.Options;
 
 namespace MIS.Infrastructure;
 
@@ -37,8 +44,13 @@ public static class DependencyInjection
 
     // Repositories
     services.AddScoped<IAuthenticationRepository, AuthenticationRepository>();
+    services.AddScoped<IOptionListRepo, OptionListRepo>();
+    services.AddScoped<IOptionItemRepo, OptionItemRepo>();
+
     services.AddScoped<IMunicipalityRepo, MunicipalityRepo>();
-    services.AddScoped<IWarrdRepo, WardRepo>();
+    services.AddScoped<IDistrictRepo, DistrictRepo>();
+    services.AddScoped<IProvinceRepo, ProvinceRepo>();
+    services.AddScoped<IWardRepo, WardRepo>();
     services.AddScoped<IUserRepository, UserRepository>();
     services.AddScoped<IToleRepo, ToleRepo>();
 

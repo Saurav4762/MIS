@@ -2,7 +2,7 @@ using FluentValidation;
 using FluentValidation.Results;
 using MIS.Domain.Exceptions;
 
-namespace MIS.Application.Common.Validations;
+namespace MIS.Application.Common.Extensions;
 
 public static class ValidationExtensions
 {

@@ -1,6 +1,6 @@
 
 using FluentValidation;
-using MIS.Application.Common.Validations;
+using MIS.Application.Common.Extensions;
 using MIS.Application.Features.Options.OptionLists;
 using MIS.Domain.Exceptions;
 
@@ -19,11 +19,11 @@ public class OptionItemService : IOptionItemService
     _createOptionItemValidator = createOptionItemValidator;
   }
 
-  public async Task<OptionItem> CreateOptionItem(CreateOptionItemDTO dto)
+  public async Task<OptionItemDTO> CreateOptionItem(CreateOptionItemDTO dto)
   {
     await _createOptionItemValidator.EnsureValidOrThrowAsync(dto);
-    
-    return await _repo.CreateOptionItemAsync(
+
+    var optionItem = await _repo.CreateOptionItemAsync(
       new OptionItem
       {
         Id = Guid.NewGuid(),
@@ -32,6 +32,8 @@ public class OptionItemService : IOptionItemService
         LabelEn = dto.LabelEn,
         LabelNe = dto.LabelNe
       });
+
+    return optionItem.ToOptionItemDTO();
   }
 
   public async Task DeleteOptionItem(Guid id)
@@ -44,14 +46,16 @@ public class OptionItemService : IOptionItemService
     await _repo.ExecuteDeleteAsync(id);
   }
 
-  public async Task<List<OptionItem>> GetOptionItemsByOptionListId(Guid optionListId)
+  public async Task<List<OptionItemDTO>> GetOptionItemsByOptionListId(Guid optionListId)
   {
     var optionList = await _optionListRepo.GetOptionListByIdAsync(optionListId) ??
       throw new NotFoundException(nameof(OptionList), nameof(OptionList.Id), optionListId);
-    return await _repo.GetOptionItemByOptionListIdAsync(optionListId);
+
+    var optionItems = await _repo.GetOptionItemByOptionListIdAsync(optionListId);
+    return [.. optionItems.Select(oi => oi.ToOptionItemDTO())];
   }
 
-  public async Task<OptionItem> UpdateOptionItem(Guid id, UpdateOptionItemDTO dto)
+  public async Task<OptionItemDTO> UpdateOptionItem(Guid id, UpdateOptionItemDTO dto)
   {
     var optionItem = await _repo.GetOptionItemByIdAsync(id) ??
     throw new NotFoundException(nameof(OptionItem), nameof(OptionItem.Id), id);
@@ -72,7 +76,6 @@ public class OptionItemService : IOptionItemService
 
     await _repo.UpdateOptionItemAsync(optionItem);
 
-
-    return optionItem;
+    return optionItem.ToOptionItemDTO();
   }
 }

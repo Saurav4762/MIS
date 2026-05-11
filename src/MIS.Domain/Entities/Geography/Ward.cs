@@ -6,6 +6,7 @@ public class Ward : BaseEntity
 {
   public Guid MunicipalityId { get; set; }
   public int Number { get; set; }
+  public int Code { get; set; }
   public string RepresentativeNameEn { get; set; } = string.Empty;
   public string RepresentativeNameNe { get; set; } = string.Empty;
   public string PhoneNo { get; set; } = string.Empty;

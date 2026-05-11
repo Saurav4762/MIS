@@ -1,5 +1,5 @@
 using FluentValidation;
-using MIS.Application.Common.Validations;
+using MIS.Application.Common.Extensions;
 using MIS.Application.Features.Geography.Municipalities;
 using MIS.Domain.Entities.Geography;
 using MIS.Domain.Exceptions;
@@ -8,13 +8,13 @@ namespace MIS.Application.Features.Geography.Wards;
 
 public class WardService : IWardService
 {
-	private readonly IWarrdRepo _repo;
+	private readonly IWardRepo _repo;
 	private readonly IMunicipalityRepo _municipalityRepo;
 	private readonly IValidator<CreateWardDTO> _createWardValidator;
 	private readonly IValidator<UpdateWardDTO> _updateWardValidator;
 
 	public WardService(
-		IWarrdRepo repo,
+		IWardRepo repo,
 		IMunicipalityRepo municipalityRepo,
 		IValidator<CreateWardDTO> createWardValidator,
 		IValidator<UpdateWardDTO> updateWardValidator)

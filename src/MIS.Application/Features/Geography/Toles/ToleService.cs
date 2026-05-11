@@ -1,5 +1,5 @@
 using FluentValidation;
-using MIS.Application.Common.Validations;
+using MIS.Application.Common.Extensions;
 using MIS.Application.Features.Geography.Wards;
 using MIS.Domain.Entities.Geography;
 using MIS.Domain.Exceptions;
@@ -9,13 +9,13 @@ namespace MIS.Application.Features.Geography.Toles;
 public class ToleService : IToleService
 {
 	private readonly IToleRepo _repo;
-	private readonly IWarrdRepo _wardRepo;
+	private readonly IWardRepo _wardRepo;
 	private readonly IValidator<CreateToleDTO> _createToleValidator;
 	private readonly IValidator<UpdateToleDTO> _updateToleValidator;
 
 	public ToleService(
 		IToleRepo repo,
-		IWarrdRepo wardRepo,
+		IWardRepo wardRepo,
 		IValidator<CreateToleDTO> createToleValidator,
 		IValidator<UpdateToleDTO> updateToleValidator)
 	{
