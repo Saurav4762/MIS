@@ -20,6 +20,9 @@ using MIS.Application.Features.Geography.Toles;
 using MIS.Infrastructure.Persistence.Repositories.Geography.Toles;
 using OfficeOpenXml;
 using MIS.Infrastructure.ExcelParser;
+using MIS.Application.Features.Options.OptionLists;
+using MIS.Application.Features.Options.OptionItems;
+using MIS.Infrastructure.Persistence.Repositories.Options;
 
 namespace MIS.Infrastructure;
 
@@ -41,6 +44,9 @@ public static class DependencyInjection
 
     // Repositories
     services.AddScoped<IAuthenticationRepository, AuthenticationRepository>();
+    services.AddScoped<IOptionListRepo, OptionListRepo>();
+    services.AddScoped<IOptionItemRepo, OptionItemRepo>();
+
     services.AddScoped<IMunicipalityRepo, MunicipalityRepo>();
     services.AddScoped<IDistrictRepo, DistrictRepo>();
     services.AddScoped<IProvinceRepo, ProvinceRepo>();

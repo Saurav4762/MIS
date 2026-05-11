@@ -6,10 +6,10 @@ using MIS.Infrastructure.Persistence.Data;
 
 namespace MIS.Infrastructure.Persistence.Repositories.Options;
 
-public class OptionListRepository : IOptionListRepo
+public class OptionListRepo : IOptionListRepo
 {
   private readonly ApplicationDbContext _context;
-  public OptionListRepository(ApplicationDbContext context)
+  public OptionListRepo(ApplicationDbContext context)
   {
     _context = context;
   }

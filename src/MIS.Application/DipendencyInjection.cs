@@ -17,6 +17,8 @@ public static class DependencyInjection
   public static IServiceCollection AddApplication(this IServiceCollection services)
   {
     services.AddScoped<IAuthenticationService, AuthenticationService>();
+    services.AddScoped<IOptionListService, OptionListService>();
+    services.AddScoped<IOptionItemService, OptionItemService>();
     services.AddScoped<IMunicipalityService, MunicipalityService>();
     services.AddScoped<IDistrictService, DistrictService>();
     services.AddScoped<IWardService, WardService>();

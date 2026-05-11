@@ -7,11 +7,11 @@ using MIS.Infrastructure.Persistence.Data;
 namespace MIS.Infrastructure.Persistence.Repositories.Options;
 
 
-public class OptionItemRepository : IOptionItemRepo
+public class OptionItemRepo : IOptionItemRepo
 {
   private readonly ApplicationDbContext _context;
 
-  public OptionItemRepository(ApplicationDbContext context)
+  public OptionItemRepo(ApplicationDbContext context)
   {
     _context = context;
   }
