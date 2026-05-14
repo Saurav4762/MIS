@@ -11,6 +11,9 @@ public class CreateMunicipalityDTOValidator : AbstractValidator<CreateMunicipali
 			.NotEmpty().WithMessage("Municipality code is required")
 			.MaximumLength(20).WithMessage("Municipality code must be at most 20 characters");
 
+		RuleFor(x => x.AreaId)
+			.Must(x => x != Guid.Empty).WithMessage("Area ID is required");
+
 		RuleFor(x => x.NameEn)
 			.NotEmpty().WithMessage("Municipality English name is required")
 			.MaximumLength(200).WithMessage("Municipality English name must be at most 200 characters");

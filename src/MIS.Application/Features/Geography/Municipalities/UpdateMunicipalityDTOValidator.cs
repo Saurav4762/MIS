@@ -11,6 +11,10 @@ public class UpdateMunicipalityDTOValidator : AbstractValidator<UpdateMunicipali
 			.MaximumLength(20).WithMessage("Municipality code must be at most 20 characters")
 			.When(x => x.Code is not null);
 
+		RuleFor(x => x.AreaId)
+			.Must(x => x != Guid.Empty).WithMessage("Area ID is required")
+			.When(x => x.AreaId.HasValue);
+
 		RuleFor(x => x.NameEn)
 			.MaximumLength(200).WithMessage("Municipality English name must be at most 200 characters")
 			.When(x => x.NameEn is not null);
