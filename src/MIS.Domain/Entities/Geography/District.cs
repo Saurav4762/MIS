@@ -11,5 +11,5 @@ public class District : BaseEntity
 
   // Navigation properties
   public Province Province { get; set; } = null!;
-  public IEnumerable<Municipality> Municipalities { get; set; } = null!;
+  public IEnumerable<Area> Areas { get; set; } = null!;
 }

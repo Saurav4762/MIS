@@ -52,7 +52,9 @@ public class MunicipalityService : IMunicipalityService
 		return await _repo.CreateMunicipalityAsync(new Municipality
 		{
 			Id = Guid.NewGuid(),
+
 			Code = dto.Code,
+			AreaId = dto.AreaId,
 			NameEn = dto.NameEn,
 			NameNe = dto.NameNe,
 			Email = dto.Email,
@@ -160,6 +162,9 @@ public class MunicipalityService : IMunicipalityService
 		if (!string.IsNullOrWhiteSpace(dto.Website))
 			municipality.Website = dto.Website;
 
+		if (Guid.TryParse(dto.AreaId?.ToString(), out var areaId) && areaId != Guid.Empty)
+			municipality.AreaId = areaId;
+
 		return await _repo.UpdateMunicipalityAsync(municipality);
 	}
 
@@ -171,7 +176,7 @@ public class MunicipalityService : IMunicipalityService
 		await _repo.DeleteMunicipalityAsync(municipality.Id);
 	}
 
-  public Task<List<Municipality>> SearchMunicipalitiesAsync(string searchQuery, string? searchBy = null, int maxResults = 10, int pageNumber = 1)
+	public Task<List<Municipality>> SearchMunicipalitiesAsync(string searchQuery, string? searchBy = null, int maxResults = 10, int pageNumber = 1)
 	{
 		return _repo.SearchMunicipalitiesAsync(searchQuery, searchBy, maxResults, pageNumber);
 	}

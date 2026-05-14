@@ -4,6 +4,7 @@ public record CreateMunicipalityDTO
 {
 
 	public string Code { get; set; } = null!;
+	public Guid AreaId { get; set; }
 	public string NameEn { get; set; } = null!;
 	public string NameNe { get; set; } = null!;
 	public string HeadExecutiveNameEn { get; set; } = null!;

@@ -129,9 +129,16 @@ public class MunicipalityRepo : BaseRepo<Municipality>, IMunicipalityRepo
 		var existing = await _context.Set<Municipality>().FirstOrDefaultAsync(x => x.Id == municipality.Id)
 			?? throw new NotFoundException(nameof(Municipality), nameof(Municipality.Id), municipality.Id);
 
+
 		existing.Code = municipality.Code;
 		existing.NameEn = municipality.NameEn;
 		existing.NameNe = municipality.NameNe;
+		existing.AreaId = municipality.AreaId;
+		existing.HeadExecutiveNameEn = municipality.HeadExecutiveNameEn;
+		existing.HeadExecutiveNameNe = municipality.HeadExecutiveNameNe;
+		existing.Email = municipality.Email;
+		existing.PhoneNo = municipality.PhoneNo;
+		existing.Website = municipality.Website;
 
 		await _context.SaveChangesAsync();
 		return existing;

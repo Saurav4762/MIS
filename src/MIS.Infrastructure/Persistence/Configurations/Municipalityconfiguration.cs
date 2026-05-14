@@ -11,9 +11,9 @@ public class Municipalityconfiguration : IEntityTypeConfiguration<Municipality>
     {
         builder.HasKey(m => m.Id);
         
-        builder.HasOne(m => m.District)
-            .WithMany(d => d.Municipalities)
-            .HasForeignKey(m => m.DistrictId)
+        builder.HasOne(m => m.Area)
+            .WithMany(a => a.Municipalities)
+            .HasForeignKey(m => m.AreaId)
             .OnDelete(DeleteBehavior.Cascade);
 
         builder
