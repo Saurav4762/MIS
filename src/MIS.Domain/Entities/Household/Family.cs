@@ -17,4 +17,7 @@ public class Family : BaseEntity
 
   public Person? HeadOfTheFamily { get; set; } = null;
 
+  public House? House { get; set; } = null;
+
+
 }

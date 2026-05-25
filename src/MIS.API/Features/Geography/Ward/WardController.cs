@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MIS.Application.Features.Geography.Wards;
 
@@ -33,8 +34,9 @@ public class WardController : ControllerBase
 	{
 		var result = await _wardService.GetWardByIdAsync(id);
 		return Ok(result);
-	}
-
+	}		
+	
+	[AllowAnonymous]
 	[HttpGet("municipality/{municipalityId:guid}")]
 	public async Task<IActionResult> GetWardsByMunicipalityId(Guid municipalityId)
 	{

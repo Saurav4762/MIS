@@ -1,6 +1,7 @@
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 using MIS.Application.Features.Authentication;
+using Microsoft.AspNetCore.Authorization;
 using MIS.Domain.Exceptions;
 
 namespace MIS.API.Features.Authentication;
@@ -21,5 +22,5 @@ public class AuthController : ControllerBase
     var data = await _authenticationService.LoginAsync(dto);
     return Ok(data);
   }
-
+  
 }

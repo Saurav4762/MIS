@@ -13,7 +13,11 @@ var builder = WebApplication.CreateBuilder(args);
 // builder.Services.AddOpenApi();
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+  // Use fully-qualified CLR type names for schema ids to avoid name collisions
+  c.CustomSchemaIds(type => type.FullName?.Replace("+", "."));
+});
 
 
 var jwt = builder.Configuration.GetSection(JwtOptions.SectionName).Get<JwtOptions>()
@@ -62,6 +66,8 @@ builder.Services
       ClockSkew = TimeSpan.Zero
     };
   });
+
+  
 
 
 
