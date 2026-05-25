@@ -9,6 +9,7 @@ public class CreateOptionListDTOValidator : AbstractValidator<CreateOptionListDT
   public CreateOptionListDTOValidator()
   {
     RuleFor(x => x.LabelEn).NotEmpty().WithMessage("English Label is required");
+    RuleFor(x => x.Key).NotEmpty().WithMessage("Key is required");
 
     RuleFor(x => x.LabelNe)
       .NotEmpty()

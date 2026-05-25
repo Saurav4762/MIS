@@ -57,4 +57,15 @@ public class OptionItemRepo : IOptionItemRepo
     if (rows == 0)
       throw new NotFoundException(nameof(OptionItem), nameof(OptionItem.Id), id);
   }
+
+  public async Task<List<OptionItem>> GetOptionItemByOptionListKeyAsync(string optionListKey)
+  {
+    var rows = await _context.OptionItems
+      .Where(x => x.OptionList.Key == optionListKey)
+      .ToListAsync();
+    if (rows.Count == 0)
+      throw new NotFoundException(nameof(OptionItem), nameof(OptionList), optionListKey);
+    return rows;
+
+  }
 }

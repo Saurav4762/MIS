@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using MIS.API.Common.Responses;
 using MIS.Application.Features.Options.OptionItems;
 
 namespace MIS.API.Features.Options;
@@ -26,6 +27,13 @@ public class OptionItemController : ControllerBase
 	{
 		var result = await _optionItemService.GetOptionItemsByOptionListId(optionListId);
 		return Ok(result);
+	}
+
+	[HttpGet("OptionList/{optionListKey}")]
+	public async Task<IActionResult> GetOptionItemByOptionListKey(string optionListKey)
+	{
+		var result = await _optionItemService.GetOptionItemByOptionListKey(optionListKey);
+		return Ok(ApiResponse<List<OptionItemDTO>>.SuccessResponse(result));
 	}
 
 	[HttpPatch("{id:guid}")]

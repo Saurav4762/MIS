@@ -6,5 +6,6 @@ public class CreateOptionListDTO
 {
   public string LabelEn { get; set; } = null!;
   public string LabelNe { get; set; } = null!;
+  public string Key { get; set; } = null!;
   public string Description { get; set; } = string.Empty;
 }

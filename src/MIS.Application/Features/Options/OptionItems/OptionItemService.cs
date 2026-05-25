@@ -46,6 +46,13 @@ public class OptionItemService : IOptionItemService
     await _repo.ExecuteDeleteAsync(id);
   }
 
+  public async Task<List<OptionItemDTO>> GetOptionItemByOptionListKey(string optionListKey)
+  {
+    var optionItems = await _repo.GetOptionItemByOptionListKeyAsync(optionListKey);
+
+    return [.. optionItems.Select(x => x.ToOptionItemDTO())];
+  }
+
   public async Task<List<OptionItemDTO>> GetOptionItemsByOptionListId(Guid optionListId)
   {
     var optionList = await _optionListRepo.GetOptionListByIdAsync(optionListId) ??
