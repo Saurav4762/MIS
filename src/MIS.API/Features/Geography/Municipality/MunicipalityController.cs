@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MIS.API.Common.Responses;
 using MIS.Application.Common.Models;
@@ -48,14 +49,16 @@ public class MunicipalityController : ControllerBase
 		var result = await _municipalityService.SearchMunicipalitiesAsync(query, searchBy, maxResults, pageNumber);
 		return Ok(result);
 	}
-
+	
+	[AllowAnonymous]
 	[HttpGet]
 	public async Task<IActionResult> GetAllMunicipalities()
 	{
 		var result = await _municipalityService.GetAllMunicipalitiesAsync();
 		return Ok(result);
 	}
-
+	
+	[AllowAnonymous]
 	[HttpGet("{id:guid}")]
 	public async Task<IActionResult> GetMunicipalityById(Guid id)
 	{
