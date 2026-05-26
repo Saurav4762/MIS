@@ -4,7 +4,7 @@ public interface IOptionItemService
 {
   public Task<OptionItemDTO> CreateOptionItem(CreateOptionItemDTO dto);
   public Task<List<OptionItemDTO>> GetOptionItemsByOptionListId(Guid Id);
-
+  public Task<List<OptionItemDTO>> GetOptionItemByOptionListKey(string optionListKey);
   public Task<OptionItemDTO> UpdateOptionItem(Guid id, UpdateOptionItemDTO dto);
 
   public Task DeleteOptionItem(Guid id);

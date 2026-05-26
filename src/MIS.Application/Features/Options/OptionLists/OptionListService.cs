@@ -38,6 +38,7 @@ public class OptionListService : IOptionListService
     {
       Id = Guid.NewGuid(),
       Description = dto.Description,
+      Key = dto.Key,
       LabelEn = dto.LabelEn,
       LabelNe = dto.LabelNe
     });
