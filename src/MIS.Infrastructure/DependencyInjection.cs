@@ -24,7 +24,7 @@ using MIS.Application.Features.Options.OptionLists;
 using MIS.Application.Features.Options.OptionItems;
 using MIS.Infrastructure.Persistence.Repositories.Options;
 using MIS.Application.Features.Reports;
-using MIS.Infrastructure.Persistence.Reports;
+using MIS.Infrastructure.Persistence.Repositories.Reports;
 
 namespace MIS.Infrastructure;
 
@@ -55,7 +55,10 @@ public static class DependencyInjection
     services.AddScoped<IWardRepo, WardRepo>();
     services.AddScoped<IUserRepository, UserRepository>();
     services.AddScoped<IToleRepo, ToleRepo>();
+    
+    services.AddScoped<IReportRepository, ReportRepository>();
     services.AddScoped<IReportService, ReportService>();
+
 
 
     // Data

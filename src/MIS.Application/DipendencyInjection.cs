@@ -28,6 +28,7 @@ public static class DependencyInjection
 
 
     services.AddScoped<IUserService, UserService>();
+    services.AddScoped<IReportService, ReportService>();
     
 
     // Registers LoginUserDTOValidator, RegisterUserDTOValidator, and any future validators automatically
