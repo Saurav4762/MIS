@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
+using MIS.Domain.Entities.DataCollection.House_info;
+using MIS.Domain.Entities.DataCollection.HouseholdInfo;
 using MIS.Domain.Entities.Geography;
-using MIS.Domain.Entities.HouseHold;
 using MIS.Domain.Entities.Identity;
 using OfficeOpenXml.Packaging.Ionic.Zip;
 
@@ -22,9 +23,25 @@ public class ApplicationDbContext : DbContext
     public DbSet<Ward> Wards => Set<Ward>();
     public DbSet<Tole> Toles => Set<Tole>();
 
-    // Household
-    public DbSet<Person> Persons => Set<Person>();
 
+
+// ====================== Household Info ======================
+    public DbSet<House> Houses => Set<House>();
+    public DbSet<Family> Families => Set<Family>();
+    public DbSet<Member> Members => Set<Member>();
+    public DbSet<MemberImage> MemberImages => Set<MemberImage>();
+    public DbSet<Facilities> Facilities => Set<Facilities>();
+    public DbSet<Social> Socials => Set<Social>();
+    public DbSet<Residence> Residences => Set<Residence>();
+
+// ====================== Other Data Collection ======================
+    public DbSet<Agriculture> Agricultures => Set<Agriculture>();
+    public DbSet<Decision> Decisions => Set<Decision>();
+    public DbSet<Disaster> Disasters => Set<Disaster>();
+    public DbSet<Economic> Economics => Set<Economic>();
+    public DbSet<Health> Healths => Set<Health>();
+    public DbSet<Livestock> Livestocks => Set<Livestock>();
+    
 
     // Lookup tables
     public DbSet<OptionList> OptionLists => Set<OptionList>();
