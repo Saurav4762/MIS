@@ -55,7 +55,7 @@ public class FamilyConfiguration : IEntityTypeConfiguration<Family>
 
         builder.HasOne(f => f.Economic)
                .WithOne(e => e.Family)
-               .HasForeignKey<Economic>(e => e.FamilyId)
+               .HasForeignKey<Economy>(e => e.FamilyId)
                .OnDelete(DeleteBehavior.Cascade);
 
         builder.HasOne(f => f.Facilities)

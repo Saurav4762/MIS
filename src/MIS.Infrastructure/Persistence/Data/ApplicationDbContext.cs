@@ -29,7 +29,6 @@ public class ApplicationDbContext : DbContext
     public DbSet<House> Houses => Set<House>();
     public DbSet<Family> Families => Set<Family>();
     public DbSet<Member> Members => Set<Member>();
-    public DbSet<MemberImage> MemberImages => Set<MemberImage>();
     public DbSet<Facilities> Facilities => Set<Facilities>();
     public DbSet<Social> Socials => Set<Social>();
     public DbSet<Residence> Residences => Set<Residence>();
@@ -38,7 +37,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<Agriculture> Agricultures => Set<Agriculture>();
     public DbSet<Decision> Decisions => Set<Decision>();
     public DbSet<Disaster> Disasters => Set<Disaster>();
-    public DbSet<Economic> Economics => Set<Economic>();
+    public DbSet<Economy> Economics => Set<Economy>();
     public DbSet<Health> Healths => Set<Health>();
     public DbSet<Livestock> Livestocks => Set<Livestock>();
     

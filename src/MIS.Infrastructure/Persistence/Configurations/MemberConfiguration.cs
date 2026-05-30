@@ -19,7 +19,7 @@ public class MemberConfiguration : IEntityTypeConfiguration<Member>
 
         // Foreign Key: Family
         builder.HasOne(fm => fm.Family)
-            .WithMany()
+            .WithMany(f=>f.Members)
             .HasForeignKey(fm => fm.FamilyId)
             .OnDelete(DeleteBehavior.Cascade)
             .HasConstraintName("FK_FamilyMember_Family");
@@ -64,13 +64,7 @@ public class MemberConfiguration : IEntityTypeConfiguration<Member>
             .HasForeignKey(fm => fm.OccupationId)
             .OnDelete(DeleteBehavior.Restrict)
             .HasConstraintName("FK_FamilyMember_Occupation");
-
-        //Foreign Key : Image (Optional)
-        builder.HasOne(fm => fm.Image)
-            .WithMany()
-            .HasForeignKey(fm => fm.ImageId)
-            .OnDelete(DeleteBehavior.SetNull)
-            .HasConstraintName("FK_Member_Image");
+        
         // Composite Index
         builder.HasIndex(fm => new { fm.FamilyId, fm.FullNameEn });
     }
