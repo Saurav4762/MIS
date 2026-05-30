@@ -131,6 +131,17 @@ public interface IReportService
     //======================DASHBOARD REPORTS======================
     
     Task<DashboardStatsResponse> GetDashboardStatsAsync(Guid municipalityId);
+    
+    Task<List<ChartItem>> GetAgeGroupDistributionAsync();
+    Task<List<ChartItem>> GetBloodGroupDistributionAsync();
+    Task<List<ChartItem>> GetHouseTypeDistributionAsync();
+    Task<List<ChartItem>> GetRoofTypeDistributionAsync();
+    Task<List<ChartItem>> GetWallTypeDistributionAsync();
+    Task<List<ChartItem>> GetLandTypeDistributionAsync();
+    Task<List<ChartItem>> GetFamilyByEthnicityAsync();
+    Task<List<ChartItem>> GetFamilyByReligionAsync();
+    Task<List<ChartItem>> GetEducationProgramsAsync();
+    Task<List<ChartItem>> GetWardHouseholdCountAsync();
 }
 
 

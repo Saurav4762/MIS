@@ -80,4 +80,15 @@ public class ReportService : IReportService
         throw new NotImplementedException();
     public Task<ChartDataResponse> GetDataCompletenessAsync(Guid municipalityId) =>
         throw new NotImplementedException();
+    
+    public Task<List<ChartItem>> GetAgeGroupDistributionAsync() => _reportRepository.GetAgeGroupDistributionAsync();
+    public Task<List<ChartItem>> GetBloodGroupDistributionAsync() => _reportRepository.GetBloodGroupDistributionAsync();
+    public Task<List<ChartItem>> GetHouseTypeDistributionAsync() => _reportRepository.GetHouseTypeDistributionAsync();
+    public Task<List<ChartItem>> GetRoofTypeDistributionAsync() => _reportRepository.GetRoofTypeDistributionAsync();
+    public Task<List<ChartItem>> GetWallTypeDistributionAsync() => _reportRepository.GetWallTypeDistributionAsync();
+    public Task<List<ChartItem>> GetLandTypeDistributionAsync() => _reportRepository.GetLandTypeDistributionAsync();
+    public Task<List<ChartItem>> GetFamilyByEthnicityAsync() => _reportRepository.GetFamilyByEthnicityAsync();
+    public Task<List<ChartItem>> GetFamilyByReligionAsync() => _reportRepository.GetFamilyByReligionAsync();
+    public Task<List<ChartItem>> GetEducationProgramsAsync() => _reportRepository.GetEducationProgramsAsync();
+    public Task<List<ChartItem>> GetWardHouseholdCountAsync() => _reportRepository.GetWardHouseholdCountAsync();
 }

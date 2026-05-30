@@ -15,6 +15,6 @@ public class Municipality : BaseEntity
   public string Website { get; set; } = null!;
 
   // Navigation property
-  public Area Area { get; set; } = null!;
+  public Area? Area { get; set; } = null!;
   public IEnumerable<Ward> Wards { get; set; } = null!;
 }

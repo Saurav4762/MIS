@@ -484,57 +484,76 @@ public class ReportsController : ControllerBase
     /// </summary>
 
     [AllowAnonymous]
-[HttpGet("dashboard/stats")]
-public async Task<IActionResult> GetDashboardStats([FromQuery] Guid? municipalityId)
+    [HttpGet("dashboard/stats")]
+    public async Task<IActionResult> GetDashboardStats()
+    {
+        try
+        {
+            var firstMunicipality = await _context.Set<Municipality>()
+                .AsNoTracking()
+                .Select(m => new { m.Id })
+                .FirstOrDefaultAsync();
+
+            if (firstMunicipality == null)
+                return BadRequest(new { success = false, message = "No municipality found" });
+
+            var stats = await _reportService.GetDashboardStatsAsync(firstMunicipality.Id);
+            return Ok(new
+            {
+                data = new
+                {
+                    populationByGender = new
+                    {
+                        male = stats.PopulationByGender.Male,
+                        female = stats.PopulationByGender.Female,
+                        others = stats.PopulationByGender.Others
+                    },
+                    totalHouseholds = stats.TotalHouseholds,
+                    totalPopulation = stats.TotalPopulation,
+                    ageGroup16Plus = stats.AgeGroup16Plus,
+                    literate = stats.Literate,
+                    jobless = stats.Jobless
+                },
+                timestamp = DateTime.UtcNow.ToString("o")
+            });
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(new { success = false, message = ex.Message });
+        }
+    }
+    
+    [AllowAnonymous]
+[HttpGet("all")]
+public async Task<IActionResult> GetAllReports()
 {
     try
     {
-        Guid id;
+        var ageGroups = await _reportService.GetAgeGroupDistributionAsync();
+        var bloodGroups = await _reportService.GetBloodGroupDistributionAsync();
+        var houseTypes = await _reportService.GetHouseTypeDistributionAsync();
+        var roofTypes = await _reportService.GetRoofTypeDistributionAsync();
+        var wallTypes = await _reportService.GetWallTypeDistributionAsync();
+        var landTypes = await _reportService.GetLandTypeDistributionAsync();
+        var ethnicities = await _reportService.GetFamilyByEthnicityAsync();
+        var religions = await _reportService.GetFamilyByReligionAsync();
+        var education = await _reportService.GetEducationProgramsAsync();
+        var wards = await _reportService.GetWardHouseholdCountAsync();
 
-        // If municipalityId is passed as query param (public access)
-        if (municipalityId.HasValue)
-        {
-            id = municipalityId.Value;
-        }
-        else if (User.Identity?.IsAuthenticated == true)
-        {
-            var currentUser = new CurrentUser(User);
-            if (currentUser.IsSuperAdmin)
-            {
-                var firstMunicipality = await _context.Set<Municipality>()
-                    .FirstOrDefaultAsync();
-                if (firstMunicipality == null)
-                    return BadRequest(new { success = false, message = "No municipality found" });
-                id = firstMunicipality.Id;
-            }
-            else
-            {
-                if (!currentUser.MunicipalityId.HasValue)
-                    return BadRequest(new { success = false, message = "User has no municipality assigned" });
-                id = currentUser.MunicipalityId.Value;
-            }
-        }
-        else
-        {
-            return BadRequest(new { success = false, message = "Municipality ID required" });
-        }
-
-        var stats = await _reportService.GetDashboardStatsAsync(id);
         return Ok(new
         {
             data = new
             {
-                populationByGender = new
-                {
-                    male = stats.PopulationByGender.Male,
-                    female = stats.PopulationByGender.Female,
-                    others = stats.PopulationByGender.Others
-                },
-                totalHouseholds = stats.TotalHouseholds,
-                totalPopulation = stats.TotalPopulation,
-                ageGroup16Plus = stats.AgeGroup16Plus,
-                literate = stats.Literate,
-                jobless = stats.Jobless
+                ageGroups = ageGroups.Select(x => new { label = x.Label, value = x.Value }),
+                bloodGroups = bloodGroups.Select(x => new { label = x.Label, value = x.Value }),
+                houseTypes = houseTypes.Select(x => new { label = x.Label, value = x.Value }),
+                roofTypes = roofTypes.Select(x => new { label = x.Label, value = x.Value }),
+                wallTypes = wallTypes.Select(x => new { label = x.Label, value = x.Value }),
+                landTypes = landTypes.Select(x => new { label = x.Label, value = x.Value }),
+                ethnicities = ethnicities.Select(x => new { label = x.Label, value = x.Value }),
+                religions = religions.Select(x => new { label = x.Label, value = x.Value }),
+                education = education.Select(x => new { label = x.Label, value = x.Value }),
+                wards = wards.Select(x => new { label = x.Label, value = x.Value }),
             },
             timestamp = DateTime.UtcNow.ToString("o")
         });
@@ -544,5 +563,4 @@ public async Task<IActionResult> GetDashboardStats([FromQuery] Guid? municipalit
         return BadRequest(new { success = false, message = ex.Message });
     }
 }
-    
-}
+}   
