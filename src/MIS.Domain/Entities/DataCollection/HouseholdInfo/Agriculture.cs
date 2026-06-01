@@ -23,15 +23,10 @@ public class Agriculture : BaseEntity
     // FUTURE-PROOF COLLECTIONS (Multiple Choice / Checkboxes)
     // ==========================================
     
-    // Section 01: Selected Land Types (Khet, Bari, Orchard, Fallow)
-    public ICollection<OptionItem> LandTypes { get; set; } = new List<OptionItem>();
+    // Replace with:
+    public ICollection<AgricultureLandType> LandTypes { get; set; } = new List<AgricultureLandType>();
+    public ICollection<AgricultureCrop> SelectedCrops { get; set; } = new List<AgricultureCrop>();
+    public ICollection<AgricultureEquipment> Equipments { get; set; } = new List<AgricultureEquipment>();
+    public ICollection<AgricultureProblem> ProblemsFaced { get; set; } = new List<AgricultureProblem>();
 
-    // Section 02: Selected Crop Items (Paddy, Maize, Lentils, Potato, Orange, etc.)
-    public ICollection<OptionItem> SelectedCrops { get; set; } = new List<OptionItem>();
-
-    // Section 03: Selected Machinery Equipment (Tractor, Pump Set, Thresher)
-    public ICollection<OptionItem> Equipments { get; set; } = new List<OptionItem>();
-
-    // Section 04: Selected Problems Faced (Lack of Irrigation, Fertilizer Scarcity, etc.)
-    public ICollection<OptionItem> ProblemsFaced { get; set; } = new List<OptionItem>();
 }

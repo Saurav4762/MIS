@@ -4,83 +4,36 @@ using MIS.Domain.Entities.DataCollection.HouseholdInfo;
 
 namespace MIS.Infrastructure.Persistence.Configurations;
 
-public class AgricultureConfiguration : IEntityTypeConfiguration<Agriculture>
+public class AgricultureCropConfiguration : IEntityTypeConfiguration<AgricultureCrop>
 {
-    public void Configure(EntityTypeBuilder<Agriculture> builder)
+    public void Configure(EntityTypeBuilder<AgricultureCrop> builder)
     {
-        // Table Mapping
-        builder.ToTable("Agriculture");
+        builder.ToTable("AgricultureCrops");
 
-        // Primary Key
-        builder.HasKey(a => a.Id);
+        builder.HasKey(c => c.Id);
 
-        // Decimal Precision Setup for Land Area
-        builder.Property(a => a.TotalArea)
-            .HasPrecision(18, 4);
+        builder.Property(c => c.Id).ValueGeneratedOnAdd();
 
-        // Bi-Directional One-to-One relationship with Family
-        builder.HasOne(a => a.Family)
-            .WithOne(f => f.Agriculture)
-            .HasForeignKey<Agriculture>(a => a.FamilyId)
+        builder.Property(c => c.AreaInHectares).HasPrecision(18,4).IsRequired(false);
+        builder.Property(c => c.EstimatedYield).HasPrecision(18,4).IsRequired(false);
+        builder.Property(c => c.Notes).HasMaxLength(1000).IsRequired(false);
+
+        // FK -> Agriculture
+        builder.HasOne(c => c.Agriculture)
+            .WithMany(a => a.SelectedCrops)
+            .HasForeignKey(c => c.AgricultureId)
             .OnDelete(DeleteBehavior.Cascade)
-            .HasConstraintName("FK_Agriculture_Family");
+            .HasConstraintName("FK_AgricultureCrop_Agriculture");
 
-        // Single Selection Dropdown: Land Unit Lookup
-        builder.HasOne(a => a.LandUnit)
+        // FK -> OptionItem (Crop)
+        builder.HasOne(c => c.Crop)
             .WithMany()
-            .HasForeignKey(a => a.LandUnitId)
+            .HasForeignKey(c => c.CropId)
             .OnDelete(DeleteBehavior.Restrict)
-            .HasConstraintName("FK_Agriculture_LandUnit");
+            .HasConstraintName("FK_AgricultureCrop_Crop");
 
-        // Single Selection Dropdown: Ownership Status Lookup
-        builder.HasOne(a => a.OwnershipStatus)
-            .WithMany()
-            .HasForeignKey(a => a.OwnershipStatusId)
-            .OnDelete(DeleteBehavior.Restrict)
-            .HasConstraintName("FK_Agriculture_OwnershipStatus");
-
-        // =======================================================================
-        // MANY-TO-MANY BRIDGE CONFIGURATIONS FOR CHECKBOXES (Future Proofing)
-        // =======================================================================
-
-        // 1. Land Types Junction Table
-        builder.HasMany(a => a.LandTypes)
-            .WithMany()
-            .UsingEntity<Dictionary<string, object>>(
-                "AgricultureLandType",
-                j => j.HasOne<OptionItem>().WithMany().HasForeignKey("LandTypeId").OnDelete(DeleteBehavior.Restrict),
-                j => j.HasOne<Agriculture>().WithMany().HasForeignKey("AgricultureId").OnDelete(DeleteBehavior.Cascade),
-                j => j.ToTable("AgricultureLandTypes")
-            );
-
-        // 2. Selected Crops Junction Table
-        builder.HasMany(a => a.SelectedCrops)
-            .WithMany()
-            .UsingEntity<Dictionary<string, object>>(
-                "AgricultureCrop",
-                j => j.HasOne<OptionItem>().WithMany().HasForeignKey("CropId").OnDelete(DeleteBehavior.Restrict),
-                j => j.HasOne<Agriculture>().WithMany().HasForeignKey("AgricultureId").OnDelete(DeleteBehavior.Cascade),
-                j => j.ToTable("AgricultureCrops")
-            );
-
-        // 3. Equipments Junction Table
-        builder.HasMany(a => a.Equipments)
-            .WithMany()
-            .UsingEntity<Dictionary<string, object>>(
-                "AgricultureEquipment",
-                j => j.HasOne<OptionItem>().WithMany().HasForeignKey("EquipmentId").OnDelete(DeleteBehavior.Restrict),
-                j => j.HasOne<Agriculture>().WithMany().HasForeignKey("AgricultureId").OnDelete(DeleteBehavior.Cascade),
-                j => j.ToTable("AgricultureEquipments")
-            );
-
-        // 4. Problems Faced Junction Table
-        builder.HasMany(a => a.ProblemsFaced)
-            .WithMany()
-            .UsingEntity<Dictionary<string, object>>(
-                "AgricultureProblem",
-                j => j.HasOne<OptionItem>().WithMany().HasForeignKey("ProblemId").OnDelete(DeleteBehavior.Restrict),
-                j => j.HasOne<Agriculture>().WithMany().HasForeignKey("AgricultureId").OnDelete(DeleteBehavior.Cascade),
-                j => j.ToTable("AgricultureProblems")
-            );
+        // Indexes for fast lookups
+        builder.HasIndex(c => c.AgricultureId);
+        builder.HasIndex(c => c.CropId);
     }
 }

@@ -39,7 +39,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<Disaster> Disasters => Set<Disaster>();
     public DbSet<Economy> Economics => Set<Economy>();
     public DbSet<Health> Healths => Set<Health>();
-    public DbSet<Livestock> Livestocks => Set<Livestock>();
+    public DbSet<Livestock> LiveStocks => Set<Livestock>();
     
 
     // Lookup tables

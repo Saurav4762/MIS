@@ -13,7 +13,7 @@ public class LivestockAIService : BaseEntity
     public int AgeYears { get; set; }            // Age numeric entry
     public Guid BirthHistoryId { get; set; }    // Toggle/Dropdown lookup (e.g., Natural, Inseminated)
     public string SemenOrBullName { get; set; } = null!; // Text entry for breeding specifications
-    public string AIServiceDate { get; set; } = null!;  // String mapping to natively handle Nepali BS date entries safely
+    public string AiServiceDate { get; set; } = null!;  // String mapping to natively handle Nepali BS date entries safely
     public Guid StatusId { get; set; }          // Dropdown lookup tracking results (e.g., Pregnant, Failed)
 
     // Navigation Properties

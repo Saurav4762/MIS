@@ -15,7 +15,7 @@ public class LivestockAIServiceConfiguration : IEntityTypeConfiguration<Livestoc
         // Configure Max Lengths for text fields to optimize DB storage
         builder.Property(las => las.AnimalName).HasMaxLength(150);
         builder.Property(las => las.SemenOrBullName).HasMaxLength(150);
-        builder.Property(las => las.AIServiceDate).HasMaxLength(10); // Format: YYYY-MM-DD
+        builder.Property(las => las.AiServiceDate).HasMaxLength(10); // Format: YYYY-MM-DD
 
         // Many-to-One Link back to Parent Livestock Table
         builder.HasOne(las => las.Livestock)
