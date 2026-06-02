@@ -8,9 +8,7 @@ public static class ToDTO
     {
       Id = area.Id,
       DistrictId = area.DistrictId,
-      Code = area.Code,
-      NameEn = area.NameEn,
-      NameNe = area.NameNe
+      Number = area.Number
     };
   }
 

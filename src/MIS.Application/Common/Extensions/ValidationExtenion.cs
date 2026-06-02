@@ -11,6 +11,13 @@ public static class ValidationExtensions
     T model,
     CancellationToken cancellationToken = default)
   {
+    if(model == null)
+    {
+      throw new DataValidationException(new Dictionary<string, string[]>
+      {
+        { typeof(T).Name, new[] { $"{typeof(T).Name} cannot be null." } }
+      });
+    }
     ValidationResult result = await validator.ValidateAsync(model, cancellationToken);
     if (!result.IsValid)
     {

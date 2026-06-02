@@ -10,17 +10,8 @@ public class AreaConfiguration : IEntityTypeConfiguration<Area>
 	{
 		builder.HasKey(a => a.Id);
 
-		builder.HasIndex(a => new { a.DistrictId, a.Code })
+		builder.HasIndex(a => new { a.DistrictId, a.Number })
 			.IsUnique();
-
-		builder.Property(a => a.Code)
-			.IsRequired();
-
-		builder.Property(a => a.NameEn)
-			.IsRequired();
-
-		builder.Property(a => a.NameNe)
-			.IsRequired();
 
 		builder.HasOne(a => a.District)
 			.WithMany(d => d.Areas)

@@ -10,5 +10,4 @@ public interface IAreaService
 	Task<List<AreaDTO>> GetAreasByDistrictIdAsync(Guid districtId);
 	Task<AreaDTO> UpdateAreaAsync(Guid id, UpdateAreaDTO area);
 	Task DeleteAreaAsync(Guid id);
-	Task<List<AreaDTO>> SearchAreasAsync(string searchQuery, string? searchBy = null, int maxResults = 10, int pageNumber = 1);
 }

@@ -1,6 +1,7 @@
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using MIS.Application.Features.Authentication;
+using MIS.Application.Features.Geography.Areas;
 using MIS.Application.Features.Geography.Districts;
 using MIS.Application.Features.Geography.Municipalities;
 using MIS.Application.Features.Geography.Provinces;
@@ -23,6 +24,7 @@ public static class DependencyInjection
     services.AddScoped<IDistrictService, DistrictService>();
     services.AddScoped<IWardService, WardService>();
     services.AddScoped<IToleService, ToleService>();
+    services.AddScoped<IAreaService, AreaService>();
     services.AddScoped<IProvinceService, ProvinceService>();
 
 
