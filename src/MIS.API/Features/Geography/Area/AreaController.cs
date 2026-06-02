@@ -33,13 +33,6 @@ public class AreaController : ControllerBase
 		return Ok(ApiResponse<List<AreaDTO>>.SuccessResponse(result));
 	}
 
-	[HttpGet("search")]
-	public async Task<IActionResult> SearchAreas([FromQuery] string query, [FromQuery] string? searchBy, [FromQuery] int maxResults = 10, [FromQuery] int pageNumber = 1)
-	{
-		var result = await _areaService.SearchAreasAsync(query, searchBy, maxResults, pageNumber);
-		return Ok(ApiResponse<List<AreaDTO>>.SuccessResponse(result));
-	}
-
 	[HttpGet("district/{districtId:guid}")]
 	public async Task<IActionResult> GetAreasByDistrictId(Guid districtId)
 	{

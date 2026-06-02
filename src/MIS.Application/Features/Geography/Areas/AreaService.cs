@@ -32,12 +32,13 @@ public class AreaService : IAreaService
 		var district = await _districtRepo.GetDistrictByIdAsync(dto.DistrictId)
 			?? throw new NotFoundException(nameof(District), nameof(District.Id), dto.DistrictId);
 
-		var existingArea = await _repo.GetByCodeAsync(dto.Code);
+		var existingArea = await _repo.GetAreaByNumberAndDistrictIdAsync(dto.Number, dto.DistrictId);
+
 		if (existingArea is not null)
 		{
 			throw new ConflictException(new Dictionary<string, string[]>
 			{
-				{ nameof(Area.Code), ["The field already exists"] }
+				{ nameof(Area.Number), ["The field already exists"] }
 			});
 		}
 
@@ -45,9 +46,7 @@ public class AreaService : IAreaService
 		{
 			Id = Guid.NewGuid(),
 			DistrictId = district.Id,
-			Code = dto.Code,
-			NameEn = dto.NameEn,
-			NameNe = dto.NameNe
+			Number = dto.Number,
 		});
 		return area.ToAreaDTO();
 	}
@@ -85,25 +84,11 @@ public class AreaService : IAreaService
 			area.DistrictId = district.Id;
 		}
 
-		if (!string.IsNullOrWhiteSpace(dto.Code))
+		if (dto.Number.HasValue && dto.Number.Value != area.Number)
 		{
-			var existingArea = await _repo.GetByCodeAsync(dto.Code);
-			if (existingArea is not null && existingArea.Id != id)
-			{
-				throw new ConflictException(new Dictionary<string, string[]>
-				{
-					{ nameof(Area.Code), ["The field already exists"] }
-				});
-			}
-
-			area.Code = dto.Code;
+			area.Number = dto.Number.Value;
 		}
 
-		if (!string.IsNullOrWhiteSpace(dto.NameEn))
-			area.NameEn = dto.NameEn;
-
-		if (!string.IsNullOrWhiteSpace(dto.NameNe))
-			area.NameNe = dto.NameNe;
 
 		var updatedArea = await _repo.UpdateAreaAsync(area);
 		return updatedArea.ToAreaDTO();
@@ -115,11 +100,5 @@ public class AreaService : IAreaService
 			?? throw new NotFoundException(nameof(Area), nameof(Area.Id), id);
 
 		await _repo.DeleteAreaAsync(area.Id);
-	}
-
-	public async Task<List<AreaDTO>> SearchAreasAsync(string searchQuery, string? searchBy = null, int maxResults = 10, int pageNumber = 1)
-	{
-		var areas = await _repo.SearchAreasAsync(searchQuery, searchBy, maxResults, pageNumber);
-		return [.. areas.Select(a => a.ToAreaDTO())];
 	}
 }

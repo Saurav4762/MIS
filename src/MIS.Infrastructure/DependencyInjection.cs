@@ -23,6 +23,8 @@ using MIS.Infrastructure.ExcelParser;
 using MIS.Application.Features.Options.OptionLists;
 using MIS.Application.Features.Options.OptionItems;
 using MIS.Infrastructure.Persistence.Repositories.Options;
+using MIS.Application.Features.Geography.Areas;
+using MIS.Infrastructure.Persistence.Repositories.Geography.Areas;
 
 namespace MIS.Infrastructure;
 
@@ -51,6 +53,7 @@ public static class DependencyInjection
     services.AddScoped<IDistrictRepo, DistrictRepo>();
     services.AddScoped<IProvinceRepo, ProvinceRepo>();
     services.AddScoped<IWardRepo, WardRepo>();
+    services.AddScoped<IAreaRepo, AreaRepo>();
     services.AddScoped<IUserRepository, UserRepository>();
     services.AddScoped<IToleRepo, ToleRepo>();
 

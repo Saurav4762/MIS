@@ -1,10 +1,13 @@
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using MIS.API.Common.Middlewares;
+using MIS.API.Common.Responses;
 using MIS.Application;
 using MIS.Application.Features.Authentication;
 using MIS.Infrastructure;
+using Newtonsoft.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -30,7 +33,50 @@ builder.Services.AddControllers()
     {
       options.JsonSerializerOptions.DefaultIgnoreCondition =
           System.Text.Json.Serialization.JsonIgnoreCondition.WhenWritingNull;
+    }).ConfigureApiBehaviorOptions(options =>
+    {
+      options.SuppressModelStateInvalidFilter = false;
+      options.InvalidModelStateResponseFactory = context =>
+      {
+        var details = context.ModelState
+          .Where(e => e.Value?.Errors.Count > 0)
+          .ToDictionary(
+              kvp =>
+              {
+                var key = kvp.Key;
+                
+                // Remove "$." prefix from JSON path keys like "$.areaId"
+                if (key.StartsWith("$."))
+                  key = key[2..];
+
+                return key;
+              },
+              kvp => kvp.Value!.Errors
+                  .Select(e => e.ErrorMessage)
+                  .ToArray()
+          );
+
+
+
+        var apiError = new ApiError
+        {
+          Code = "VALIDATION_ERROR",
+          Message = "One or more validation errors occurred.",
+          Details = details
+        };
+
+        var apiResponse = new ApiResponse<object>
+        {
+          Success = false,
+          Message = "Validation failed",
+          Error = apiError,
+          StatusCode = System.Net.HttpStatusCode.BadRequest
+        };
+
+        return new BadRequestObjectResult(apiResponse);
+      };
     });
+
 
 builder.Services.AddTransient<GlobalExceptionHandler>();
 
@@ -67,6 +113,9 @@ builder.Services
 
 var app = builder.Build();
 
+
+
+
 app.UseMiddleware<GlobalExceptionHandler>();
 
 // Configure the HTTP request pipeline.
@@ -85,6 +134,8 @@ if (!app.Environment.IsDevelopment())
 
 app.UseAuthentication();
 app.UseAuthorization();
+
+
 
 app.MapControllers();
 app.Run();
