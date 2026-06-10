@@ -18,5 +18,4 @@ public class ToleConfiguration : IEntityTypeConfiguration<Tole>
             .HasForeignKey(t => t.WardId)
             .OnDelete(DeleteBehavior.Cascade);
     }
-    
 }

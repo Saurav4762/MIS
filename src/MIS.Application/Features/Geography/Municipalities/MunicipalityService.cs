@@ -61,7 +61,9 @@ public class MunicipalityService : IMunicipalityService
 			HeadExecutiveNameEn = dto.HeadExecutiveNameEn,
 			HeadExecutiveNameNe = dto.HeadExecutiveNameNe,
 			PhoneNo = dto.PhoneNo,
-			Website = dto.Website
+			Website = dto.Website,
+			
+			DistrictId = dto.DistrictId
 		});
 	}
 	public async Task<int> SeedMunicipalityAsync(IMunicipalitySeedDTO dto)

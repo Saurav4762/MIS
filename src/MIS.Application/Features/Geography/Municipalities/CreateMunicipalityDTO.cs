@@ -3,6 +3,7 @@ namespace MIS.Application.Features.Geography.Municipalities;
 public record CreateMunicipalityDTO
 {
 
+	public Guid DistrictId { get; set; }
 	public string Code { get; set; } = null!;
 	public Guid AreaId { get; set; }
 	public string NameEn { get; set; } = null!;

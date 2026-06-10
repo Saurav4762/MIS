@@ -28,9 +28,9 @@ public class DistrictService : IDistrictService
 	public async Task<DistrictDTO> CreateDistrictAsync(CreateDistrictDTO dto)
 	{
 		await _createDistrictValidator.EnsureValidOrThrowAsync(dto);
-
+		Console.WriteLine(dto.ProvinceId);
 		var province = await _provinceRepo.GetProvinceByIdAsync(dto.ProvinceId)
-			?? throw new NotFoundException(nameof(Province), nameof(Province.Id), dto.ProvinceId);
+		               ?? throw new NotFoundException(nameof(Province), nameof(Province.Id), dto.ProvinceId);
 
 		var existingDistrict = await _repo.GetByCodeAsync(dto.Code);
 		if (existingDistrict is not null)
