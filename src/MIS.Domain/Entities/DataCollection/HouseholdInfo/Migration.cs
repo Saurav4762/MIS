@@ -1,5 +1,5 @@
 using MIS.Domain.Common.Premitives;
-using MIS.Domain.Entities.DataCollection.House_info;
+using MIS.Domain.Entities.DataCollection.HouseInfo;
 
 namespace MIS.Domain.Entities.DataCollection.HouseholdInfo;
 

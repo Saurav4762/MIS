@@ -1,7 +1,7 @@
 using MIS.Domain.Common.Premitives;
 using MIS.Domain.Entities.Geography;
 
-namespace MIS.Domain.Entities.DataCollection.House_info;
+namespace MIS.Domain.Entities.DataCollection.HouseInfo;
 
 public class House : BaseEntity
 {

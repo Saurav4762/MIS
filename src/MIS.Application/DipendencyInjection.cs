@@ -9,6 +9,7 @@ using MIS.Application.Features.Geography.Toles;
 using MIS.Application.Features.Geography.Wards;
 using MIS.Application.Features.Options.OptionItems;
 using MIS.Application.Features.Options.OptionLists;
+using MIS.Application.Features.Submissions;
 using MIS.Application.Features.Users;
 
 namespace MIS.Application;
@@ -27,10 +28,13 @@ public static class DependencyInjection
     services.AddScoped<IAreaService, AreaService>();
     services.AddScoped<IProvinceService, ProvinceService>();
 
+    services.AddScoped<ISubmissionsService, SubmissionService>();
+
 
     services.AddScoped<IUserService, UserService>();
 
     // Registers LoginUserDTOValidator, RegisterUserDTOValidator, and any future validators automatically
+    
     services.AddValidatorsFromAssemblyContaining<LoginUserDTOValidator>();
     services.AddValidatorsFromAssemblyContaining<CreateUserDTOValidator>();
 

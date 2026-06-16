@@ -1,7 +1,7 @@
 using FluentValidation;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MIS.Application.Features.Authentication;
-using MIS.Domain.Exceptions;
 
 namespace MIS.API.Features.Authentication;
 
@@ -15,6 +15,7 @@ public class AuthController : ControllerBase
 
     _authenticationService = authenticationService;
   }
+  [AllowAnonymous]
   [HttpPost]
   public async Task<IActionResult> Login([FromBody] LoginUserDTO dto)
   {
