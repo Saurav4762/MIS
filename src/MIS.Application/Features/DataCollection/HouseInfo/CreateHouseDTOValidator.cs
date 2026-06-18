@@ -3,9 +3,9 @@ using FluentValidation;
 namespace MIS.Application.Features.DataCollection.HouseInfo;
 
 
-public class CreateHouseDTOValidator : AbstractValidator<CreateHouseDTO>
+public class CreateHouseInfoDTOValidator : AbstractValidator<CreateHouseInfoDTO>
 {
-  public CreateHouseDTOValidator()
+  public CreateHouseInfoDTOValidator()
   {
     RuleFor(x => x.SubmissionId)
       .NotEmpty().WithMessage("Submission is required");

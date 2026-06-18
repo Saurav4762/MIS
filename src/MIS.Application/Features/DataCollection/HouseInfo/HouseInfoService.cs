@@ -4,17 +4,17 @@ using MIS.Domain.Entities.DataCollection.HouseInfo;
 
 namespace MIS.Application.Features.DataCollection.HouseInfo;
 
-public class HouseService : IHouseService
+public class HouseInfoService : IHouseInfoService
 {
-  private readonly IHouseRepo _houseRepo;
-  private readonly IValidator<CreateHouseDTO> _validator;
+  private readonly IHouseInfoRepo _houseRepo;
+  private readonly IValidator<CreateHouseInfoDTO> _validator;
 
-  public HouseService(IHouseRepo houseRepo, IValidator<CreateHouseDTO> validator)
+  public HouseInfoService(IHouseInfoRepo houseRepo, IValidator<CreateHouseInfoDTO> validator)
   {
     _houseRepo = houseRepo;
     _validator = validator;
   }
-  public async Task CreateHouseAsync(CreateHouseDTO house)
+  public async Task CreateHouseAsync(CreateHouseInfoDTO house)
   {
     await _validator.EnsureValidOrThrowAsync(house);
 
@@ -38,7 +38,7 @@ public class HouseService : IHouseService
     });
   }
 
-  public async Task<HouseDTO> GetHouseByIdAsync(Guid id)
+  public async Task<HouseInfoDTO> GetHouseByIdAsync(Guid id)
   {
     throw new NotImplementedException();
   }

@@ -3,11 +3,11 @@ using MIS.Domain.Entities.DataCollection.HouseInfo;
 
 namespace MIS.Application.Features.DataCollection.HouseInfo;
 
-public static class ToHouseDTO
+public static class ToHouseInfoDTO
 {
-  public static HouseDTO ToDTO(House house)
+  public static HouseInfoDTO ToDTO(House house)
   {
-    return new HouseDTO
+    return new HouseInfoDTO
     {
       SubmissionId = house.SubmissionId,
       WardId = house.WardId,

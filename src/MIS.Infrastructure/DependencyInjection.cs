@@ -27,6 +27,8 @@ using MIS.Application.Features.Geography.Areas;
 using MIS.Infrastructure.Persistence.Repositories.Geography.Areas;
 using MIS.Application.Features.Submissions;
 using MIS.Infrastructure.Persistence.Repositories.Submissions;
+using MIS.Application.Features.DataCollection.HouseInfo;
+using MIS.Infrastructure.Persistence.Repositories.DataCollection;
 
 namespace MIS.Infrastructure;
 
@@ -61,6 +63,9 @@ public static class DependencyInjection
 
     // Submissions
     services.AddScoped<ISubmissionsRepo, SubmissionsRepo>();
+
+    // Data Collection
+    services.AddScoped<IHouseInfoRepo, HouseInfoRepo>();
 
 
     // Data

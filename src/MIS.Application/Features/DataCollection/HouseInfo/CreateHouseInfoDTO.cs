@@ -1,8 +1,6 @@
-using MIS.Domain.Entities.Geography;
-
 namespace MIS.Application.Features.DataCollection.HouseInfo;
 
-public class HouseDTO
+public class CreateHouseInfoDTO
 {
   public Guid SubmissionId { get; set; }
 
@@ -20,15 +18,4 @@ public class HouseDTO
   public Guid LandTypeId { get; set; }
   public Guid RoofTypeId { get; set; }
   public Guid WallTypeId { get; set; }
-
-
-  // --- Navigation Properties ---
-  public Tole Tole { get; set; } = null!;
-
-  public Ward Ward { get; set; } = null!;
-  public OptionItem HouseType { get; set; } = null!;
-  public OptionItem LandType { get; set; } = null!;
-  public OptionItem RoofType { get; set; } = null!;
-  public OptionItem WallType { get; set; } = null!;
-
 }

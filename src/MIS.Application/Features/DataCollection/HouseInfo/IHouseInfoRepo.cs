@@ -3,8 +3,8 @@ using MIS.Domain.Entities.DataCollection.HouseInfo;
 
 namespace MIS.Application.Features.DataCollection.HouseInfo;
 
-public interface IHouseRepo
+public interface IHouseInfoRepo
 {
   Task CreateHouseAsync(House house);
-  Task<House> GetHouseByIdAsync(Guid id);
+  Task<House?> GetHouseByIdAsync(Guid id);
 }
