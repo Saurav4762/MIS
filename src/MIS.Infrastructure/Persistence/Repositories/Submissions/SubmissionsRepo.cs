@@ -34,4 +34,12 @@ public class SubmissionsRepo : ISubmissionsRepo
     return await _context.Submissions.ToListAsync();
   }
 
+  public Task DeleteAsync(Guid id)
+  {
+    var submission = new Submission { Id = id };
+    _context.Submissions.Attach(submission);
+    _context.Submissions.Remove(submission);
+    return _context.SaveChangesAsync();
+
+  }
 }

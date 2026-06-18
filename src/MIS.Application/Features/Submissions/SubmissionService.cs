@@ -46,4 +46,10 @@ public class SubmissionService : ISubmissionsService
     var submissions = await _submissionRepo.GetAllAsync();
     return submissions.Select(x => x.ToDTO());
   }
+
+  public async Task DeleteAsync(Guid id)
+  {
+    await _submissionRepo.DeleteAsync(id);
+    return;
+  }
 }

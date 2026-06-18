@@ -47,4 +47,11 @@ public class SubmissionsController(ISubmissionsService submissionService) : Cont
     var submissions = await _submissionService.GetAllAsync();
     return Ok(ApiResponse<IEnumerable<SubmissionDTO>>.SuccessResponse(submissions));
   }
+
+  [HttpDelete("{id:guid}")]
+  public async Task<IActionResult> Delete(Guid id)
+  {
+    await _submissionService.DeleteAsync(id);
+    return Ok(ApiResponse<bool>.SuccessResponse(true, "Submission deleted successfully"));
+  }
 }
