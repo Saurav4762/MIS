@@ -1,13 +1,16 @@
+using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi;
 using MIS.API.Common.Middlewares;
 using MIS.API.Common.Responses;
 using MIS.Application;
 using MIS.Application.Features.Authentication;
 using MIS.Infrastructure;
-using Newtonsoft.Json;
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +19,27 @@ var builder = WebApplication.CreateBuilder(args);
 // builder.Services.AddOpenApi();
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(c =>
+{
+  c.SwaggerDoc("v1", new OpenApiInfo { Title = "API", Version = "v1" });
+
+  c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+  {
+    Name = "Authorization",
+    Type = SecuritySchemeType.ApiKey,
+    Scheme = "Bearer",
+    BearerFormat = "JWT",
+    In = ParameterLocation.Header,
+    Description = "Enter 'Bearer' [space] and then your token"
+  });
+  c.AddSecurityRequirement(document => new OpenApiSecurityRequirement
+  {
+    {
+        new OpenApiSecuritySchemeReference("Bearer", document),
+        new List<string>()
+    }
+  });
+});
 
 
 var jwt = builder.Configuration.GetSection(JwtOptions.SectionName).Get<JwtOptions>()
@@ -44,7 +67,7 @@ builder.Services.AddControllers()
               kvp =>
               {
                 var key = kvp.Key;
-                
+
                 // Remove "$." prefix from JSON path keys like "$.areaId"
                 if (key.StartsWith("$."))
                   key = key[2..];
@@ -91,11 +114,11 @@ builder.Services.AddCors(options =>
 });
 
 
-
 builder.Services
   .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
   .AddJwtBearer(options =>
   {
+    options.MapInboundClaims = false;
     options.TokenValidationParameters = new TokenValidationParameters
     {
       ValidateIssuer = true,
@@ -138,5 +161,22 @@ app.UseAuthorization();
 
 
 app.MapControllers();
+
+
+
+
+if (app.Environment.IsDevelopment())
+{
+  app.MapGet("/debug-routes", (EndpointDataSource ds) =>
+    string.Join("\n", ds.Endpoints.Select(e => e.DisplayName)));
+}
+
+app.MapGet("/ping", () =>
+{
+  return Results.Ok(new { message = "pong" });
+});
+
+
+
 app.Run();
 

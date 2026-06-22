@@ -63,7 +63,6 @@ public class MunicipalityService : IMunicipalityService
 			PhoneNo = dto.PhoneNo,
 			Website = dto.Website,
 			
-			DistrictId = dto.DistrictId
 		});
 	}
 	public async Task<int> SeedMunicipalityAsync(IMunicipalitySeedDTO dto)
