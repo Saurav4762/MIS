@@ -9,14 +9,18 @@ namespace MIS.API.Features.DataCollection;
 public class HouseInfoController : ControllerBase
 {
 
+  private readonly IHouseInfoService _houseInfoService;
+
   public HouseInfoController(IHouseInfoService houseInfoService)
   {
+    _houseInfoService = houseInfoService;
   }
 
 
   [HttpPost]
-  public IActionResult Post()
+  public IActionResult Post(CreateHouseInfoDTO createHouseInfoDTO)
   {
+    _houseInfoService.CreateHouseAsync(createHouseInfoDTO);
     return CreatedAtAction(nameof(Get), new { }, null);
   }
 

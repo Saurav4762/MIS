@@ -18,13 +18,10 @@ public class HouseInfoService : IHouseInfoService
   {
     await _validator.EnsureValidOrThrowAsync(house);
 
-    // check submission exists
-    // check ward and tole exists and are related
-
-
 
     await _houseRepo.CreateHouseAsync(new House
     {
+      Id = Guid.NewGuid(),
       SubmissionId = house.SubmissionId,
       WardId = house.WardId,
       ToleId = house.ToleId,
