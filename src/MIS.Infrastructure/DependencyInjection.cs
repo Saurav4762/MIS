@@ -29,6 +29,7 @@ using MIS.Application.Features.Submissions;
 using MIS.Infrastructure.Persistence.Repositories.Submissions;
 using MIS.Application.Features.DataCollection.HouseInfo;
 using MIS.Infrastructure.Persistence.Repositories.DataCollection;
+using MIS.Application.Features.DataCollection.HouseholdInfo.Decisions;
 
 namespace MIS.Infrastructure;
 
@@ -66,6 +67,7 @@ public static class DependencyInjection
 
     // Data Collection
     services.AddScoped<IHouseInfoRepo, HouseInfoRepo>();
+    services.AddScoped<IDecisionRepo, DecisionsRepo>();
 
 
     // Data
