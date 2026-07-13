@@ -1,23 +1,27 @@
 namespace MIS.Infrastructure.Persistence.Repositories.DataCollection;
 
+using Microsoft.EntityFrameworkCore;
 using MIS.Application.Features.DataCollection.HouseholdInfo.Decisions;
+using MIS.Domain.Entities.DataCollection.HouseholdInfo;
 using MIS.Infrastructure.Persistence.Data;
 
 public class DecisionsRepo(ApplicationDbContext context) : IDecisionRepo
 {
   readonly ApplicationDbContext _context = context;
 
-  public Task<DecisionDTO> CreateDecision(CreateDecisionDTO createDecisionDTO)
+  public async Task<Decision> CreateDecision(Decision decision)
   {
-    throw new NotImplementedException();
+    _context.Decisions.Add(decision);
+    await _context.SaveChangesAsync();
+    return decision;
   }
 
-  public Task<DecisionDTO> GetDecisionByFamilyId(Guid familyId)
+  public async Task<Decision?> GetDecisionByFamilyId(Guid familyId)
   {
-    throw new NotImplementedException();
+    return await _context.Decisions.FirstOrDefaultAsync(d => d.FamilyId == familyId);
   }
 
-  public Task<DecisionDTO> UpdateDecision(Guid familyId, UpdateDecisionDTO updateDecisionDTO)
+  public async Task<Decision> UpdateDecision(Guid familyId, Decision decision)
   {
     throw new NotImplementedException();
   }

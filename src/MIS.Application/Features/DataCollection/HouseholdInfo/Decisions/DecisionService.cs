@@ -1,20 +1,30 @@
-
+using MIS.Domain.Entities.DataCollection.HouseholdInfo;
 namespace MIS.Application.Features.DataCollection.HouseholdInfo.Decisions;
 
 public class DecisionService(IDecisionRepo decisionRepo) : IDecisionService
 {
   readonly IDecisionRepo _repo = decisionRepo;
-  public Task<DecisionDTO> CreateDecision(CreateDecisionDTO createDecisionDTO)
+  public async Task<DecisionDTO> CreateDecision(CreateDecisionDTO createDecisionDTO)
   {
-    throw new NotImplementedException();
+    var decision = new Decision
+    {
+      FamilyId = createDecisionDTO.FamilyId,
+      EducationId = createDecisionDTO.EducationId,
+      GovernanceId = createDecisionDTO.GovernanceId,
+      HealthCareId = createDecisionDTO.HealthCareId,
+      InvestmentsId = createDecisionDTO.InvestmentsId,
+      PropertyId = createDecisionDTO.PropertyId,
+    };
+    return (await _repo.CreateDecision(decision)).MapToDecisionDTO();
   }
 
-  public Task<DecisionDTO> GetDecisionByFamilyId(Guid familyId)
+  public async Task<DecisionDTO> GetDecisionByFamilyId(Guid familyId)
   {
-    throw new NotImplementedException();
+    var decision = await _repo.GetDecisionByFamilyId(familyId);
+    return decision?.MapToDecisionDTO() ?? throw new InvalidOperationException("Decision not found");
   }
 
-  public Task<DecisionDTO> UpdateDecision(Guid familyId, UpdateDecisionDTO updateDecisionDTO)
+  public async Task<DecisionDTO> UpdateDecision(Guid familyId, UpdateDecisionDTO updateDecisionDTO)
   {
     throw new NotImplementedException();
   }
