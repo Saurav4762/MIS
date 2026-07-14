@@ -4,6 +4,7 @@ using MIS.Application.Features.DataCollection.HouseholdInfo.Decisions;
 namespace MIS.API.Features.DataCollection;
 
 
+[Route("api/[controller]")]
 public class DecisionsController : ControllerBase
 {
   private readonly IDecisionService _decisionService;
@@ -14,7 +15,7 @@ public class DecisionsController : ControllerBase
   }
 
   [HttpPost]
-  public async Task<IActionResult> CreateDecision(CreateDecisionDTO createDecisionDTO)
+  public async Task<IActionResult> CreateDecision([FromBody] CreateDecisionDTO createDecisionDTO)
   {
     var result = await _decisionService.CreateDecision(createDecisionDTO);
     return Ok(result);
