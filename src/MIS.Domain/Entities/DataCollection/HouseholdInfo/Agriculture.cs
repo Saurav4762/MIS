@@ -1,5 +1,4 @@
 using MIS.Domain.Common.Premitives;
-
 namespace MIS.Domain.Entities.DataCollection.HouseholdInfo;
 
 public class Agriculture : BaseEntity

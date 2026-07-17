@@ -66,7 +66,7 @@ public static class DependencyInjection
 
     // Data Collection
     services.AddScoped<IHouseInfoRepo, HouseInfoRepo>();
-
+    services.AddScoped<IAgricultureRepo, AgricultureRepo>();
 
     // Data
     // Enable Dynamic Serialization

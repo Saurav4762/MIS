@@ -12,7 +12,6 @@ using MIS.Application.Features.Options.OptionItems;
 using MIS.Application.Features.Options.OptionLists;
 using MIS.Application.Features.Submissions;
 using MIS.Application.Features.Users;
-
 namespace MIS.Application;
 
 public static class DependencyInjection
@@ -36,7 +35,7 @@ public static class DependencyInjection
 
     // DATA COLLECTION
     services.AddScoped<IHouseInfoService, HouseInfoService>();
-
+    
     // Registers LoginUserDTOValidator, RegisterUserDTOValidator, and any future validators automatically
     
     services.AddValidatorsFromAssemblyContaining<LoginUserDTOValidator>();
