@@ -35,6 +35,7 @@ public static class DependencyInjection
 
     // DATA COLLECTION
     services.AddScoped<IHouseInfoService, HouseInfoService>();
+    services.AddScoped<IAgricultureService, AgricultureService>();
     
     // Registers LoginUserDTOValidator, RegisterUserDTOValidator, and any future validators automatically
     
