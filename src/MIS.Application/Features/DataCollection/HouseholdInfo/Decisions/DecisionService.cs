@@ -73,7 +73,7 @@ public class DecisionService(IDecisionRepo decisionRepo, IOptionItemRepo optionI
   public async Task<DecisionDTO> GetDecisionByFamilyId(Guid familyId)
   {
     var decision = await _repo.GetDecisionByFamilyId(familyId);
-    return decision?.MapToDecisionDTO() ?? throw new NotFoundException(nameof(Decision), nameof(Decision.FamilyId), familyId);
+    return decision?.MapToDecisionDTO() ?? throw new NotFoundException(nameof(Family), nameof(Decision.FamilyId), familyId);
   }
 
   public async Task<DecisionDTO> UpdateDecision(Guid familyId, UpdateDecisionDTO updateDecisionDTO)
