@@ -25,42 +25,46 @@ public class ToleService : IToleService
 		_updateToleValidator = updateToleValidator;
 	}
 
-	public async Task<Tole> CreateToleAsync(CreateToleDTO dto)
+	public async Task<ToleDTO> CreateToleAsync(CreateToleDTO dto)
 	{
 		await _createToleValidator.EnsureValidOrThrowAsync(dto);
 
 		var ward = await _wardRepo.GetWardByIdAsync(dto.WardId)
 			?? throw new NotFoundException(nameof(Ward), nameof(Ward.Id), dto.WardId);
 
-		return await _repo.CreateToleAsync(new Tole
+		var tole = await _repo.CreateToleAsync(new Tole
 		{
 			Id = Guid.NewGuid(),
 			WardId = ward.Id,
 			Code = dto.Code,
 			Name = dto.Name
 		});
+		return tole.ToToleDTO();
 	}
 
-	public async Task<List<Tole>> GetAllTolesAsync()
+	public async Task<List<ToleDTO>> GetAllTolesAsync()
 	{
-		return await _repo.GetAllTolesAsync();
+		var toles = await _repo.GetAllTolesAsync();
+		return toles.Select(t => t.ToToleDTO()).ToList();
 	}
 
-	public async Task<List<Tole>> GetTolesByWardIdAsync(Guid wardId)
+	public async Task<List<ToleDTO>> GetTolesByWardIdAsync(Guid wardId)
 	{
 		var ward = await _wardRepo.GetWardByIdAsync(wardId)
 			?? throw new NotFoundException(nameof(Ward), nameof(Ward.Id), wardId);
 
-		return await _repo.GetTolesByWardIdAsync(ward.Id);
+		var toles = await _repo.GetTolesByWardIdAsync(ward.Id);
+		return toles.Select(t => t.ToToleDTO()).ToList();
 	}
 
-	public async Task<Tole> GetToleByIdAsync(Guid id)
+	public async Task<ToleDTO> GetToleByIdAsync(Guid id)
 	{
-		return await _repo.GetToleByIdAsync(id)
+		var tole = await _repo.GetToleByIdAsync(id)
 			?? throw new NotFoundException(nameof(Tole), nameof(Tole.Id), id);
+		return tole.ToToleDTO();
 	}
 
-	public async Task<Tole> UpdateToleAsync(Guid id, UpdateToleDTO dto)
+	public async Task<ToleDTO> UpdateToleAsync(Guid id, UpdateToleDTO dto)
 	{
 		await _updateToleValidator.EnsureValidOrThrowAsync(dto);
 
@@ -80,7 +84,8 @@ public class ToleService : IToleService
 		if (!string.IsNullOrWhiteSpace(dto.Name))
 			tole.Name = dto.Name;
 
-		return await _repo.UpdateToleAsync(tole);
+		var updatedTole = await _repo.UpdateToleAsync(tole);
+		return updatedTole.ToToleDTO();
 	}
 
 	public async Task DeleteToleAsync(Guid id)
