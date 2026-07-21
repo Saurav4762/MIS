@@ -2,6 +2,7 @@ using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using MIS.Application.Features.Authentication;
 using MIS.Application.Features.DataCollection.HouseholdInfo.Decisions;
+using MIS.Application.Features.DataCollection.HouseholdInfo.Economies;
 using MIS.Application.Features.DataCollection.HouseInfo;
 using MIS.Application.Features.Geography.Areas;
 using MIS.Application.Features.Geography.Districts;
@@ -38,6 +39,7 @@ public static class DependencyInjection
     // DATA COLLECTION
     services.AddScoped<IHouseInfoService, HouseInfoService>();
     services.AddScoped<IDecisionService, DecisionService>();
+    services.AddScoped<IEconomyService, EconomyService>();
 
     // Registers LoginUserDTOValidator, RegisterUserDTOValidator, and any future validators automatically
     
