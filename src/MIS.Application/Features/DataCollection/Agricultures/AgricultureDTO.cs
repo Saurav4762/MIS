@@ -6,7 +6,7 @@ public class AgricultureDTO
     public Guid OwnershipStatusId { get; set; }
     public decimal TotalArea { get; set; }
     public bool UsesImprovedSeeds { get; set; }
-    public bool UsersChemicalPesticides { get; set; }
+    public bool UsesChemicalPesticides { get; set; }
 
     public List<AgricultureCropDTO> SelectedCrops { get; set; } = new();
     public List<AgricultureEquipmentDTO> Equipments { get; set; } = new();
