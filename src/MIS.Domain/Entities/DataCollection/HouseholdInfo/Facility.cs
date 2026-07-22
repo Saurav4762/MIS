@@ -2,7 +2,7 @@ using MIS.Domain.Common.Premitives;
 
 namespace MIS.Domain.Entities.DataCollection.HouseholdInfo;
 
-public class Facilities: BaseEntity
+public class Facility: BaseEntity
 {
     //Foreign 
     public Guid FamilyId { get; set; }
