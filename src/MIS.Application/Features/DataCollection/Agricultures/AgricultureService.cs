@@ -1,3 +1,4 @@
+using System.Formats.Asn1;
 using System.Runtime.InteropServices.Marshalling;
 using FluentValidation;
 using Microsoft.VisualBasic.CompilerServices;
@@ -73,45 +74,108 @@ public class AgricultureService : IAgricultureService
 
 
     //Update code 
-   public async Task<AgricultureDTO> UpdateAgricultureAsync(Guid id, UpdateAgricultureDTO dto)
-{
-    await _updateValidator.ValidateAndThrowAsync(dto);
-
-    var agriculture = await _repo.GetAgricultureByIdAsync(id);
-
-    if (agriculture == null)
+    public async Task<AgricultureDTO> UpdateAgricultureAsync(Guid id, UpdateAgricultureDTO dto)
     {
-        throw new NotFoundException(nameof(Agriculture), nameof(Agriculture.Id), id);
-    }
+        await _updateValidator.ValidateAndThrowAsync(dto);
 
-    if (dto.LandUnitId.HasValue)
-    {
-        agriculture.LandUnitId = dto.LandUnitId.Value;
-    }
+        var agriculture = await _repo.GetAgricultureByIdAsync(id);
 
-    if (dto.OwnershipStatusId.HasValue)
-    {
-        agriculture.OwnershipStatusId = dto.OwnershipStatusId.Value;
-    }
+        if (agriculture == null)
+        {
+            throw new NotFoundException(nameof(Agriculture), nameof(Agriculture.Id), id);
+        }
 
-    if (dto.TotalArea.HasValue)
-    {
-        agriculture.TotalArea = dto.TotalArea.Value;
-    }
+        if (dto.LandUnitId.HasValue)
+        {
+            agriculture.LandUnitId = dto.LandUnitId.Value;
+        }
 
-    if (dto.UsesImprovedSeeds.HasValue)
-    {
-        agriculture.UsesImprovedSeeds = dto.UsesImprovedSeeds.Value;
-    }
+        if (dto.OwnershipStatusId.HasValue)
+        {
+            agriculture.OwnershipStatusId = dto.OwnershipStatusId.Value;
+        }
 
-    if (dto.UsesChemicalPesticides.HasValue)
-    {
-        agriculture.UsesChemicalPesticides = dto.UsesChemicalPesticides.Value;
-    }
+        if (dto.TotalArea.HasValue)
+        {
+            agriculture.TotalArea = dto.TotalArea.Value;
+        }
 
-    var updated = await _repo.UpdateAgricultureAsync(agriculture);
-    return ToDto(updated);
-}
+        if (dto.UsesImprovedSeeds.HasValue)
+        {
+            agriculture.UsesImprovedSeeds = dto.UsesImprovedSeeds.Value;
+        }
+
+        if (dto.UsesChemicalPesticides.HasValue)
+        {
+            agriculture.UsesChemicalPesticides = dto.UsesChemicalPesticides.Value;
+        }
+
+        //AgricultureCrops sub_tables
+
+        if (dto.SelectedCrops is not null)
+        {
+            agriculture.SelectedCrops.Clear();
+
+            foreach (var crop in dto.SelectedCrops)
+            {
+                agriculture.SelectedCrops.Add(new AgricultureCrop
+                {
+                    Id = Guid.NewGuid(),
+                    CropId = crop.CropId,
+                    AreaInHectares = crop.AreaInHectares,
+                    EstimatedYield = crop.EstimatedYield,
+                    Notes = crop.Notes
+                });
+            }
+        }
+
+        if (dto.Equipments is not null)
+        {
+            agriculture.Equipments.Clear();
+
+            foreach (var equipment in dto.Equipments)
+            {
+                agriculture.Equipments.Add(new AgricultureEquipment
+                {
+                  Id = Guid.NewGuid(),
+                  EquipmentId = equipment.EquipmentId,
+                  Quantity = equipment.Quantity ?? 0
+                });
+            }
+        }
+
+        if (dto.LandTypes is not null)
+        {
+            agriculture.LandTypes.Clear();
+
+            foreach (var landType in dto.LandTypes)
+            {
+                agriculture.LandTypes.Add(new AgricultureLandType
+                {
+                    Id = Guid.NewGuid(),
+                    LandTypeId = landType.LandTypeId,
+                    Area = landType.Area
+                });
+            }
+        }
+        if (dto.ProblemsFaced is not null)
+        {
+            agriculture.ProblemsFaced.Clear();
+
+            foreach (var problem in dto.ProblemsFaced)
+            {
+                agriculture.ProblemsFaced.Add(new AgricultureProblem
+                {
+                    Id = Guid.NewGuid(),
+                    ProblemId = problem.ProblemId,
+                    Details = problem.Details
+                });
+            }
+        }
+
+        var updated = await _repo.UpdateAgricultureAsync(agriculture);
+        return ToDto(updated);
+    }
 
 
     //Get by id 
