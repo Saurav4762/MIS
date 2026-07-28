@@ -18,7 +18,7 @@ public class Family : BaseEntity
     public Decision? Decision { get; set; }
     public Disaster? Disaster { get; set; }
     public Economy? Economic { get; set; }
-    public Facilities? Facilities { get; set; }
+    public Facility? Facilities { get; set; }
     public Health? Health { get; set; }
     public Livestock? Livestock { get; set; }
     public Social? Social { get; set; }

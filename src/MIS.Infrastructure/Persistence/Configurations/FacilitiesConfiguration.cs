@@ -4,9 +4,9 @@ using MIS.Domain.Entities.DataCollection.HouseholdInfo;
 
 namespace MIS.Infrastructure.Persistence.Configurations;
 
-public class FacilitiesConfiguration : IEntityTypeConfiguration<Facilities>
+public class FacilitiesConfiguration : IEntityTypeConfiguration<Facility>
 {
-    public void Configure(EntityTypeBuilder<Facilities> builder)
+    public void Configure(EntityTypeBuilder<Facility> builder)
     {
         // Table Name
         builder.ToTable("Facilities");
