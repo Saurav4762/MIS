@@ -4,6 +4,7 @@ using MIS.Application.Features.Authentication;
 using MIS.Application.Features.DataCollection.HouseholdInfo.Decisions;
 using MIS.Application.Features.DataCollection.HouseholdInfo.Economies;
 using MIS.Application.Features.DataCollection.HouseholdInfo.Facilities;
+using MIS.Application.Features.DataCollection.HouseholdInfo.Healths;
 using MIS.Application.Features.DataCollection.HouseholdInfo.Livestocks;
 using MIS.Application.Features.DataCollection.HouseInfo;
 using MIS.Application.Features.Geography.Areas;
@@ -44,6 +45,7 @@ public static class DependencyInjection
     services.AddScoped<IEconomyService, EconomyService>();
     services.AddScoped<IFacilityService, FacilityService>();
     services.AddScoped<ILivestockService, LivestockService>();
+    services.AddScoped<IHealthService, HealthService>();
 
     // Registers LoginUserDTOValidator, RegisterUserDTOValidator, and any future validators automatically
     

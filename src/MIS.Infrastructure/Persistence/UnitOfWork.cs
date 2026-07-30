@@ -3,6 +3,7 @@ using MIS.Application.Features.Authentication;
 using MIS.Application.Features.DataCollection.HouseholdInfo.Decisions;
 using MIS.Application.Features.DataCollection.HouseholdInfo.Economies;
 using MIS.Application.Features.DataCollection.HouseholdInfo.Facilities;
+using MIS.Application.Features.DataCollection.HouseholdInfo.Healths;
 using MIS.Application.Features.DataCollection.HouseInfo;
 using MIS.Application.Features.Geography.Areas;
 using MIS.Application.Features.Geography.Districts;
@@ -38,7 +39,8 @@ public class UnitOfWork : IUnitOfWork
         IHouseInfoRepo houseInfoRepository,
         IDecisionRepo decisionRepository,
         IEconomyRepo economyRepository,
-        IFacilityRepo facilityRepository)
+        IFacilityRepo facilityRepository,
+        IHealthRepo healthRepository)
     {
         _context = context;
         AuthenticationRepository = authenticationRepository;
@@ -56,6 +58,7 @@ public class UnitOfWork : IUnitOfWork
         DecisionRepository = decisionRepository;
         EconomyRepository = economyRepository;
         FacilityRepository = facilityRepository;
+        HealthRepository = healthRepository;
     }
 
     public IAuthenticationRepository AuthenticationRepository { get; }
@@ -73,6 +76,7 @@ public class UnitOfWork : IUnitOfWork
     public IDecisionRepo DecisionRepository { get; }
     public IEconomyRepo EconomyRepository { get; }
     public IFacilityRepo FacilityRepository { get; }
+    public IHealthRepo HealthRepository { get; }
 
     public Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
         => _context.SaveChangesAsync(cancellationToken);

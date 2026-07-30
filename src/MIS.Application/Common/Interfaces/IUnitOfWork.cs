@@ -2,6 +2,7 @@ using MIS.Application.Features.Authentication;
 using MIS.Application.Features.DataCollection.HouseholdInfo.Decisions;
 using MIS.Application.Features.DataCollection.HouseholdInfo.Economies;
 using MIS.Application.Features.DataCollection.HouseholdInfo.Facilities;
+using MIS.Application.Features.DataCollection.HouseholdInfo.Healths;
 using MIS.Application.Features.DataCollection.HouseInfo;
 using MIS.Application.Features.Geography.Areas;
 using MIS.Application.Features.Geography.Districts;
@@ -33,6 +34,7 @@ public interface IUnitOfWork
     IDecisionRepo DecisionRepository { get; }
     IEconomyRepo EconomyRepository { get; }
     IFacilityRepo FacilityRepository { get; }
+    IHealthRepo HealthRepository { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }
