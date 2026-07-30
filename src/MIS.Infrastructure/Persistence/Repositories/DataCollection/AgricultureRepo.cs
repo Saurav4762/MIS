@@ -41,9 +41,17 @@ public class AgricultureRepo : IAgricultureRepo
             .ToListAsync();
     }
 
-    public async Task<Agriculture>UpdateAgricultureAsync(Agriculture agriculture)
+    public async Task<Agriculture> UpdateAgricultureAsync(Agriculture agriculture)
     {
-        _context.Agricultures.Update(agriculture);
+        foreach (var crop in agriculture.SelectedCrops)
+            _context.Entry(crop).State = EntityState.Added;
+        foreach (var equipment in agriculture.Equipments)
+            _context.Entry(equipment).State = EntityState.Added;
+        foreach (var landType in agriculture.LandTypes)
+            _context.Entry(landType).State = EntityState.Added;
+        foreach (var problem in agriculture.ProblemsFaced)
+            _context.Entry(problem).State = EntityState.Added;
+
         await _context.SaveChangesAsync();
         return agriculture;
     }

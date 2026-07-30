@@ -1,7 +1,4 @@
-using System.Formats.Asn1;
-using System.Runtime.InteropServices.Marshalling;
 using FluentValidation;
-using Microsoft.VisualBasic.CompilerServices;
 using MIS.Application.Common.Extensions;
 using MIS.Domain.Entities.DataCollection.HouseholdInfo;
 using MIS.Domain.Exceptions;
@@ -11,7 +8,7 @@ namespace MIS.Application.Features.DataCollection.Agricultures;
 public class AgricultureService : IAgricultureService
 {
     private readonly IAgricultureRepo _repo;
-    private readonly IValidator<CreateAgricultureDTO> _createValidation;
+    private readonly IValidator<CreateAgricultureDTO> _createValidator;
     private readonly IValidator<UpdateAgricultureDTO> _updateValidator;
 
     public AgricultureService(
@@ -20,13 +17,13 @@ public class AgricultureService : IAgricultureService
         IValidator<UpdateAgricultureDTO> updateValidator)
     {
         _repo = repo;
-        _createValidation = createValidator;
+        _createValidator = createValidator;
         _updateValidator = updateValidator;
     }
 
     public async Task<AgricultureDTO> CreateAgricultureAsync(CreateAgricultureDTO dto)
     {
-        await _createValidation.EnsureValidOrThrowAsync(dto);
+        await _createValidator.EnsureValidOrThrowAsync(dto);
         var agriculture = new Agriculture
         {
             Id = Guid.NewGuid(),
@@ -37,35 +34,35 @@ public class AgricultureService : IAgricultureService
             UsesImprovedSeeds = dto.UsesImprovedSeeds,
             UsesChemicalPesticides = dto.UsesChemicalPesticides,
 
-            SelectedCrops = dto.SelectedCrops.Select(crops => new AgricultureCrop
+            SelectedCrops = dto.SelectedCrops?.Select(crops => new AgricultureCrop
             {
                 Id = Guid.NewGuid(),
                 CropId = crops.CropId,
                 AreaInHectares = crops.AreaInHectares,
                 EstimatedYield = crops.EstimatedYield,
                 Notes = crops.Notes
-            }).ToList(),
+            }).ToList() ?? new(),
 
-            Equipments = dto.Equipments.Select(equipment => new AgricultureEquipment
+            Equipments = dto.Equipments?.Select(equipment => new AgricultureEquipment
             {
                 Id = Guid.NewGuid(),
                 EquipmentId = equipment.EquipmentId,
                 Quantity = equipment.Quantity ?? 0
-            }).ToList(),
+            }).ToList() ?? new(),
 
-            LandTypes = dto.LandTypes.Select(landType => new AgricultureLandType
+            LandTypes = dto.LandTypes?.Select(landType => new AgricultureLandType
             {
                 Id = Guid.NewGuid(),
                 LandTypeId = landType.LandTypeId,
                 Area = landType.Area,
-            }).ToList(),
+            }).ToList() ?? new(),
 
-            ProblemsFaced = dto.ProblemsFaced.Select(problem => new AgricultureProblem
+            ProblemsFaced = dto.ProblemsFaced?.Select(problem => new AgricultureProblem
             {
                 Id = Guid.NewGuid(),
                 ProblemId = problem.ProblemId,
                 Details = problem.Details
-            }).ToList()
+            }).ToList() ?? new()
         };
 
         var created = await _repo.CreateAgricultureAsync(agriculture);
@@ -192,16 +189,17 @@ public class AgricultureService : IAgricultureService
     public async Task<List<AgricultureDTO>> GetAllAgricultureAsync()
     {
         var agricultures = await _repo.GetAllAgriculturesAsync();
-        var result = new List<AgricultureDTO>();
-        foreach (var agriculture in agricultures)
-        {
-            result.Add(ToDto(agriculture));
-        }
-        return result;
+        return agricultures.Select(ToDto).ToList();
     }
 
     public async Task DeleteAgricultureAsync(Guid id)
     {
+        var agriculture = await _repo.GetAgricultureByIdAsync(id);
+        if (agriculture == null)
+        {
+            throw new NotFoundException(nameof(Agriculture), nameof(Agriculture.Id), id);
+        }
+
         await _repo.DeleteAgricultureAsync(id);
     }
 

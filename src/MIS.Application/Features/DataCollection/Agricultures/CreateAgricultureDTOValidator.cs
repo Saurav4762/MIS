@@ -1,9 +1,9 @@
 using FluentValidation;
 namespace MIS.Application.Features.DataCollection.Agricultures;
 
-public class AgricultureDTOValidator : AbstractValidator<CreateAgricultureDTO>
+public class CreateAgricultureDTOValidator : AbstractValidator<CreateAgricultureDTO>
 {
-    public AgricultureDTOValidator()
+    public CreateAgricultureDTOValidator()
     {
         RuleFor(x => x.FamilyId)
             .NotEmpty().WithMessage("Family is required.");
