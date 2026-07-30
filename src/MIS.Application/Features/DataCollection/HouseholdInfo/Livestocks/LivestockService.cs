@@ -90,7 +90,7 @@ public class LivestockService(
             livestock.HasAIServicePractice = updateLivestockDto.HasAIServicePractice.Value;
 
         // Replace animal list entirely if provided
-        if (updateLivestockDto.Animals is not null)
+        if (updateLivestockDto.HasLivestockPractice == true && updateLivestockDto.Animals is not null)
         {
             livestock.Animals.Clear();
 
@@ -109,7 +109,7 @@ public class LivestockService(
         }
 
         // Replace AI service list entirely if provided
-        if (updateLivestockDto.AIServices is not null)
+        if (updateLivestockDto.HasAIServicePractice == true && updateLivestockDto.AIServices is not null)
         {
             livestock.AIServices.Clear();
 
@@ -134,6 +134,15 @@ public class LivestockService(
                 }
             }
         }
+        if(updateLivestockDto.HasLivestockPractice == false)
+        {
+            livestock.Animals.Clear();
+        }
+        if(updateLivestockDto.HasAIServicePractice == false)
+        {
+            livestock.AIServices.Clear();
+        }
+
 
         await _unitOfWork.SaveChangesAsync();
         return livestock.ToLivestockDto();

@@ -6,8 +6,11 @@ public class UpdateLivestocksDtoValidator : AbstractValidator<UpdateLivestockDto
 {
     public UpdateLivestocksDtoValidator()
     {
-        When(x => x.Animals is not null && x.Animals.Count > 0, () =>
+        When(x => x.HasLivestockPractice == true, () =>
         {
+            RuleFor(x => x.Animals)
+                .NotEmpty().WithMessage("Animals are required when livestock practice is enabled.");
+
             RuleForEach(x => x.Animals).ChildRules(animal =>
             {
                 animal.RuleFor(a => a.AnimalTypeId)
@@ -18,8 +21,11 @@ public class UpdateLivestocksDtoValidator : AbstractValidator<UpdateLivestockDto
             });
         });
 
-        When(x => x.AIServices is not null && x.AIServices.Count > 0, () =>
+        When(x => x.HasAIServicePractice == true, () =>
         {
+            RuleFor(x => x.AIServices)
+                .NotEmpty().WithMessage("AIServices are required when AI service practice is enabled.");
+
             RuleForEach(x => x.AIServices).ChildRules(aiService =>
             {
                 aiService.RuleFor(a => a.AnimalTypeId)

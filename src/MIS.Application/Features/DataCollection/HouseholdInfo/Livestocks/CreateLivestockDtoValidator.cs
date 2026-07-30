@@ -11,6 +11,9 @@ public class CreateLivestockDtoValidator : AbstractValidator<CreateLivestockDto>
 
         When(x => x.HasLivestockPractice, () =>
         {
+            RuleFor(x => x.Animals)
+                .NotEmpty().WithMessage("Animals are required when livestock practice is enabled.");
+
             RuleForEach(x => x.Animals).ChildRules(animal =>
             {
                 animal.RuleFor(a => a.AnimalTypeId)
@@ -23,6 +26,9 @@ public class CreateLivestockDtoValidator : AbstractValidator<CreateLivestockDto>
 
         When(x => x.HasAIServicePractice, () =>
         {
+            RuleFor(x => x.AIServices)
+                .NotEmpty().WithMessage("AIServices are required when AI service practice is enabled.");
+
             RuleForEach(x => x.AIServices).ChildRules(aiService =>
             {
                 aiService.RuleFor(a => a.AnimalTypeId)

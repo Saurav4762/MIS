@@ -34,6 +34,7 @@ using MIS.Application.Features.DataCollection.HouseholdInfo.Decisions;
 using MIS.Application.Features.DataCollection.HouseholdInfo.Economies;
 using MIS.Application.Features.DataCollection.HouseholdInfo.Facilities;
 using MIS.Infrastructure.Persistence;
+using MIS.Application.Features.DataCollection.HouseholdInfo.Livestocks;
 
 namespace MIS.Infrastructure;
 
@@ -74,6 +75,7 @@ public static class DependencyInjection
     services.AddScoped<IDecisionRepo, DecisionsRepo>();
     services.AddScoped<IEconomyRepo, EconomyRepo>();
     services.AddScoped<IFacilityRepo, FacilityRepo>();
+    services.AddScoped<ILivestockRepo, LivestockRepo>();
 
     services.AddScoped<IUnitOfWork, UnitOfWork>();
 
