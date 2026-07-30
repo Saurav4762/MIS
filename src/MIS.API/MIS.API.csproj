@@ -15,8 +15,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\tests\MIS.Domain.Tests\MIS.Domain.Tests.csproj" />
     <ProjectReference Include="..\MIS.Application\MIS.Application.csproj" />
     <ProjectReference Include="..\MIS.Infrastructure\MIS.Infrastructure.csproj" />
+    <ProjectReference Include="..\MIS.DevTools\MIS.DevTools.csproj" />
   </ItemGroup>
 
 </Project>
