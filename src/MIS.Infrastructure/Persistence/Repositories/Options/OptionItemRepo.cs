@@ -68,4 +68,9 @@ public class OptionItemRepo : IOptionItemRepo
     return rows;
 
   }
+
+  public Task<bool> CheckIfOptionItemExistsAsync(Guid id)
+  {
+    return _context.OptionItems.AnyAsync(x => x.Id == id);
+  }
 }

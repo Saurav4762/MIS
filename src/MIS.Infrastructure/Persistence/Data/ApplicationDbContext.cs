@@ -30,7 +30,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<House> Houses => Set<House>();
     public DbSet<Family> Families => Set<Family>();
     public DbSet<Member> Members => Set<Member>();
-    public DbSet<Facilities> Facilities => Set<Facilities>();
+    public DbSet<Facility> Facilities => Set<Facility>();
     public DbSet<Social> Socials => Set<Social>();
     public DbSet<Migration> Residences => Set<Migration>();
 
@@ -40,7 +40,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<Disaster> Disasters => Set<Disaster>();
     public DbSet<Economy> Economics => Set<Economy>();
     public DbSet<Health> Healths => Set<Health>();
-    public DbSet<Livestock> LiveStocks => Set<Livestock>();
+    public DbSet<Livestock> Livestocks => Set<Livestock>();
 
 
     // Lookup tables

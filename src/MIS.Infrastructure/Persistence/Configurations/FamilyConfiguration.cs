@@ -66,7 +66,7 @@ public class FamilyConfiguration : IEntityTypeConfiguration<Family>
 
               builder.HasOne(f => f.Facilities)
                      .WithOne(fac => fac.Family)
-                     .HasForeignKey<Facilities>(fac => fac.FamilyId)
+                     .HasForeignKey<Facility>(fac => fac.FamilyId)
                      .OnDelete(DeleteBehavior.Cascade);
 
               builder.HasOne(f => f.Health)
