@@ -4,5 +4,5 @@ public interface IFacilityService
 {
     Task<FacilityDto> GetFacilityByFamilyIdAsync(Guid familyId);
     Task<FacilityDto> CreateFacilityAsync(CreateFacilityDto createFacilityDto);
-    Task<FacilityDto> UpdateFacilityAsync(Guid familyId, FacilityDto facilityDto);
+    Task<FacilityDto> UpdateFacilityAsync(Guid familyId, UpdateFacilityDto facilityDto);
 }

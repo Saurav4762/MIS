@@ -25,7 +25,7 @@ public class FacilitiesController(IFacilityService facilityService) : Controller
     }
 
     [HttpPut("{familyId}")]
-    public async Task<IActionResult> UpdateFacilityData([FromRoute] Guid familyId, [FromBody] FacilityDto dto)
+    public async Task<IActionResult> UpdateFacilityData([FromRoute] Guid familyId, [FromBody] UpdateFacilityDto dto)
     {
         var facilityData = await _facilityService.UpdateFacilityAsync(familyId, dto);
         return Ok(ApiResponse<FacilityDto>.SuccessResponse(facilityData, "Facility data updated successfully"));

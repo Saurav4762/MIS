@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using MIS.Application.Common.Interfaces;
 using MIS.Application.Features.Authentication;
 using MIS.Application.Features.Geography.Districts;
 using MIS.Application.Features.Geography.Municipalities;
@@ -32,6 +33,7 @@ using MIS.Infrastructure.Persistence.Repositories.DataCollection;
 using MIS.Application.Features.DataCollection.HouseholdInfo.Decisions;
 using MIS.Application.Features.DataCollection.HouseholdInfo.Economies;
 using MIS.Application.Features.DataCollection.HouseholdInfo.Facilities;
+using MIS.Infrastructure.Persistence;
 
 namespace MIS.Infrastructure;
 
@@ -73,6 +75,7 @@ public static class DependencyInjection
     services.AddScoped<IEconomyRepo, EconomyRepo>();
     services.AddScoped<IFacilityRepo, FacilityRepo>();
 
+    services.AddScoped<IUnitOfWork, UnitOfWork>();
 
     // Data
     // Enable Dynamic Serialization

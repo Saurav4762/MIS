@@ -6,5 +6,5 @@ public interface IFacilityRepo
 {
     Task<Facility?> GetFacilityByFamilyIdAsync(Guid familyId);
     Task<Facility> CreateFacilityAsync(Facility facility);
-    Task<Facility> UpdateFacilityAsync(Guid familyId, Facility facility);
+    Task<Facility> UpdateFacilityAsync(Facility facility);
 }

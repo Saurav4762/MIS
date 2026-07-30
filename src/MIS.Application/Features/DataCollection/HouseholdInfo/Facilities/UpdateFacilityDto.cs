@@ -1,8 +1,7 @@
 namespace MIS.Application.Features.DataCollection.HouseholdInfo.Facilities;
 
-public class FacilityDto
+public class UpdateFacilityDto
 {
-    public Guid FamilyId { get; set; }
     public Guid? DrinkingWaterId { get; set; }
     public Guid? ToiletTypeId { get; set; }
     public Guid? ElectricityId { get; set; }
@@ -17,5 +16,4 @@ public class FacilityDto
     public bool? Internet { get; set; }
     public bool? Refrigerator { get; set; }
     public bool? WashingMachine { get; set; }
-
 }
