@@ -16,7 +16,7 @@ public class Member : BaseEntity
     //Personal info
     public string FullNameEn { get; set; } = null!;
     public string FullNameNe { get; set; } = null!;
-    public DateTime DateOfBirth { get; set; }
+    public DateOnly DateOfBirth { get; set; }
     
     //Contact
     public string MobileNumber { get; set; } = null!;

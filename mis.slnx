@@ -2,6 +2,7 @@
   <Folder Name="/src/">
     <Project Path="src/MIS.API/MIS.API.csproj" />
     <Project Path="src/MIS.Application/MIS.Application.csproj" />
+    <Project Path="src/MIS.DevTools/MIS.DevTools.csproj" />
     <Project Path="src/MIS.Domain/MIS.Domain.csproj" />
     <Project Path="src/MIS.Infrastructure/MIS.Infrastructure.csproj" />
   </Folder>

@@ -8,13 +8,17 @@ public class MemberConfiguration : IEntityTypeConfiguration<Member>
 {
     public void Configure(EntityTypeBuilder<Member> builder)
     {
+        builder.ToTable("Members");
+
         // Primary Key
         builder.HasKey(fm => fm.Id);
 
         // Required Properties
         builder.Property(fm => fm.FullNameEn).IsRequired();
         builder.Property(fm => fm.FullNameNe).IsRequired();
-        builder.Property(fm => fm.DateOfBirth).IsRequired();
+        builder.Property(fm => fm.DateOfBirth)
+            .IsRequired()
+            .HasColumnType("date");
         builder.Property(fm => fm.MobileNumber).IsRequired();
 
         // Foreign Key: Family

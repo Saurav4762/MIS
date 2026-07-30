@@ -1,17 +1,12 @@
-using System;
-
 namespace MIS.Application.Features.DataCollection.HouseholdInfo;
 
-public class CreateMemberDTO
+public class UpdateMemberDTO
 {
-    public Guid FamilyId { get; set; }
-    public string FullNameEn { get; set; } = null!;
-    public string FullNameNe { get; set; } = null!;
-    public DateOnly DateOfBirth { get; set; }
-    public string MobileNumber { get; set; } = null!;
+    public string? FullNameEn { get; set; }
+    public string? FullNameNe { get; set; }
+    public DateOnly? DateOfBirth { get; set; }
+    public string? MobileNumber { get; set; }
     public string? Email { get; set; }
-    
-    //option reference
     public Guid? GenderId { get; set; }
     public Guid? MartialStatusId { get; set; }
     public Guid? RelationshipToHeadId { get; set; }
