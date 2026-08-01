@@ -1,4 +1,6 @@
-namespace MIS.Application.Features.DataCollection.HouseholdInfo;
+using MIS.Application.Features.DataCollection.HouseholdInfo.Members;
+
+namespace MIS.Application.Features.DataCollection.HouseholdInfo.Members;
 
 public interface IMemberService
 {

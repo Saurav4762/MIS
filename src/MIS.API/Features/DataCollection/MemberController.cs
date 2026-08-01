@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using MIS.Application.Features.DataCollection.HouseholdInfo;
+using MIS.Application.Features.DataCollection.HouseholdInfo.Members;
 
 namespace MIS.API.Features.DataCollection;
 

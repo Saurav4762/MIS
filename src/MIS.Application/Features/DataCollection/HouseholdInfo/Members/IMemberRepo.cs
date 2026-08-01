@@ -1,6 +1,6 @@
 using MIS.Domain.Entities.DataCollection.HouseholdInfo;
 
-namespace MIS.Application.Features.DataCollection.HouseholdInfo;
+namespace MIS.Application.Features.DataCollection.HouseholdInfo.Members;
 
 public interface IMemberRepo
 {

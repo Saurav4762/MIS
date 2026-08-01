@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
+using MIS.Application.Features.DataCollection.HouseholdInfo.Members;
 
-namespace MIS.Application.Features.DataCollection.HouseholdInfo;
+namespace MIS.Application.Features.DataCollection.HouseholdInfo.Famiiles;
 
 public class FamilyDTO
 {

@@ -1,9 +1,10 @@
 using FluentValidation;
 using MIS.Application.Common.Extensions;
+using MIS.Application.Features.DataCollection.HouseholdInfo.Families;
 using MIS.Domain.Entities.DataCollection.HouseholdInfo;
 using MIS.Domain.Exceptions;
 
-namespace MIS.Application.Features.DataCollection.HouseholdInfo;
+namespace MIS.Application.Features.DataCollection.HouseholdInfo.Members;
 
 public class MemberService : IMemberService
 {

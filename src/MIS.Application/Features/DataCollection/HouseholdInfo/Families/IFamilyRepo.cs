@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using MIS.Domain.Entities.DataCollection.HouseholdInfo;
 
-namespace MIS.Application.Features.DataCollection.HouseholdInfo;
+namespace MIS.Application.Features.DataCollection.HouseholdInfo.Families;
 
 public interface IFamilyRepo
 {

@@ -2,6 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using MIS.Application.Features.DataCollection.HouseholdInfo;
+using MIS.Application.Features.DataCollection.HouseholdInfo.Families;
 using MIS.Domain.Entities.DataCollection.HouseholdInfo;
 using MIS.Infrastructure.Persistence.Data;
 

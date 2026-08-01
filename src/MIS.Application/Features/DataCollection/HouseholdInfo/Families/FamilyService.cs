@@ -3,9 +3,11 @@ using System.Linq;
 using System.Threading.Tasks;
 //using Microsoft.EntityFrameworkCore;
 using MIS.Application.Common.Extensions;
+using MIS.Application.Features.DataCollection.HouseholdInfo.Famiiles;
+using MIS.Application.Features.DataCollection.HouseholdInfo.Members;
 using MIS.Domain.Entities.DataCollection.HouseholdInfo;
 
-namespace MIS.Application.Features.DataCollection.HouseholdInfo;
+namespace MIS.Application.Features.DataCollection.HouseholdInfo.Families;
 
 public class FamilyService : IFamilyService
 {

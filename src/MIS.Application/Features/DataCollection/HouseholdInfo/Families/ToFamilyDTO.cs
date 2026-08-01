@@ -1,7 +1,8 @@
 using System.Linq;
+using MIS.Application.Features.DataCollection.HouseholdInfo.Members;
 using MIS.Domain.Entities.DataCollection.HouseholdInfo;
 
-namespace MIS.Application.Features.DataCollection.HouseholdInfo;
+namespace MIS.Application.Features.DataCollection.HouseholdInfo.Famiiles;
 
 public static class ToFamilyDto
 {

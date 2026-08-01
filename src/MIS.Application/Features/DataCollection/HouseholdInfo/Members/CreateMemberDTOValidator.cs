@@ -1,7 +1,8 @@
 using FluentValidation;
 using MIS.Application.Common.Extensions;
+using MIS.Application.Features.DataCollection.HouseholdInfo.Members;
 
-namespace MIS.Application.Features.DataCollection.HouseholdInfo;
+namespace MIS.Application.Features.DataCollection.HouseholdInfo.Members;
 
 public class CreateMemberDTOValidator : AbstractValidator<CreateMemberDTO>
 {

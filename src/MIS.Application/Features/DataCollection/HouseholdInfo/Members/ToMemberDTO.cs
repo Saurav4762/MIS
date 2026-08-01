@@ -1,6 +1,7 @@
+using MIS.Application.Features.DataCollection.HouseholdInfo.Members;
 using MIS.Domain.Entities.DataCollection.HouseholdInfo;
 
-namespace MIS.Application.Features.DataCollection.HouseholdInfo;
+namespace MIS.Application.Features.DataCollection.HouseholdInfo.Members;
 
 public static class ToMemberDto
 {
