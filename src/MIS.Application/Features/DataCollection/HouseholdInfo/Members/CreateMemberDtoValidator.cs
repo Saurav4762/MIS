@@ -4,9 +4,9 @@ using MIS.Application.Features.DataCollection.HouseholdInfo.Members;
 
 namespace MIS.Application.Features.DataCollection.HouseholdInfo.Members;
 
-public class CreateMemberDTOValidator : AbstractValidator<CreateMemberDTO>
+public class CreateMemberDtoValidator : AbstractValidator<CreateMemberDto>
 {
-    public CreateMemberDTOValidator()
+    public CreateMemberDtoValidator()
     {
         RuleFor(x => x.FamilyId)
             .NotEmpty().WithMessage("Family id is required");

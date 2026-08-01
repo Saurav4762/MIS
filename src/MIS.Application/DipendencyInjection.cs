@@ -6,7 +6,6 @@ using MIS.Application.Features.DataCollection.HouseholdInfo.Economies;
 using MIS.Application.Features.DataCollection.HouseholdInfo.Facilities;
 using MIS.Application.Features.DataCollection.HouseholdInfo.Healths;
 using MIS.Application.Features.DataCollection.HouseholdInfo.Livestocks;
-using MIS.Application.Features.DataCollection.HouseholdInfo;
 using MIS.Application.Features.DataCollection.HouseholdInfo.Members;
 using MIS.Application.Features.DataCollection.HouseInfo;
 using MIS.Application.Features.Geography.Areas;

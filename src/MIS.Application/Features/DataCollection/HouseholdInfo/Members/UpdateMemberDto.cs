@@ -1,6 +1,6 @@
 namespace MIS.Application.Features.DataCollection.HouseholdInfo.Members;
 
-public class UpdateMemberDTO
+public class UpdateMemberDto
 {
     public string? FullNameEn { get; set; }
     public string? FullNameNe { get; set; }

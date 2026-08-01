@@ -3,7 +3,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MIS.Application.Common.Interfaces;
 using MIS.Application.Features.Authentication;
-using MIS.Application.Features.DataCollection.HouseholdInfo;
 using MIS.Application.Features.Geography.Districts;
 using MIS.Application.Features.Geography.Municipalities;
 using MIS.Application.Features.Geography.Provinces;

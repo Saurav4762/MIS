@@ -25,7 +25,7 @@ public static class ToMemberDto
         };
     }
 
-    public static Member ToEntity(CreateMemberDTO dto, Guid familyId)
+    public static Member ToEntity(CreateMemberDto dto, Guid familyId)
     {
         return new Member
         {

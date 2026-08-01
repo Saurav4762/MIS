@@ -10,14 +10,14 @@ public class MemberService : IMemberService
 {
     private readonly IMemberRepo _memberRepo;
     private readonly IFamilyRepo _familyRepo;
-    private readonly IValidator<CreateMemberDTO> _createValidator;
-    private readonly IValidator<UpdateMemberDTO> _updateValidator;
+    private readonly IValidator<CreateMemberDto> _createValidator;
+    private readonly IValidator<UpdateMemberDto> _updateValidator;
 
     public MemberService(
         IMemberRepo memberRepo,
         IFamilyRepo familyRepo,
-        IValidator<CreateMemberDTO> createValidator,
-        IValidator<UpdateMemberDTO> updateValidator)
+        IValidator<CreateMemberDto> createValidator,
+        IValidator<UpdateMemberDto> updateValidator)
     {
         _memberRepo = memberRepo;
         _familyRepo = familyRepo;
@@ -25,7 +25,7 @@ public class MemberService : IMemberService
         _updateValidator = updateValidator;
     }
 
-    public async Task<MemberDto> CreateMemberAsync(CreateMemberDTO dto)
+    public async Task<MemberDto> CreateMemberAsync(CreateMemberDto dto)
     {
         await _createValidator.EnsureValidOrThrowAsync(dto);
 
@@ -53,7 +53,7 @@ public class MemberService : IMemberService
         return members.Select(ToMemberDto.ToDto).ToList();
     }
 
-    public async Task<MemberDto> UpdateMemberAsync(Guid id, UpdateMemberDTO dto)
+    public async Task<MemberDto> UpdateMemberAsync(Guid id, UpdateMemberDto dto)
     {
         await _updateValidator.EnsureValidOrThrowAsync(dto);
 

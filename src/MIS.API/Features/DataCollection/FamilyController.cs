@@ -1,8 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using MIS.Application.Features.DataCollection.HouseholdInfo;
-using MIS.Application.Features.DataCollection.HouseholdInfo.Famiiles;
+using MIS.API.Common.Responses;
 using MIS.Application.Features.DataCollection.HouseholdInfo.Families;
-using MIS.Domain.Entities.DataCollection.HouseholdInfo;
+
 
 namespace MIS.API.Features.DataCollection;
 
@@ -18,19 +17,19 @@ public class FamilyController : ControllerBase
     }
     
     [HttpPost]
-    public async Task<IActionResult> Post (CreateFamilyDTO dto)
+    public async Task<IActionResult> Post (CreateFamilyDto dto)
     {
         await _familyService.CreateFamilyAsync(dto);
-        return Ok();
+        return CreatedAtAction(nameof(GetById), new { id = dto.SubmissionId }, dto);
     }
 
     [HttpGet("{id:guid}")]
     public async Task<IActionResult> GetById (Guid id)
     {
         
-        var result = await _familyService.GetFamilyByIdAsync(id);
-        if (result == null) return NotFound();
-        return Ok(result);
+        var familydata = await _familyService.GetFamilyByIdAsync(id);
+        if (familydata == null) return NotFound();
+        return Ok(ApiResponse<FamilyDto>.SuccessResponse(familydata));
     }
 
 }

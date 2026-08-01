@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using MIS.API.Common.Responses;
 using MIS.Application.Features.DataCollection.HouseholdInfo.Members;
 
 namespace MIS.API.Features.DataCollection;
@@ -15,7 +16,7 @@ public class MemberController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> CreateMember([FromBody] CreateMemberDTO dto)
+    public async Task<IActionResult> CreateMember([FromBody] CreateMemberDto dto)
     {
         var result = await _memberService.CreateMemberAsync(dto);
         return CreatedAtAction(nameof(GetMemberById), new { id = result.Id }, result);
@@ -25,21 +26,21 @@ public class MemberController : ControllerBase
     public async Task<IActionResult> GetMemberById(Guid id)
     {
         var result = await _memberService.GetMemberByIdAsync(id);
-        return Ok(result);
+        return Ok(ApiResponse<MemberDto>.SuccessResponse(result));
     }
 
     [HttpGet("family/{familyId:guid}")]
     public async Task<IActionResult> GetMembersByFamilyId(Guid familyId)
     {
         var result = await _memberService.GetMembersByFamilyIdAsync(familyId);
-        return Ok(result);
+        return Ok(ApiResponse<List<MemberDto>>.SuccessResponse(result));
     }
 
     [HttpPatch("{id:guid}")]
-    public async Task<IActionResult> UpdateMember(Guid id, [FromBody] UpdateMemberDTO dto)
+    public async Task<IActionResult> UpdateMember(Guid id, [FromBody] UpdateMemberDto dto)
     {
         var result = await _memberService.UpdateMemberAsync(id, dto);
-        return Ok(result);
+        return Ok(ApiResponse<MemberDto>.SuccessResponse(result));
     }
 
     [HttpDelete("{id:guid}")]
