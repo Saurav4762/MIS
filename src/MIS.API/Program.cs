@@ -163,6 +163,17 @@ if (app.Environment.IsDevelopment())
     Console.WriteLine($"idTypeId: {optionLookup["test-id-type"]}");
     Console.WriteLine($"educationLevelId: {optionLookup["test-education-level"]}");
     Console.WriteLine($"occupationId: {optionLookup["test-occupation"]}");
+    
+    var socialOptions = await TestSocialSeeder.SeedSocialOptionItems(db);
+    var familyIdForSocial = await TestSocialSeeder.GetAnyFamilyIdWithoutSocial(db);
+
+    Console.WriteLine($"houseId: {houseId}");
+    Console.WriteLine($"submissionId: {submissionId}");
+    Console.WriteLine($"familyIdForSocial: {familyIdForSocial}");
+    Console.WriteLine($"ethnicityId: {socialOptions["test-social-ethnicity"]}");
+    Console.WriteLine($"religionId: {socialOptions["test-social-religion"]}");
+    Console.WriteLine($"motherTongueId: {socialOptions["test-social-mother-tongue"]}");
+    Console.WriteLine($"commonLanguageId: {socialOptions["test-social-common-language"]}");
 }
 
 

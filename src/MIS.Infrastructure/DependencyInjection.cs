@@ -38,6 +38,7 @@ using MIS.Application.Features.DataCollection.HouseholdInfo.Healths;
 using MIS.Infrastructure.Persistence;
 using MIS.Application.Features.DataCollection.HouseholdInfo.Livestocks;
 using MIS.Application.Features.DataCollection.HouseholdInfo.Members;
+using MIS.Application.Features.DataCollection.HouseholdInfo.Socials;
 
 namespace MIS.Infrastructure;
 
@@ -89,6 +90,10 @@ public static class DependencyInjection
     // Data Collection - member
     services.AddScoped<IMemberRepo, MemberRepo>();
     services.AddScoped<IMemberService, MemberService>();
+    
+    //Data Collection - Social
+    services.AddScoped<ISocialService, SocialService>();
+    services.AddScoped<ISocialRepo, SocialRepo>();
 
     services.AddScoped<IUnitOfWork, UnitOfWork>();
 
