@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MIS.Application.Common.Interfaces;
 using MIS.Application.Features.Authentication;
+using MIS.Application.Features.DataCollection.Agricultures;
 using MIS.Application.Features.Geography.Districts;
 using MIS.Application.Features.Geography.Municipalities;
 using MIS.Application.Features.Geography.Provinces;
@@ -73,6 +74,7 @@ public static class DependencyInjection
 
     // Data Collection
     services.AddScoped<IHouseInfoRepo, HouseInfoRepo>();
+    services.AddScoped<IAgricultureRepo, AgricultureRepo>();
     services.AddScoped<IDecisionRepo, DecisionsRepo>();
     services.AddScoped<IEconomyRepo, EconomyRepo>();
     services.AddScoped<IFacilityRepo, FacilityRepo>();
@@ -80,6 +82,7 @@ public static class DependencyInjection
     services.AddScoped<IHealthRepo, HealthRepo>();
 
     services.AddScoped<IUnitOfWork, UnitOfWork>();
+
 
     // Data
     // Enable Dynamic Serialization

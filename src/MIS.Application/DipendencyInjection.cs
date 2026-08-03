@@ -1,6 +1,7 @@
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using MIS.Application.Features.Authentication;
+using MIS.Application.Features.DataCollection.Agricultures;
 using MIS.Application.Features.DataCollection.HouseholdInfo.Decisions;
 using MIS.Application.Features.DataCollection.HouseholdInfo.Economies;
 using MIS.Application.Features.DataCollection.HouseholdInfo.Facilities;
@@ -17,7 +18,6 @@ using MIS.Application.Features.Options.OptionItems;
 using MIS.Application.Features.Options.OptionLists;
 using MIS.Application.Features.Submissions;
 using MIS.Application.Features.Users;
-
 namespace MIS.Application;
 
 public static class DependencyInjection
@@ -41,12 +41,13 @@ public static class DependencyInjection
 
     // DATA COLLECTION
     services.AddScoped<IHouseInfoService, HouseInfoService>();
+    services.AddScoped<IAgricultureService, AgricultureService>();
     services.AddScoped<IDecisionService, DecisionService>();
     services.AddScoped<IEconomyService, EconomyService>();
     services.AddScoped<IFacilityService, FacilityService>();
     services.AddScoped<ILivestockService, LivestockService>();
     services.AddScoped<IHealthService, HealthService>();
-
+    
     // Registers LoginUserDTOValidator, RegisterUserDTOValidator, and any future validators automatically
     
     services.AddValidatorsFromAssemblyContaining<LoginUserDTOValidator>();
