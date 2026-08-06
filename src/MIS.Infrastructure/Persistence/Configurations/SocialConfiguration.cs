@@ -24,12 +24,7 @@ public class SocialConfiguration : IEntityTypeConfiguration<Social>
 
         // ==================== Other Relationships ====================
 
-        // Foreign Key: Member
-        builder.HasOne(s => s.Member)
-            .WithMany()
-            .HasForeignKey(s => s.MemberId)
-            .OnDelete(DeleteBehavior.Restrict)
-            .HasConstraintName("FK_Social_Member");
+        
 
         // Foreign Key: Ethnicity
         builder.HasOne(s => s.Ethnicity)

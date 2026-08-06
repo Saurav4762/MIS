@@ -8,6 +8,7 @@ using MIS.Application.Features.DataCollection.HouseholdInfo.Facilities;
 using MIS.Application.Features.DataCollection.HouseholdInfo.Healths;
 using MIS.Application.Features.DataCollection.HouseholdInfo.Livestocks;
 using MIS.Application.Features.DataCollection.HouseholdInfo.Members;
+using MIS.Application.Features.DataCollection.HouseholdInfo.Socials;
 using MIS.Application.Features.DataCollection.HouseInfo;
 using MIS.Application.Features.Geography.Areas;
 using MIS.Application.Features.Geography.Districts;
@@ -51,6 +52,9 @@ public static class DependencyInjection
     services.AddScoped<IHealthService, HealthService>();
 
     services.AddScoped<IMemberService, MemberService>();
+    services.AddScoped<ISocialService, SocialService>();
+    services.AddScoped<IValidator<CreateSocialDto>, CreateSocialDtoValidator>(); 
+    // if you register validators this way — check your existing Member registration pattern first
 
 
     // Registers LoginUserDTOValidator, RegisterUserDTOValidator, and any future validators automatically
