@@ -1,11 +1,14 @@
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using MIS.Application.Features.Authentication;
+using MIS.Application.Features.DataCollection.Agricultures;
 using MIS.Application.Features.DataCollection.HouseholdInfo.Decisions;
 using MIS.Application.Features.DataCollection.HouseholdInfo.Economies;
 using MIS.Application.Features.DataCollection.HouseholdInfo.Facilities;
 using MIS.Application.Features.DataCollection.HouseholdInfo.Healths;
 using MIS.Application.Features.DataCollection.HouseholdInfo.Livestocks;
+using MIS.Application.Features.DataCollection.HouseholdInfo.Members;
+using MIS.Application.Features.DataCollection.HouseholdInfo.Socials;
 using MIS.Application.Features.DataCollection.HouseInfo;
 using MIS.Application.Features.Geography.Areas;
 using MIS.Application.Features.Geography.Districts;
