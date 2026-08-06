@@ -892,3 +892,5 @@ $RECYCLE.BIN/
 *.lnk
 
 # End of https://www.toptal.com/developers/gitignore/api/venv,dotnetcore,dotenv,aspnetcore,rider,macos,windows,linux,vs,sublimetext,visualstudiocode,vim,node
+.claude/
+graphify-out
