@@ -7,6 +7,7 @@ using MIS.Application.Features.DataCollection.HouseholdInfo.Economies;
 using MIS.Application.Features.DataCollection.HouseholdInfo.Facilities;
 using MIS.Application.Features.DataCollection.HouseholdInfo.Healths;
 using MIS.Application.Features.DataCollection.HouseholdInfo.Livestocks;
+using MIS.Application.Features.DataCollection.HouseholdInfo.Members;
 using MIS.Application.Features.DataCollection.HouseInfo;
 using MIS.Application.Features.Geography.Areas;
 using MIS.Application.Features.Geography.Districts;
@@ -18,6 +19,7 @@ using MIS.Application.Features.Options.OptionItems;
 using MIS.Application.Features.Options.OptionLists;
 using MIS.Application.Features.Submissions;
 using MIS.Application.Features.Users;
+
 namespace MIS.Application;
 
 public static class DependencyInjection
@@ -47,7 +49,10 @@ public static class DependencyInjection
     services.AddScoped<IFacilityService, FacilityService>();
     services.AddScoped<ILivestockService, LivestockService>();
     services.AddScoped<IHealthService, HealthService>();
-    
+
+    services.AddScoped<IMemberService, MemberService>();
+
+
     // Registers LoginUserDTOValidator, RegisterUserDTOValidator, and any future validators automatically
     
     services.AddValidatorsFromAssemblyContaining<LoginUserDTOValidator>();

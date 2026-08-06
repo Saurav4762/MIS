@@ -21,6 +21,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\MIS.Domain\MIS.Domain.csproj" />
+    <ProjectReference Include="..\..\src\MIS.Infrastructure\MIS.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Entities\" />
   </ItemGroup>
 
 </Project>

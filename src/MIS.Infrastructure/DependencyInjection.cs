@@ -83,7 +83,6 @@ public static class DependencyInjection
 
     services.AddScoped<IUnitOfWork, UnitOfWork>();
 
-
     // Data
     // Enable Dynamic Serialization
     var dataSourceBuilder = new NpgsqlDataSourceBuilder(
